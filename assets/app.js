@@ -1045,9 +1045,9 @@ function renderMiniReportTable(selector, rows) {
   host.innerHTML = `
     <div class="panel table-wrap">
       <table>
-        <thead><tr><th>Group</th><th>Trades</th><th>Win%</th><th>Avg R</th><th>Net</th></tr></thead>
+        <thead><tr><th>Group</th><th>Trades</th><th>Win%</th><th>Net</th></tr></thead>
         <tbody>
-          ${top.map(r => `<tr><td>${r.key}</td><td>${r.trades}</td><td>${r.winRate.toFixed(1)}%</td><td>${r.avgR.toFixed(2)}</td><td class="${r.pnl >= 0 ? 'pos' : 'neg'}">${fmtMoney(r.pnl)}</td></tr>`).join('')}
+          ${top.map(r => `<tr><td>${r.key}</td><td>${r.trades}</td><td>${r.winRate.toFixed(1)}%</td><td class="${r.pnl >= 0 ? 'pos' : 'neg'}">${fmtMoney(r.pnl)}</td></tr>`).join('')}
         </tbody>
       </table>
     </div>
