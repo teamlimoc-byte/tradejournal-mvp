@@ -77,7 +77,15 @@ async function loadData() {
       if (!r.ok) continue;
       const parsed = await r.json();
       if (parsed?.trades?.length) {
-        parsed.trades = [...parsed.trades, ...readLocalTrades()];
+        const local = readLocalTrades();
+        const byId = new Map();
+        // Prefer server data first; only add local trades that are missing by id.
+        for (const t of parsed.trades) byId.set(String(t.id || ''), t);
+        for (const t of local) {
+          const id = String(t?.id || '');
+          if (!id || !byId.has(id)) byId.set(id, t);
+        }
+        parsed.trades = Array.from(byId.values());
         return parsed;
       }
     } catch (_) {}
