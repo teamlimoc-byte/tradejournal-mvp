@@ -734,6 +734,21 @@ function fillFormForEdit(trade) {
   if (submit) submit.textContent = 'Update Trade';
 }
 
+function validateTradeInput(trade, allTrades = []) {
+  const errs = [];
+  if (!trade.date) errs.push('Date is required');
+  if (!trade.symbol) errs.push('Symbol is required');
+  if (!trade.side) errs.push('Side is required');
+  if (!Number.isFinite(Number(trade.qty)) || Number(trade.qty) <= 0) errs.push('Qty must be > 0');
+  if (!Number.isFinite(Number(trade.entry))) errs.push('Entry must be a valid number');
+  if (!Number.isFinite(Number(trade.exit))) errs.push('Exit must be a valid number');
+  if (!Number.isFinite(Number(trade.commission)) || Number(trade.commission) < 0) errs.push('Commission cannot be negative');
+
+  const duplicate = allTrades.find(t => t.id === trade.id && t.id !== state.editTradeId);
+  if (duplicate) errs.push(`Duplicate trade ID detected: ${trade.id}`);
+  return errs;
+}
+
 function renderTradeForm() {
   const host = document.querySelector('#trade-form');
   if (!host) return;
@@ -756,6 +771,7 @@ function renderTradeForm() {
       <button class="btn" type="button" id="cancel-edit" style="display:none;">Cancel Edit</button>
       <button class="btn" type="button" id="clear-local-trades">Clear Local Trades</button>
     </div>
+    <div id="trade-form-errors" class="full small" style="margin-top:6px;"></div>
   `;
 
   host.addEventListener('submit', e => {
@@ -794,6 +810,13 @@ function renderTradeForm() {
       notes: String(fd.get('notes') || '')
     };
 
+    const errs = validateTradeInput(trade, state.data.trades || []);
+    const errHost = host.querySelector('#trade-form-errors');
+    if (errs.length) {
+      if (errHost) errHost.innerHTML = `<span class="neg">${errs.join(' • ')}</span>`;
+      return;
+    }
+
     const i = (state.data.trades || []).findIndex(t => t.id === trade.id);
     if (i >= 0) state.data.trades[i] = trade;
     else state.data.trades.push(trade);
@@ -801,6 +824,7 @@ function renderTradeForm() {
     state.editTradeId = null;
     syncLocalTradesFromState();
     host.reset();
+    if (errHost) errHost.innerHTML = '<span class="pos">Saved.</span>';
     const submit = host.querySelector('button[type="submit"]');
     if (submit) submit.textContent = 'Save Trade';
     const cancelBtn = host.querySelector('#cancel-edit');
@@ -811,6 +835,8 @@ function renderTradeForm() {
   document.querySelector('#cancel-edit')?.addEventListener('click', () => {
     state.editTradeId = null;
     host.reset();
+    const errHost = host.querySelector('#trade-form-errors');
+    if (errHost) errHost.innerHTML = '';
     const submit = host.querySelector('button[type="submit"]');
     if (submit) submit.textContent = 'Save Trade';
     const cancelBtn = host.querySelector('#cancel-edit');
@@ -1064,6 +1090,25 @@ function renderReportsSanity(selector, trades, snapshot) {
   `;
 }
 
+function renderReportHealth(selector, trades) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const missingTime = trades.filter(t => !deriveEntryTime(t)).length;
+  const untagged = trades.filter(t => !(Array.isArray(t.tags) && t.tags.length)).length;
+  const zeroCommission = trades.filter(t => Number(t.commission || 0) <= 0).length;
+  const badQty = trades.filter(t => !Number.isFinite(Number(t.qty)) || Number(t.qty) <= 0).length;
+  host.innerHTML = `
+    <div class="panel">
+      <ul class="list-compact">
+        <li>Missing time: <strong>${missingTime}</strong></li>
+        <li>Untagged trades: <strong>${untagged}</strong></li>
+        <li>Zero/empty commission: <strong>${zeroCommission}</strong></li>
+        <li>Invalid qty records: <strong>${badQty}</strong></li>
+      </ul>
+    </div>
+  `;
+}
+
 function renderReportsPage(trades) {
   if (!document.querySelector('#reports-kpis')) return;
   renderReportControls('#report-controls');
@@ -1086,6 +1131,7 @@ function renderReportsPage(trades) {
 
   renderReportsHighlights('#report-highlights', snapshot);
   renderReportsSanity('#report-sanity', reportTrades, snapshot);
+  renderReportHealth('#report-health', reportTrades);
   renderMiniReportTable('#report-setup', snapshot.bySetup);
   renderMiniReportTable('#report-time', snapshot.byTimeBucket);
   renderMiniReportTable('#report-symbol', snapshot.bySymbol);
