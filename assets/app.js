@@ -20,7 +20,7 @@ const MOCK_DATA = {
 const state = {
   data: null,
   filters: { symbol: '', side: 'All', setup: 'All', dateFrom: '', dateTo: '', sort: 'date-desc' },
-  reportFilters: { dateFrom: '', dateTo: '' },
+  reportFilters: { dateFrom: '', dateTo: '', sortBy: 'pnl' },
   selectedTrade: null,
   formMounted: false,
   editTradeId: null,
@@ -284,18 +284,27 @@ function renderReportControls(selector) {
   const host = document.querySelector(selector);
   if (!host) return;
   host.innerHTML = `
-    <div class="toolbar" style="grid-template-columns: 1fr 1fr auto; margin-top:10px;">
+    <div class="toolbar" style="grid-template-columns: 1fr 1fr 1fr auto; margin-top:10px;">
       <div class="field"><label>Date From</label><input id="rf-date-from" type="date" value="${state.reportFilters.dateFrom || ''}" /></div>
       <div class="field"><label>Date To</label><input id="rf-date-to" type="date" value="${state.reportFilters.dateTo || ''}" /></div>
+      <div class="field"><label>Sort Rows By</label>
+        <select id="rf-sort">
+          <option value="pnl" ${state.reportFilters.sortBy === 'pnl' ? 'selected' : ''}>Net P&L</option>
+          <option value="winRate" ${state.reportFilters.sortBy === 'winRate' ? 'selected' : ''}>Win Rate</option>
+          <option value="trades" ${state.reportFilters.sortBy === 'trades' ? 'selected' : ''}>Trades</option>
+        </select>
+      </div>
       <div class="field" style="justify-content:end;"><label>&nbsp;</label><button id="rf-clear" class="btn">Clear</button></div>
     </div>
   `;
   document.querySelector('#rf-date-from')?.addEventListener('change', e => { state.reportFilters.dateFrom = e.target.value || ''; rerender(); });
   document.querySelector('#rf-date-to')?.addEventListener('change', e => { state.reportFilters.dateTo = e.target.value || ''; rerender(); });
+  document.querySelector('#rf-sort')?.addEventListener('change', e => { state.reportFilters.sortBy = e.target.value || 'pnl'; rerender(); });
   document.querySelector('#rf-clear')?.addEventListener('click', e => {
     e.preventDefault();
     state.reportFilters.dateFrom = '';
     state.reportFilters.dateTo = '';
+    state.reportFilters.sortBy = 'pnl';
     rerender();
   });
 }
@@ -969,6 +978,14 @@ function renderJournal(selector) {
   host.innerHTML = journalHtml + (autoLessons ? `<div style="margin-top:10px;"><h3 style="margin:0 0 8px;">Recent Trade Lessons</h3>${autoLessons}</div>` : '');
 }
 
+function sortReportRows(rows) {
+  const mode = state.reportFilters.sortBy || 'pnl';
+  const sorted = [...(rows || [])];
+  if (mode === 'winRate') return sorted.sort((a, b) => b.winRate - a.winRate);
+  if (mode === 'trades') return sorted.sort((a, b) => b.trades - a.trades);
+  return sorted.sort((a, b) => b.pnl - a.pnl);
+}
+
 function renderMiniReportTable(selector, rows) {
   const host = document.querySelector(selector);
   if (!host) return;
@@ -976,7 +993,7 @@ function renderMiniReportTable(selector, rows) {
     host.innerHTML = '<div class="panel muted">No data yet.</div>';
     return;
   }
-  const top = rows.slice(0, 8);
+  const top = sortReportRows(rows).slice(0, 8);
   host.innerHTML = `
     <div class="panel table-wrap">
       <table>
@@ -992,16 +1009,17 @@ function renderMiniReportTable(selector, rows) {
 function renderReportsHighlights(selector, snapshot) {
   const host = document.querySelector(selector);
   if (!host) return;
-  const bestSetup = (snapshot.bySetup || [])[0];
-  const worstSetup = [...(snapshot.bySetup || [])].sort((a, b) => a.pnl - b.pnl)[0];
-  const bestDay = (snapshot.byWeekday || [])[0];
+  const top3 = [...(snapshot.bySetup || [])].sort((a, b) => b.pnl - a.pnl).slice(0, 3);
+  const bottom3 = [...(snapshot.bySetup || [])].sort((a, b) => a.pnl - b.pnl).slice(0, 3);
   host.innerHTML = `
     <div class="panel">
+      <div class="small muted" style="margin-bottom:6px;">Top 3 Setups</div>
       <ul class="list-compact">
-        <li><strong>Best setup:</strong> ${bestSetup ? `${bestSetup.key} (${fmtMoney(bestSetup.pnl)})` : 'N/A'}</li>
-        <li><strong>Weakest setup:</strong> ${worstSetup ? `${worstSetup.key} (${fmtMoney(worstSetup.pnl)})` : 'N/A'}</li>
-        <li><strong>Best weekday:</strong> ${bestDay ? `${bestDay.key} (${fmtMoney(bestDay.pnl)})` : 'N/A'}</li>
-        <li><strong>Top tag:</strong> ${snapshot.byTag?.[0] ? `${snapshot.byTag[0].key} (${fmtMoney(snapshot.byTag[0].pnl)})` : 'N/A'}</li>
+        ${top3.length ? top3.map(x => `<li>${x.key} — <span class="pos">${fmtMoney(x.pnl)}</span></li>`).join('') : '<li>N/A</li>'}
+      </ul>
+      <div class="small muted" style="margin:10px 0 6px;">Bottom 3 Setups</div>
+      <ul class="list-compact">
+        ${bottom3.length ? bottom3.map(x => `<li>${x.key} — <span class="neg">${fmtMoney(x.pnl)}</span></li>`).join('') : '<li>N/A</li>'}
       </ul>
     </div>
   `;
