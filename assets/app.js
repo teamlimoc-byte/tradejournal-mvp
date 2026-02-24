@@ -245,6 +245,32 @@ function buildReportsSnapshot(trades, journalEntries) {
   };
 }
 
+function renderWeekdayBars(selector, rows) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Unknown'];
+  const map = new Map((rows || []).map(r => [r.key, r]));
+  const items = order.map(k => map.get(k)).filter(Boolean);
+  if (!items.length) {
+    host.innerHTML = '<div class="panel muted">No weekday data yet.</div>';
+    return;
+  }
+  const maxAbs = Math.max(...items.map(i => Math.abs(i.pnl || 0)), 1);
+  host.innerHTML = `
+    <div class="panel">
+      ${items.map(i => {
+        const w = Math.max(4, Math.round((Math.abs(i.pnl || 0) / maxAbs) * 100));
+        const c = i.pnl >= 0 ? 'var(--success)' : 'var(--danger)';
+        return `<div style="display:grid;grid-template-columns:72px 1fr 90px;gap:8px;align-items:center;margin:6px 0;">
+          <div class="small muted">${i.key}</div>
+          <div style="height:10px;background:#eef2f7;border-radius:999px;overflow:hidden;"><div style="height:100%;width:${w}%;background:${c};"></div></div>
+          <div class="small ${i.pnl>=0?'pos':'neg'}" style="text-align:right;">${fmtMoney(i.pnl)}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
 function renderDashboardBreakdown(trades) {
   const host = document.querySelector('#dashboard-breakdown');
   if (!host) return;
@@ -956,6 +982,8 @@ function renderReportsPage(trades) {
   renderMiniReportTable('#report-time', snapshot.byTimeBucket);
   renderMiniReportTable('#report-symbol', snapshot.bySymbol);
   renderMiniReportTable('#report-recovery', snapshot.byRecovery);
+  renderMiniReportTable('#report-tags', snapshot.byTag);
+  renderWeekdayBars('#report-weekday', snapshot.byWeekday);
 }
 
 function markActiveNav() {
