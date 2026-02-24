@@ -750,6 +750,7 @@ function renderDetailedJournalEntry(j) {
 
   return `
     <p><strong class="muted">Mood:</strong> ${j.mood || '—'}</p>
+    <p><strong class="muted">Recovery Metrics:</strong> ${j.ouraSleepScore != null ? `Sleep ${j.ouraSleepScore}` : '—'}${j.ouraReadinessScore != null ? ` | Readiness ${j.ouraReadinessScore}` : ''}</p>
     <p><strong class="muted">Setup Context:</strong> ${j.setupContext || '—'}</p>
     <p><strong class="muted">Execution:</strong> ${j.execution || '—'}</p>
     <p><strong class="muted">Psychology:</strong> ${j.psychology || '—'}</p>
