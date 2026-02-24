@@ -740,7 +740,7 @@ function normalizeJournalContent(text = '') {
 }
 
 function renderDetailedJournalEntry(j) {
-  const hasStructured = j.setupContext || j.execution || j.psychology || j.ruleAdherence || j.lessonLearned || j.nextRule;
+  const hasStructured = j.setupContext || j.execution || j.psychology || j.ruleAdherence || j.whatWentWell || j.whatToImprove || j.lessonLearned || j.nextRule;
   if (!hasStructured) {
     return `
       <p><strong class="muted">Mood:</strong> ${j.mood || '—'}</p>
@@ -754,6 +754,8 @@ function renderDetailedJournalEntry(j) {
     <p><strong class="muted">Execution:</strong> ${j.execution || '—'}</p>
     <p><strong class="muted">Psychology:</strong> ${j.psychology || '—'}</p>
     <p><strong class="muted">Rule Adherence:</strong> ${j.ruleAdherence || '—'}</p>
+    <p><strong class="muted">What I Did Good:</strong> ${j.whatWentWell || '—'}</p>
+    <p><strong class="muted">What To Improve:</strong> ${j.whatToImprove || '—'}</p>
     <p><strong class="muted">Lesson Learned:</strong> ${j.lessonLearned || '—'}</p>
     <p><strong class="muted">Next Trade Rule:</strong> ${j.nextRule || '—'}</p>
     ${j.content ? `<p style="margin-top:8px; white-space: pre-line">${normalizeJournalContent(j.content)}</p>` : ''}

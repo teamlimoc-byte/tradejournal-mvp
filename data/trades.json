@@ -221,7 +221,9 @@
       "psychology": "Initial frustration after avoidable loss, then regained control by slowing down and following TP-or-BE rules.",
       "ruleAdherence": "Improved through session: stop discipline and no revenge entries after losses.",
       "lessonLearned": "No stop order in market = no trade. Execution tools must be set before entry.",
-      "nextRule": "Before any entry: confirm ATM template loaded, SL/TP visible, and size valid."
+      "nextRule": "Before any entry: confirm ATM template loaded, SL/TP visible, and size valid.",
+      "whatWentWell": "Recovered discipline mid-session, restored ATM stop workflow, and executed TP-or-BE management without revenge trading.",
+      "whatToImprove": "Set stop order before every entry, avoid manual stop tracking, and reduce over-management during stall candles."
     }
   ]
 }
