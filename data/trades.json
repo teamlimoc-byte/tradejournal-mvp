@@ -1,6 +1,6 @@
 {
-  "source": "csv-import-server",
-  "generatedAt": "2026-02-22T17:38:23.570582Z",
+  "source": "live-chat-manual-log",
+  "generatedAt": "2026-02-24T01:36:13.330992+00:00",
   "trades": [
     {
       "id": "CSV-0070",
@@ -136,6 +136,60 @@
       "r": 0,
       "tags": [],
       "notes": "5min 57sec"
+    },
+    {
+      "id": "MAN-20260223-01",
+      "date": "2026-02-23",
+      "symbol": "MNQH6",
+      "side": "Short",
+      "setup": "2x BOS + FVG Retest",
+      "qty": 1.0,
+      "entry": 24870.0,
+      "exit": 24899.0,
+      "pnl": -58.0,
+      "commission": 1.0,
+      "r": -1.38,
+      "tags": [
+        "manual-log",
+        "no-atm-stop"
+      ],
+      "notes": "Short signal under ORB; SL initially manual and not set on platform, overshot planned stop."
+    },
+    {
+      "id": "MAN-20260223-02",
+      "date": "2026-02-23",
+      "symbol": "MNQH6",
+      "side": "Short",
+      "setup": "2x BOS + FVG Retest",
+      "qty": 1.0,
+      "entry": 24871.25,
+      "exit": 24905.75,
+      "pnl": -69.0,
+      "commission": 1.0,
+      "r": -1.0,
+      "tags": [
+        "manual-log",
+        "atm-restored"
+      ],
+      "notes": "Short with defined ATM stop/target; stopped at invalidation level cleanly."
+    },
+    {
+      "id": "MAN-20260223-03",
+      "date": "2026-02-23",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "2x BOS + FVG Retest",
+      "qty": 1.0,
+      "entry": 24767.75,
+      "exit": 24771.5,
+      "pnl": 7.5,
+      "commission": 1.0,
+      "r": 0.12,
+      "tags": [
+        "manual-log",
+        "be-management"
+      ],
+      "notes": "Long in A+ window with 250/125 ATM; moved SL to BE and exited small winner."
     }
   ],
   "journal": [
@@ -156,6 +210,12 @@
       "title": "Trading Journal \u2014 Feb 19, 2026 (Wednesday)",
       "mood": "** Entered despite choppy conditions, hoped ORB bottom would hold",
       "content": "1. ALL MTF down + dead zone = NO TRADE"
+    },
+    {
+      "date": "2026-02-23",
+      "title": "Trading Journal \u2014 Monday, February 23, 2026",
+      "mood": "Mixed but improving discipline",
+      "content": "Key lesson: No stop order in market = no trade. Process improved after restoring ATM template. Followed TP-or-BE discipline on long setup."
     }
   ]
 }
