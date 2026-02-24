@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trading Platform MVP — Journal</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">Trade<span>Journal</span> MVP</div>
+      <nav class="nav">
+        <a class="nav-link" href="index.html">Dashboard</a>
+        <a class="nav-link" href="trades.html">Trades</a>
+        <a class="nav-link" href="journal.html">Journal</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Journal</h1>
+    <div class="subtle">Daily reflections synced from local JSON when available.</div>
+
+    <section class="panel" style="margin-top:14px; margin-bottom:14px;">
+      <div class="muted small">Prompt Shell</div>
+      <div style="margin-top:8px">What was your best setup today? What would you do differently tomorrow?</div>
+    </section>
+
+    <section id="journal-list" class="note-list"></section>
+  </main>
+
+  <footer>Static/offline-friendly build for GitHub Pages</footer>
+  <script src="./assets/app.js?v=20260222f"></script>
+</body>
+</html>

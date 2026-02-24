@@ -1,0 +1,161 @@
+{
+  "source": "csv-import-server",
+  "generatedAt": "2026-02-22T17:38:23.570582Z",
+  "trades": [
+    {
+      "id": "CSV-0070",
+      "date": "2026-02-18",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24866.5,
+      "exit": 24827.75,
+      "pnl": -77.5,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "2min 29sec"
+    },
+    {
+      "id": "CSV-0071",
+      "date": "2026-02-18",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24821.25,
+      "exit": 24896.25,
+      "pnl": 150.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "3min 14sec"
+    },
+    {
+      "id": "CSV-0072",
+      "date": "2026-02-19",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24877.0,
+      "exit": 24878.5,
+      "pnl": 3.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "17min 21sec"
+    },
+    {
+      "id": "CSV-0073",
+      "date": "2026-02-19",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24881.75,
+      "exit": 24884.75,
+      "pnl": 6.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "8min 42sec"
+    },
+    {
+      "id": "CSV-0074",
+      "date": "2026-02-19",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24929.0,
+      "exit": 24929.5,
+      "pnl": 1.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "1min 7sec"
+    },
+    {
+      "id": "CSV-0075",
+      "date": "2026-02-19",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24862.5,
+      "exit": 24844.5,
+      "pnl": -36.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "8min 34sec"
+    },
+    {
+      "id": "CSV-0076",
+      "date": "2026-02-19",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24824.5,
+      "exit": 24829.0,
+      "pnl": 9.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "11min 24sec"
+    },
+    {
+      "id": "CSV-0077",
+      "date": "2026-02-20",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 24884.75,
+      "exit": 24959.75,
+      "pnl": 150.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "10min 12sec"
+    },
+    {
+      "id": "CSV-0078",
+      "date": "2026-02-20",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "CSV Import",
+      "qty": 1.0,
+      "entry": 25049.75,
+      "exit": 25083.75,
+      "pnl": 68.0,
+      "commission": 0,
+      "r": 0,
+      "tags": [],
+      "notes": "5min 57sec"
+    }
+  ],
+  "journal": [
+    {
+      "date": "2026-02-21",
+      "title": "Live Journal Auto Entry \u2014 2026-02-21 09:45 AM PST",
+      "mood": "\u2014",
+      "content": ""
+    },
+    {
+      "date": "2026-02-20",
+      "title": "Trading Journal \u2014 Friday, February 20, 2026",
+      "mood": "\u2014",
+      "content": "| Field | Value |"
+    },
+    {
+      "date": "2026-02-19",
+      "title": "Trading Journal \u2014 Feb 19, 2026 (Wednesday)",
+      "mood": "** Entered despite choppy conditions, hoped ORB bottom would hold",
+      "content": "1. ALL MTF down + dead zone = NO TRADE"
+    }
+  ]
+}
