@@ -20,6 +20,7 @@ const MOCK_DATA = {
 const state = {
   data: null,
   filters: { symbol: '', side: 'All', setup: 'All', dateFrom: '', dateTo: '', sort: 'date-desc' },
+  reportFilters: { dateFrom: '', dateTo: '' },
   selectedTrade: null,
   formMounted: false,
   editTradeId: null,
@@ -269,6 +270,34 @@ function renderWeekdayBars(selector, rows) {
       }).join('')}
     </div>
   `;
+}
+
+function getReportTrades(trades) {
+  return (trades || []).filter(t => {
+    if (state.reportFilters.dateFrom && t.date < state.reportFilters.dateFrom) return false;
+    if (state.reportFilters.dateTo && t.date > state.reportFilters.dateTo) return false;
+    return true;
+  });
+}
+
+function renderReportControls(selector) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  host.innerHTML = `
+    <div class="toolbar" style="grid-template-columns: 1fr 1fr auto; margin-top:10px;">
+      <div class="field"><label>Date From</label><input id="rf-date-from" type="date" value="${state.reportFilters.dateFrom || ''}" /></div>
+      <div class="field"><label>Date To</label><input id="rf-date-to" type="date" value="${state.reportFilters.dateTo || ''}" /></div>
+      <div class="field" style="justify-content:end;"><label>&nbsp;</label><button id="rf-clear" class="btn">Clear</button></div>
+    </div>
+  `;
+  document.querySelector('#rf-date-from')?.addEventListener('change', e => { state.reportFilters.dateFrom = e.target.value || ''; rerender(); });
+  document.querySelector('#rf-date-to')?.addEventListener('change', e => { state.reportFilters.dateTo = e.target.value || ''; rerender(); });
+  document.querySelector('#rf-clear')?.addEventListener('click', e => {
+    e.preventDefault();
+    state.reportFilters.dateFrom = '';
+    state.reportFilters.dateTo = '';
+    rerender();
+  });
 }
 
 function renderDashboardBreakdown(trades) {
@@ -997,7 +1026,9 @@ function renderReportsSanity(selector, trades, snapshot) {
 
 function renderReportsPage(trades) {
   if (!document.querySelector('#reports-kpis')) return;
-  const snapshot = buildReportsSnapshot(trades, state.data?.journal || []);
+  renderReportControls('#report-controls');
+  const reportTrades = getReportTrades(trades);
+  const snapshot = buildReportsSnapshot(reportTrades, state.data?.journal || []);
   window.__reports = snapshot;
 
   const k = snapshot.totals;
@@ -1014,7 +1045,7 @@ function renderReportsPage(trades) {
   }
 
   renderReportsHighlights('#report-highlights', snapshot);
-  renderReportsSanity('#report-sanity', trades, snapshot);
+  renderReportsSanity('#report-sanity', reportTrades, snapshot);
   renderMiniReportTable('#report-setup', snapshot.bySetup);
   renderMiniReportTable('#report-time', snapshot.byTimeBucket);
   renderMiniReportTable('#report-symbol', snapshot.bySymbol);
