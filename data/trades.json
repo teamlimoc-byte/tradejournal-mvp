@@ -195,19 +195,20 @@
       "id": "MAN-20260224-01",
       "date": "2026-02-24",
       "symbol": "MNQH6",
-      "side": "Long",
+      "side": "Short",
       "setup": "2x BOS + FVG Retest",
       "qty": 1.0,
-      "entry": 25012.5,
-      "exit": 24985.0,
-      "pnl": -55.0,
+      "entry": 25000.0,
+      "exit": 25032.0,
+      "pnl": -64.0,
       "commission": 1.0,
       "r": -1.0,
       "tags": [
         "manual-log",
-        "discipline"
+        "discipline",
+        "stop-respected"
       ],
-      "notes": "Entered on reclaim/hold attempt; respected stop with no widening. Dead-zone passes maintained after."
+      "notes": "Short entry at 25000 after 2x BOS + FVG retest. Held original plan in chop and accepted stop at 25032 without revenge trade."
     }
   ],
   "journal": [
@@ -254,18 +255,18 @@
     {
       "date": "2026-02-24",
       "title": "Trading Journal \u2014 Tuesday, February 24, 2026",
-      "mood": "Disciplined despite choppy/dead-zone conditions",
-      "setupContext": "Mixed/choppy intraday structure. Avoided multiple dead-zone temptations and waited for level-based confirmation entries.",
-      "execution": "Took one MNQ long with defined SL/TP and 1 contract. Stop was honored without widening. Passed additional dead-zone setups.",
-      "psychology": "Managed frustration better than prior sessions; prioritized process over FOMO.",
-      "ruleAdherence": "Strong: followed dead-zone no-trade rule and respected hard stop.",
-      "whatWentWell": "Waited for proper pullback areas, avoided forcing entries, and maintained risk control.",
-      "whatToImprove": "Improve patience on continuation confirmation and avoid early anticipation around chop zones.",
-      "lessonLearned": "Missing a move is cheaper than forcing low-quality entries in chop.",
-      "nextRule": "No A+ confluence + clean confirmation close = no trade.",
+      "mood": "Calm finish; process-first despite choppy tape",
+      "setupContext": "Choppy session with mixed lower-timeframe swings, but valid short thesis appeared with 2x BOS + FVG retest.",
+      "execution": "Entered MNQ short at 25000 with predefined SL 25032 and TP 24938.25. Price chopped and eventually tagged stop. No SL widening, no panic exit, no revenge trade.",
+      "psychology": "Some tension during OB retest, but stayed mechanical and followed invalidation rules.",
+      "ruleAdherence": "Strong: respected original stop and ended session after stop-out.",
+      "whatWentWell": "Clear thesis-based entry, disciplined risk management, and emotional control after loss.",
+      "whatToImprove": "Avoid second-guessing during chop; trust pre-trade invalidation without micro-managing candles.",
+      "lessonLearned": "A disciplined stop-out is a good trade process-wise, even when outcome is red.",
+      "nextRule": "If invalidation does not trigger, hold; if it triggers, exit clean and end session.",
       "ouraSleepScore": 75,
       "ouraReadinessScore": 74,
-      "content": "Session focus was discipline first. One controlled loss with proper stop, followed by multiple quality passes during dead zone."
+      "content": "Final account balance: 24834. Trade followed plan (Short 25000 / SL 25032 / TP 24938.25), stop filled, session closed with no revenge trading."
     }
   ]
 }
