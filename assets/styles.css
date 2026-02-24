@@ -149,6 +149,16 @@ footer { color: var(--muted); text-align:center; padding: 20px 0 10px; font-size
   .breakdown-grid { grid-template-columns: 1fr; }
   .layout-2 { grid-template-columns: 1fr; }
 }
+/* Reports page fit + alignment */
+.reports-page .table-wrap { overflow-x: hidden; }
+.reports-page table { min-width: 0; width: 100%; table-layout: fixed; }
+.reports-page th, .reports-page td { font-size: 0.82rem; }
+.reports-page .toolbar { grid-template-columns: 1fr 1fr 1fr auto; }
+
+@media (max-width: 900px) {
+  .reports-page .toolbar { grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 620px) {
   .container { padding: 12px; }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
