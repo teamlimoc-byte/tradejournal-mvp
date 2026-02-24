@@ -158,7 +158,7 @@ function toETHour(dateObj) {
 }
 
 function parseTradeTimestamp(trade) {
-  const candidates = [trade?.boughtTimestamp, trade?.soldTimestamp, trade?.entryTime, trade?.time, trade?.timestamp, trade?.openedAt];
+  const candidates = [trade?.entryTimestamp, trade?.boughtTimestamp, trade?.soldTimestamp, trade?.entryTime, trade?.time, trade?.timestamp, trade?.openedAt];
   for (const c of candidates) {
     if (!c) continue;
     const d = new Date(c);
@@ -705,10 +705,20 @@ function downloadCsv(filename, csv) {
   URL.revokeObjectURL(url);
 }
 
+function deriveEntryTime(trade) {
+  if (trade?.entryTime && /^\d{2}:\d{2}$/.test(String(trade.entryTime))) return String(trade.entryTime);
+  const ts = parseTradeTimestamp(trade);
+  if (!ts || Number.isNaN(ts.getTime())) return '';
+  const hh = String(ts.getHours()).padStart(2, '0');
+  const mm = String(ts.getMinutes()).padStart(2, '0');
+  return `${hh}:${mm}`;
+}
+
 function fillFormForEdit(trade) {
   const form = document.querySelector('#trade-form');
   if (!form || !trade) return;
   form.querySelector('[name="date"]').value = trade.date || '';
+  form.querySelector('[name="entryTime"]').value = deriveEntryTime(trade);
   form.querySelector('[name="symbol"]').value = trade.symbol || '';
   form.querySelector('[name="side"]').value = trade.side || 'Long';
   form.querySelector('[name="setup"]').value = trade.setup || '';
@@ -729,6 +739,7 @@ function renderTradeForm() {
   if (!host) return;
   host.innerHTML = `
     <div class="field"><label>Date</label><input name="date" type="date" required /></div>
+    <div class="field"><label>Entry Time</label><input name="entryTime" type="time" /></div>
     <div class="field"><label>Symbol</label><input name="symbol" placeholder="MNQ" required /></div>
     <div class="field"><label>Side</label><select name="side"><option>Long</option><option>Short</option></select></div>
     <div class="field"><label>Setup</label><input name="setup" placeholder="Pullback" /></div>
@@ -757,9 +768,19 @@ function renderTradeForm() {
     if (!Number.isFinite(pnl)) pnl = 0;
     const commission = Number(fd.get('commission') || 0);
 
+    const tradeDate = String(fd.get('date') || new Date().toISOString().slice(0, 10));
+    const entryTime = String(fd.get('entryTime') || '').trim();
+    let entryTimestamp = '';
+    if (entryTime) {
+      const d = new Date(`${tradeDate}T${entryTime}`);
+      if (!Number.isNaN(d.getTime())) entryTimestamp = d.toISOString();
+    }
+
     const trade = {
       id: state.editTradeId || `MAN-${Date.now()}`,
-      date: String(fd.get('date') || new Date().toISOString().slice(0, 10)),
+      date: tradeDate,
+      entryTime,
+      entryTimestamp,
       symbol: String(fd.get('symbol') || '').toUpperCase(),
       side,
       setup: String(fd.get('setup') || 'Manual'),
@@ -812,12 +833,13 @@ function renderTradesTable(selector, trades, clickable = false) {
     <div class="table-wrap panel">
       <table>
         <thead>
-          <tr><th>Date</th><th>ID</th><th>Symbol</th><th>Side</th><th>Setup</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Comm</th><th>Net P&L</th><th>R</th><th>Actions</th></tr>
+          <tr><th>Date</th><th>Time</th><th>ID</th><th>Symbol</th><th>Side</th><th>Setup</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Comm</th><th>Net P&L</th><th>R</th><th>Actions</th></tr>
         </thead>
         <tbody>
           ${trades.map(t => `
             <tr data-id="${t.id}" style="cursor:${clickable ? 'pointer' : 'default'}">
               <td>${t.date || ''}</td>
+              <td>${deriveEntryTime(t) || '—'}</td>
               <td>${t.id || ''}</td>
               <td>${t.symbol || ''}</td>
               <td><span class="badge ${(t.side || '').toLowerCase()}">${t.side || ''}</span></td>
@@ -879,7 +901,7 @@ function renderTradeDetail(selector, trade) {
   host.innerHTML = `
     <div class="panel detail-box">
       <h3 style="margin:0 0 6px">${trade.symbol || '—'} • ${trade.side || '—'}</h3>
-      <div class="small muted">${trade.id || '—'} • ${trade.date || '—'} • ${trade.setup || '—'}</div>
+      <div class="small muted">${trade.id || '—'} • ${trade.date || '—'} ${deriveEntryTime(trade) ? `@ ${deriveEntryTime(trade)}` : ''} • ${trade.setup || '—'}</div>
       <div class="meta-grid">
         <div><div class="muted small">Entry</div><div>${fmtNum(trade.entry)}</div></div>
         <div><div class="muted small">Exit</div><div>${fmtNum(trade.exit)}</div></div>
