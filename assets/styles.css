@@ -154,11 +154,16 @@ footer { color: var(--muted); text-align:center; padding: 20px 0 10px; font-size
 .reports-page table { min-width: 0; width: 100%; table-layout: fixed; }
 .reports-page th, .reports-page td { font-size: 0.8rem; padding: 7px 6px; }
 .reports-page .toolbar { grid-template-columns: 1fr 1fr 1fr auto; }
-/* Force stacked report sections for cleaner fit */
-.reports-page .breakdown-grid { grid-template-columns: 1fr; }
+.reports-page .breakdown-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.reports-page .reports-triad { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+
+@media (max-width: 1100px) {
+  .reports-page .reports-triad { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 900px) {
   .reports-page .toolbar { grid-template-columns: 1fr 1fr; }
+  .reports-page .breakdown-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 620px) {
