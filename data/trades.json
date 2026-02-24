@@ -215,7 +215,13 @@
       "date": "2026-02-23",
       "title": "Trading Journal \u2014 Monday, February 23, 2026",
       "mood": "Mixed but improving discipline",
-      "content": "Key lesson: No stop order in market = no trade. Process improved after restoring ATM template. Followed TP-or-BE discipline on long setup."
+      "content": "Key lesson: No stop order in market = no trade. Process improved after restoring ATM template. Followed TP-or-BE discipline on long setup.",
+      "setupContext": "Volatile session with bearish pressure early, then recovery attempts around key intraday levels. Used 2x BOS + FVG retest logic and A+ window filters.",
+      "execution": "Trade 1 lacked platform stop and overshot planned risk. Trade 2 used restored ATM and honored invalidation. Trade 3 long used 250/125 plan, moved stop to BE, and exited small green.",
+      "psychology": "Initial frustration after avoidable loss, then regained control by slowing down and following TP-or-BE rules.",
+      "ruleAdherence": "Improved through session: stop discipline and no revenge entries after losses.",
+      "lessonLearned": "No stop order in market = no trade. Execution tools must be set before entry.",
+      "nextRule": "Before any entry: confirm ATM template loaded, SL/TP visible, and size valid."
     }
   ]
 }

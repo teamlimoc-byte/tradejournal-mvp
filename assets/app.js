@@ -739,19 +739,68 @@ function normalizeJournalContent(text = '') {
   return raw;
 }
 
+function renderDetailedJournalEntry(j) {
+  const hasStructured = j.setupContext || j.execution || j.psychology || j.ruleAdherence || j.lessonLearned || j.nextRule;
+  if (!hasStructured) {
+    return `
+      <p><strong class="muted">Mood:</strong> ${j.mood || '—'}</p>
+      <p style="margin-top:8px; white-space: pre-line">${normalizeJournalContent(j.content)}</p>
+    `;
+  }
+
+  return `
+    <p><strong class="muted">Mood:</strong> ${j.mood || '—'}</p>
+    <p><strong class="muted">Setup Context:</strong> ${j.setupContext || '—'}</p>
+    <p><strong class="muted">Execution:</strong> ${j.execution || '—'}</p>
+    <p><strong class="muted">Psychology:</strong> ${j.psychology || '—'}</p>
+    <p><strong class="muted">Rule Adherence:</strong> ${j.ruleAdherence || '—'}</p>
+    <p><strong class="muted">Lesson Learned:</strong> ${j.lessonLearned || '—'}</p>
+    <p><strong class="muted">Next Trade Rule:</strong> ${j.nextRule || '—'}</p>
+    ${j.content ? `<p style="margin-top:8px; white-space: pre-line">${normalizeJournalContent(j.content)}</p>` : ''}
+  `;
+}
+
+function renderAutoTradeLessons(trades) {
+  if (!trades.length) return '';
+  const latest = [...trades]
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+    .slice(0, 5);
+
+  return latest.map(t => {
+    const lesson = t.lessonLearned || (netPnl(t) < 0
+      ? 'Respect invalidation and protect capital faster.'
+      : 'Repeat this execution discipline next setup.');
+    const nextRule = t.nextRule || (netPnl(t) < 0
+      ? 'No stop in market = no trade.'
+      : 'Let winners resolve at TP/BE, no emotional exits.');
+
+    return `
+      <article class="note-item">
+        <h4>${t.date || '—'} — Trade Review (${t.symbol || ''} ${t.side || ''})</h4>
+        <p><strong class="muted">Execution:</strong> Entry ${fmtNum(t.entry)} / Exit ${fmtNum(t.exit)} / Net ${fmtMoney(netPnl(t))}</p>
+        <p><strong class="muted">Lesson Learned:</strong> ${lesson}</p>
+        <p><strong class="muted">Next Trade Rule:</strong> ${nextRule}</p>
+      </article>
+    `;
+  }).join('');
+}
+
 function renderJournal(selector) {
   const host = document.querySelector(selector);
   if (!host) return;
 
   const entries = (state.data?.journal || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const journalHtml = entries.length
+    ? entries.map(j => `
+      <article class="note-item">
+        <h4>${j.date || '—'} — ${j.title || 'Journal Entry'}</h4>
+        ${renderDetailedJournalEntry(j)}
+      </article>
+    `).join('')
+    : '<div class="panel muted">No journal entries found in local JSON.</div>';
 
-  host.innerHTML = entries.length ? entries.map(j => `
-    <article class="note-item">
-      <h4>${j.date || '—'} — ${j.title || 'Journal Entry'}</h4>
-      <p><strong class="muted">Mood:</strong> ${j.mood || '—'}</p>
-      <p style="margin-top:8px; white-space: pre-line">${normalizeJournalContent(j.content)}</p>
-    </article>
-  `).join('') : '<div class="panel muted">No journal entries found in local JSON.</div>';
+  const autoLessons = renderAutoTradeLessons(getTrades());
+  host.innerHTML = journalHtml + (autoLessons ? `<div style="margin-top:10px;"><h3 style="margin:0 0 8px;">Recent Trade Lessons</h3>${autoLessons}</div>` : '');
 }
 
 function markActiveNav() {
