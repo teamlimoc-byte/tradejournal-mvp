@@ -145,6 +145,106 @@ function renderKpis(rootSel, trades) {
   `;
 }
 
+// --- Reports module prep helpers (data layer only; UI wiring on Friday sprint) ---
+function toETHour(dateObj) {
+  try {
+    const hr = new Intl.DateTimeFormat('en-US', { hour: '2-digit', hour12: false, timeZone: 'America/New_York' }).format(dateObj);
+    const n = Number(hr);
+    return Number.isFinite(n) ? n : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+function parseTradeTimestamp(trade) {
+  const candidates = [trade?.boughtTimestamp, trade?.soldTimestamp, trade?.entryTime, trade?.time, trade?.timestamp, trade?.openedAt];
+  for (const c of candidates) {
+    if (!c) continue;
+    const d = new Date(c);
+    if (!Number.isNaN(d.getTime())) return d;
+  }
+  return null;
+}
+
+function weekdayFromDate(dateStr) {
+  if (!dateStr) return 'Unknown';
+  const d = new Date(`${dateStr}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return 'Unknown';
+  return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getUTCDay()];
+}
+
+function bucketLabelForHourET(hour) {
+  if (hour == null) return 'Unknown';
+  if (hour < 10) return 'Pre-RTH';
+  if (hour < 11) return 'Open Drive';
+  if (hour < 14) return 'Midday';
+  if (hour < 16) return 'Power Hour';
+  return 'Post-RTH';
+}
+
+function aggregateByKey(trades, keyFn) {
+  const map = new Map();
+  for (const t of trades) {
+    const key = keyFn(t) || 'Unknown';
+    if (!map.has(key)) map.set(key, { key, trades: 0, wins: 0, pnl: 0, rTotal: 0 });
+    const row = map.get(key);
+    row.trades += 1;
+    const n = netPnl(t);
+    row.pnl += n;
+    row.rTotal += Number(t?.r || 0);
+    if (n > 0) row.wins += 1;
+  }
+  return Array.from(map.values()).map(r => ({
+    ...r,
+    winRate: r.trades ? (r.wins / r.trades) * 100 : 0,
+    avgR: r.trades ? r.rTotal / r.trades : 0
+  })).sort((a, b) => b.pnl - a.pnl);
+}
+
+function buildReportsSnapshot(trades, journalEntries) {
+  const bySetup = aggregateByKey(trades, t => t?.setup || 'Unknown');
+  const bySymbol = aggregateByKey(trades, t => t?.symbol || 'Unknown');
+  const byWeekday = aggregateByKey(trades, t => weekdayFromDate(t?.date));
+
+  const byTag = aggregateByKey(
+    trades.flatMap(t => {
+      const tags = Array.isArray(t?.tags) && t.tags.length ? t.tags : ['untagged'];
+      return tags.map(tag => ({ ...t, __tag: String(tag) }));
+    }),
+    t => t.__tag
+  );
+
+  const byTimeBucket = aggregateByKey(trades, t => {
+    const ts = parseTradeTimestamp(t);
+    return bucketLabelForHourET(ts ? toETHour(ts) : null);
+  });
+
+  const journalByDate = new Map((journalEntries || []).map(j => [j.date, j]));
+  const withRecovery = trades.map(t => {
+    const j = journalByDate.get(t.date) || {};
+    const sleep = Number(j.ouraSleepScore);
+    const readiness = Number(j.ouraReadinessScore);
+    return {
+      ...t,
+      __recoveryBand: (Number.isFinite(sleep) && Number.isFinite(readiness) && sleep >= 75 && readiness >= 75)
+        ? 'High Recovery (>=75/75)'
+        : 'Lower Recovery'
+    };
+  });
+  const byRecovery = aggregateByKey(withRecovery, t => t.__recoveryBand);
+
+  return {
+    generatedAt: new Date().toISOString(),
+    totals: computeKpis(trades),
+    bySetup,
+    byTag,
+    bySymbol,
+    byWeekday,
+    byTimeBucket,
+    byRecovery
+  };
+}
+
 function renderDashboardBreakdown(trades) {
   const host = document.querySelector('#dashboard-breakdown');
   if (!host) return;
