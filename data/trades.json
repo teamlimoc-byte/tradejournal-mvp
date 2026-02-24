@@ -190,6 +190,24 @@
         "be-management"
       ],
       "notes": "Long in A+ window with 250/125 ATM; moved SL to BE and exited small winner."
+    },
+    {
+      "id": "MAN-20260224-01",
+      "date": "2026-02-24",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "2x BOS + FVG Retest",
+      "qty": 1.0,
+      "entry": 25012.5,
+      "exit": 24985.0,
+      "pnl": -55.0,
+      "commission": 1.0,
+      "r": -1.0,
+      "tags": [
+        "manual-log",
+        "discipline"
+      ],
+      "notes": "Entered on reclaim/hold attempt; respected stop with no widening. Dead-zone passes maintained after."
     }
   ],
   "journal": [
@@ -232,6 +250,22 @@
       "whatToImprove": "Set stop order before every entry, avoid manual stop tracking, and reduce over-management during stall candles.",
       "ouraSleepScore": 75,
       "ouraReadinessScore": 74
+    },
+    {
+      "date": "2026-02-24",
+      "title": "Trading Journal \u2014 Tuesday, February 24, 2026",
+      "mood": "Disciplined despite choppy/dead-zone conditions",
+      "setupContext": "Mixed/choppy intraday structure. Avoided multiple dead-zone temptations and waited for level-based confirmation entries.",
+      "execution": "Took one MNQ long with defined SL/TP and 1 contract. Stop was honored without widening. Passed additional dead-zone setups.",
+      "psychology": "Managed frustration better than prior sessions; prioritized process over FOMO.",
+      "ruleAdherence": "Strong: followed dead-zone no-trade rule and respected hard stop.",
+      "whatWentWell": "Waited for proper pullback areas, avoided forcing entries, and maintained risk control.",
+      "whatToImprove": "Improve patience on continuation confirmation and avoid early anticipation around chop zones.",
+      "lessonLearned": "Missing a move is cheaper than forcing low-quality entries in chop.",
+      "nextRule": "No A+ confluence + clean confirmation close = no trade.",
+      "ouraSleepScore": 75,
+      "ouraReadinessScore": 74,
+      "content": "Session focus was discipline first. One controlled loss with proper stop, followed by multiple quality passes during dead zone."
     }
   ]
 }
