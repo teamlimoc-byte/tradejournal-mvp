@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trading Platform MVP — Dashboard</title>
+  <title>Trading Platform MVP — Reports</title>
   <link rel="stylesheet" href="./assets/styles.css" />
 </head>
 <body>
@@ -20,28 +20,31 @@
   </header>
 
   <main class="container">
-    <h1 class="page-title">Dashboard</h1>
-    <div class="subtle">Tradervue-inspired performance snapshot from local journal pipeline JSON.</div>
+    <h1 class="page-title">Reports (Scaffold)</h1>
+    <div class="subtle">Phase 1 data layer is wired. Friday sprint will finalize charts/filters.</div>
 
-    <section id="kpis" class="grid kpi-grid"></section>
+    <section id="reports-kpis" class="grid kpi-grid"></section>
 
     <section class="breakdown-grid" style="margin-top:12px;">
-      <div class="panel">
-        <h2 style="margin:0 0 10px">Equity Curve</h2>
-        <div id="equity-curve"></div>
+      <div>
+        <h2 style="margin:0 0 10px">By Setup</h2>
+        <div id="report-setup"></div>
       </div>
-      <div class="panel">
-        <h2 style="margin:0 0 10px">Daily Heatmap</h2>
-        <div id="daily-heatmap"></div>
+      <div>
+        <h2 style="margin:0 0 10px">By Time Bucket (ET)</h2>
+        <div id="report-time"></div>
       </div>
     </section>
 
     <section class="breakdown-grid">
       <div>
-        <h2 style="margin:0 0 10px">Recent Trades</h2>
-        <div id="dashboard-table"></div>
+        <h2 style="margin:0 0 10px">By Symbol</h2>
+        <div id="report-symbol"></div>
       </div>
-      <div id="dashboard-breakdown"></div>
+      <div>
+        <h2 style="margin:0 0 10px">Recovery Slice (Oura)</h2>
+        <div id="report-recovery"></div>
+      </div>
     </section>
   </main>
 

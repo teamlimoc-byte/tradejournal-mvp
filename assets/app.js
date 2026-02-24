@@ -914,6 +914,50 @@ function renderJournal(selector) {
   host.innerHTML = journalHtml + (autoLessons ? `<div style="margin-top:10px;"><h3 style="margin:0 0 8px;">Recent Trade Lessons</h3>${autoLessons}</div>` : '');
 }
 
+function renderMiniReportTable(selector, rows) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  if (!rows?.length) {
+    host.innerHTML = '<div class="panel muted">No data yet.</div>';
+    return;
+  }
+  const top = rows.slice(0, 8);
+  host.innerHTML = `
+    <div class="panel table-wrap">
+      <table>
+        <thead><tr><th>Group</th><th>Trades</th><th>Win%</th><th>Avg R</th><th>Net</th></tr></thead>
+        <tbody>
+          ${top.map(r => `<tr><td>${r.key}</td><td>${r.trades}</td><td>${r.winRate.toFixed(1)}%</td><td>${r.avgR.toFixed(2)}</td><td class="${r.pnl >= 0 ? 'pos' : 'neg'}">${fmtMoney(r.pnl)}</td></tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderReportsPage(trades) {
+  if (!document.querySelector('#reports-kpis')) return;
+  const snapshot = buildReportsSnapshot(trades, state.data?.journal || []);
+  window.__reports = snapshot;
+
+  const k = snapshot.totals;
+  const kpiHost = document.querySelector('#reports-kpis');
+  if (kpiHost) {
+    kpiHost.innerHTML = `
+      <div class="panel"><div class="kpi-label">Net P&L</div><div class="kpi-value ${k.totalPnl >= 0 ? 'pos' : 'neg'}">${fmtMoney(k.totalPnl)}</div></div>
+      <div class="panel"><div class="kpi-label">Trades</div><div class="kpi-value">${k.count}</div></div>
+      <div class="panel"><div class="kpi-label">Win Rate</div><div class="kpi-value">${k.winRate.toFixed(1)}%</div></div>
+      <div class="panel"><div class="kpi-label">Avg R</div><div class="kpi-value ${k.avgR >= 0 ? 'pos' : 'neg'}">${k.avgR.toFixed(2)}R</div></div>
+      <div class="panel"><div class="kpi-label">Expectancy</div><div class="kpi-value ${k.expectancy >= 0 ? 'pos' : 'neg'}">${fmtMoney(k.expectancy)}</div></div>
+      <div class="panel"><div class="kpi-label">Profit Factor</div><div class="kpi-value">${Number.isFinite(k.profitFactor) ? k.profitFactor.toFixed(2) : '∞'}</div></div>
+    `;
+  }
+
+  renderMiniReportTable('#report-setup', snapshot.bySetup);
+  renderMiniReportTable('#report-time', snapshot.byTimeBucket);
+  renderMiniReportTable('#report-symbol', snapshot.bySymbol);
+  renderMiniReportTable('#report-recovery', snapshot.byRecovery);
+}
+
 function markActiveNav() {
   const p = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach(a => {
@@ -944,6 +988,7 @@ function rerender() {
   }
   if (document.querySelector('#trade-detail')) renderTradeDetail('#trade-detail', state.selectedTrade);
   if (document.querySelector('#journal-list')) renderJournal('#journal-list');
+  renderReportsPage(trades);
 }
 
 (async function init() {
