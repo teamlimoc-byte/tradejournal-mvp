@@ -8,6 +8,7 @@ const DATA_CANDIDATES = [
 
 const LOCAL_TRADES_KEY = 'trading-platform-mvp.localTrades.v1';
 const COMMISSION_RT_KEY = 'trading-platform-mvp.commissionRt.v1';
+const THEME_KEY = 'trading-platform-mvp.theme.v1';
 
 const MOCK_DATA = {
   trades: [
@@ -1140,6 +1141,29 @@ function renderReportsPage(trades) {
   renderWeekdayBars('#report-weekday', snapshot.byWeekday);
 }
 
+function applyTheme(theme) {
+  const dark = theme === 'dark';
+  document.body.classList.toggle('dark', dark);
+  const btn = document.querySelector('#theme-toggle');
+  if (btn) btn.textContent = dark ? '☀️' : '🌙';
+}
+
+function initThemeToggle() {
+  let theme = 'light';
+  try {
+    theme = localStorage.getItem(THEME_KEY) || 'light';
+  } catch (_) {}
+  applyTheme(theme);
+
+  const btn = document.querySelector('#theme-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
+  });
+}
+
 function markActiveNav() {
   const p = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach(a => {
@@ -1175,6 +1199,7 @@ function rerender() {
 
 (async function init() {
   markActiveNav();
+  initThemeToggle();
   loadCommissionSetting();
   state.data = await loadData();
   rerender();
