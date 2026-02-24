@@ -209,6 +209,24 @@
         "stop-respected"
       ],
       "notes": "Short entry at 25000 after 2x BOS + FVG retest. Held original plan in chop and accepted stop at 25032 without revenge trade."
+    },
+    {
+      "id": "MAN-20260224-00",
+      "date": "2026-02-24",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "2x BOS + FVG Retest",
+      "qty": 1.0,
+      "entry": 25012.5,
+      "exit": 24985.0,
+      "pnl": -55.0,
+      "commission": 1.0,
+      "r": -1.0,
+      "tags": [
+        "manual-log",
+        "draft-restored"
+      ],
+      "notes": "Restored first trade record from earlier log state."
     }
   ],
   "journal": [
