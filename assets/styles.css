@@ -152,8 +152,10 @@ footer { color: var(--muted); text-align:center; padding: 20px 0 10px; font-size
 /* Reports page fit + alignment */
 .reports-page .table-wrap { overflow-x: hidden; }
 .reports-page table { min-width: 0; width: 100%; table-layout: fixed; }
-.reports-page th, .reports-page td { font-size: 0.82rem; }
+.reports-page th, .reports-page td { font-size: 0.8rem; padding: 7px 6px; }
 .reports-page .toolbar { grid-template-columns: 1fr 1fr 1fr auto; }
+/* Force stacked report sections for cleaner fit */
+.reports-page .breakdown-grid { grid-template-columns: 1fr; }
 
 @media (max-width: 900px) {
   .reports-page .toolbar { grid-template-columns: 1fr 1fr; }
