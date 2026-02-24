@@ -960,6 +960,41 @@ function renderMiniReportTable(selector, rows) {
   `;
 }
 
+function renderReportsHighlights(selector, snapshot) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const bestSetup = (snapshot.bySetup || [])[0];
+  const worstSetup = [...(snapshot.bySetup || [])].sort((a, b) => a.pnl - b.pnl)[0];
+  const bestDay = (snapshot.byWeekday || [])[0];
+  host.innerHTML = `
+    <div class="panel">
+      <ul class="list-compact">
+        <li><strong>Best setup:</strong> ${bestSetup ? `${bestSetup.key} (${fmtMoney(bestSetup.pnl)})` : 'N/A'}</li>
+        <li><strong>Weakest setup:</strong> ${worstSetup ? `${worstSetup.key} (${fmtMoney(worstSetup.pnl)})` : 'N/A'}</li>
+        <li><strong>Best weekday:</strong> ${bestDay ? `${bestDay.key} (${fmtMoney(bestDay.pnl)})` : 'N/A'}</li>
+        <li><strong>Top tag:</strong> ${snapshot.byTag?.[0] ? `${snapshot.byTag[0].key} (${fmtMoney(snapshot.byTag[0].pnl)})` : 'N/A'}</li>
+      </ul>
+    </div>
+  `;
+}
+
+function renderReportsSanity(selector, trades, snapshot) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const totalFromSetups = (snapshot.bySetup || []).reduce((s, r) => s + Number(r.pnl || 0), 0);
+  const totalFromSymbols = (snapshot.bySymbol || []).reduce((s, r) => s + Number(r.pnl || 0), 0);
+  const totalFromTrades = trades.reduce((s, t) => s + netPnl(t), 0);
+  const ok = Math.abs(totalFromTrades - totalFromSetups) < 0.001 && Math.abs(totalFromTrades - totalFromSymbols) < 0.001;
+  host.innerHTML = `
+    <div class="panel">
+      <div class="small muted">Trades total</div><div class="kpi-value ${totalFromTrades >= 0 ? 'pos' : 'neg'}">${fmtMoney(totalFromTrades)}</div>
+      <div class="small muted" style="margin-top:8px;">Setup aggregate: ${fmtMoney(totalFromSetups)}</div>
+      <div class="small muted">Symbol aggregate: ${fmtMoney(totalFromSymbols)}</div>
+      <div class="small" style="margin-top:8px;color:${ok ? 'var(--success)' : 'var(--danger)'};">${ok ? '✓ aggregates reconcile' : '⚠ mismatch detected'}</div>
+    </div>
+  `;
+}
+
 function renderReportsPage(trades) {
   if (!document.querySelector('#reports-kpis')) return;
   const snapshot = buildReportsSnapshot(trades, state.data?.journal || []);
@@ -978,6 +1013,8 @@ function renderReportsPage(trades) {
     `;
   }
 
+  renderReportsHighlights('#report-highlights', snapshot);
+  renderReportsSanity('#report-sanity', trades, snapshot);
   renderMiniReportTable('#report-setup', snapshot.bySetup);
   renderMiniReportTable('#report-time', snapshot.byTimeBucket);
   renderMiniReportTable('#report-symbol', snapshot.bySymbol);
