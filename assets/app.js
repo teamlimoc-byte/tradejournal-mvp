@@ -363,13 +363,17 @@ function renderEquityCurve(trades) {
   const y = v => h - pad - ((v - min) / range) * (h - pad * 2);
   const points = curve.map((p, i) => `${x(i)},${y(p.value)}`).join(' ');
 
+  const latest = curve[curve.length - 1]?.value ?? 0;
+  const peak = max;
+
   host.innerHTML = `
     <svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Equity curve">
       <line x1="${pad}" y1="${y(0)}" x2="${w-pad}" y2="${y(0)}" stroke="#d1d5db" stroke-width="1" />
       <polyline fill="none" stroke="#2563eb" stroke-width="2.5" points="${points}" />
-      <circle cx="${x(curve.length-1)}" cy="${y(curve[curve.length-1].value)}" r="3.5" fill="#2563eb" />
+      <circle cx="${x(curve.length-1)}" cy="${y(latest)}" r="3.5" fill="#2563eb" />
       <text x="${pad}" y="14" fill="#6b7280" font-size="11">Start</text>
-      <text x="${w-pad-55}" y="14" fill="#6b7280" font-size="11">${fmtMoney(curve[curve.length-1].value)}</text>
+      <text x="${w-pad-78}" y="14" fill="#6b7280" font-size="11">Peak ${fmtMoney(peak)}</text>
+      <text x="${w-pad-84}" y="${Math.max(16, y(latest)-8)}" fill="#6b7280" font-size="11">Now ${fmtMoney(latest)}</text>
     </svg>
   `;
 }
