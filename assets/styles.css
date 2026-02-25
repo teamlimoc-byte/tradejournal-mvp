@@ -12,16 +12,16 @@
 }
 
 body.dark {
-  --bg: #0f172a;
-  --panel: #111827;
-  --panel-soft: #0b1220;
-  --text: #e5e7eb;
-  --muted: #94a3b8;
-  --line: #243244;
-  --primary: #60a5fa;
-  --success: #22c55e;
-  --danger: #f87171;
-  --warning: #f59e0b;
+  --bg: #0b1220;
+  --panel: #0f1a2e;
+  --panel-soft: #13213a;
+  --text: #e6edf8;
+  --muted: #9db0ce;
+  --line: #223657;
+  --primary: #6ea8ff;
+  --success: #35d39a;
+  --danger: #ff6b88;
+  --warning: #f6b44f;
 }
 
 * { box-sizing: border-box; }
@@ -88,7 +88,7 @@ input, select, textarea {
 table { width: 100%; border-collapse: collapse; min-width: 860px; }
 th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
 th { color: var(--muted); font-weight: 600; text-align: left; white-space: nowrap; }
-tr[data-id]:hover { background: #f8fafc; }
+tr[data-id]:hover { background: var(--panel-soft); }
 
 .badge {
   display: inline-flex; align-items: center;
@@ -96,16 +96,17 @@ tr[data-id]:hover { background: #f8fafc; }
   border: 1px solid var(--line);
   padding: 2px 8px;
   font-size: .75rem;
-  color: #374151;
+  color: var(--text);
+  background: var(--panel-soft);
 }
-.badge.long { color: var(--success); border-color: #bbf7d0; background: #f0fdf4; }
-.badge.short { color: var(--danger); border-color: #fecaca; background: #fef2f2; }
+.badge.long { color: var(--success); border-color: color-mix(in srgb, var(--success) 35%, var(--line)); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.badge.short { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--line)); background: color-mix(in srgb, var(--danger) 12%, transparent); }
 
 .layout-2 { grid-template-columns: 2fr 1fr; align-items: start; }
 .note-list { display: grid; gap: 10px; }
-.note-item { border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 12px; }
-.note-item h4 { margin: 0 0 6px; }
-.note-item p { margin: 0; color: #374151; line-height: 1.45; }
+.note-item { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); padding: 12px; }
+.note-item h4 { margin: 0 0 6px; color: var(--text); }
+.note-item p { margin: 0; color: var(--text); line-height: 1.45; }
 
 .muted { color: var(--muted); }
 .small { font-size: .83rem; }
@@ -125,8 +126,8 @@ tr[data-id]:hover { background: #f8fafc; }
   min-height: 32px;
   padding: 4px;
   font-size: .7rem;
-  color: #374151;
-  background: #fff;
+  color: var(--text);
+  background: var(--panel);
 }
 .day-cell .day-num { color: var(--muted); font-size: .65rem; }
 .heat-0 { background: #f9fafb; }
