@@ -138,6 +138,20 @@ tr[data-id]:hover { background: var(--panel-soft); }
 .heat-neg-2 { background: #fecaca; }
 .heat-neg-3 { background: #fca5a5; }
 
+/* Dark-mode heatmap readability */
+body.dark .day-cell {
+  color: #e8f0ff;
+  border-color: #2a3f63;
+}
+body.dark .day-cell .day-num { color: #c0d0ea; }
+body.dark .heat-0 { background: #12213b; }
+body.dark .heat-1 { background: #113325; }
+body.dark .heat-2 { background: #145c42; }
+body.dark .heat-3 { background: #1a7a57; }
+body.dark .heat-neg-1 { background: #3a1d2a; }
+body.dark .heat-neg-2 { background: #5b2338; }
+body.dark .heat-neg-3 { background: #7b2c47; }
+
 .trade-form-grid {
   display:grid;
   grid-template-columns: repeat(5, minmax(0,1fr));
