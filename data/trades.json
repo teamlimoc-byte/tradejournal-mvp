@@ -227,6 +227,46 @@
         "draft-restored"
       ],
       "notes": "Restored first trade record from earlier log state."
+    },
+    {
+      "id": "MAN-20260225-01",
+      "date": "2026-02-25",
+      "entryTime": "09:22",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "2x BOS + ORB Hold",
+      "qty": 1.0,
+      "entry": 25312.75,
+      "exit": 25278.75,
+      "pnl": -68.0,
+      "commission": 1.0,
+      "r": -1.0,
+      "tags": [
+        "manual-log",
+        "a-plus",
+        "stop-hit"
+      ],
+      "notes": "Entered long after 2x BOS + 15m ORB hold in A+ window. Trade failed and stop was hit."
+    },
+    {
+      "id": "MAN-20260225-02",
+      "date": "2026-02-25",
+      "entryTime": "11:40",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "2x BOS + A+ Window",
+      "qty": 1.0,
+      "entry": 25346.25,
+      "exit": 25339.5,
+      "pnl": -13.5,
+      "commission": 1.0,
+      "r": -0.22,
+      "tags": [
+        "manual-log",
+        "capital-protection",
+        "nvda-day"
+      ],
+      "notes": "Long setup was valid but extended into late session/NVDA earnings risk. Exited early to protect capital."
     }
   ],
   "journal": [
@@ -285,6 +325,22 @@
       "ouraSleepScore": 75,
       "ouraReadinessScore": 74,
       "content": "Final account balance: 24834. Trade followed plan (Short 25000 / SL 25032 / TP 24938.25), stop filled, session closed with no revenge trading."
+    },
+    {
+      "date": "2026-02-25",
+      "title": "Trading Journal \u2014 Wednesday, February 25, 2026",
+      "mood": "Disciplined under chop and event-risk pressure",
+      "setupContext": "Mixed/choppy session with multiple fake breaks and late-day NVDA earnings risk affecting conviction near highs.",
+      "execution": "Trade 1 long (25312.75) stopped at 25278.75 after setup failed. Trade 2 long (25346.25) was valid but extended; exited early at 25339.50 to protect capital before earnings-driven uncertainty.",
+      "psychology": "Managed FOMO better by respecting dead-zone rules and prioritizing process over chasing. Caught myself when hope-based thinking appeared.",
+      "ruleAdherence": "Good overall: respected stop, avoided dead-zone override, and made defensive exit decision on extended late-day conditions.",
+      "whatWentWell": "Followed A+ checklist more consistently, identified hope-vs-rule distinction in real time, and protected capital during uncertain conditions.",
+      "whatToImprove": "Don\u2019t anchor on one signal (e.g., ORB retest) when BOS structure conflicts. Keep execution checklist explicit before entry.",
+      "lessonLearned": "\u201cI\u2019ll exit near BE unless reclaim confirms\u201d is rule-based; \u201cmaybe it comes back\u201d is hope-based. BOS line/level is context, BOS event is break-confirm action.",
+      "nextRule": "At +50% to TP, move SL to BE (or BE +1 tick) unless structure invalidation says otherwise.",
+      "ouraSleepScore": 80,
+      "ouraReadinessScore": 76,
+      "content": "Final day focus was process discipline on a choppy session. Trade results were controlled losses with improved decision quality and no revenge behavior."
     }
   ]
 }
