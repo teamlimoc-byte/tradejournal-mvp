@@ -140,10 +140,10 @@ tr[data-id]:hover { background: var(--panel-soft); }
 
 /* Dark-mode heatmap readability */
 body.dark .day-cell {
-  color: #e8f0ff;
-  border-color: #2a3f63;
+  color: #f4f8ff;
+  border-color: #35507a;
 }
-body.dark .day-cell .day-num { color: #c0d0ea; }
+body.dark .day-cell .day-num { color: #d8e5fa; }
 body.dark .heat-0 { background: #12213b; }
 body.dark .heat-1 { background: #113325; }
 body.dark .heat-2 { background: #145c42; }
