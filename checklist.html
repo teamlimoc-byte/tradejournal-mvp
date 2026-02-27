@@ -31,5 +31,63 @@
 
   <footer>Static/offline-friendly build for GitHub Pages</footer>
   <script src="./assets/app.js?v=20260227t"></script>
+  <script>
+    (function(){
+      const key = 'mvp_pretrade_checklist_v1';
+      const root = document.getElementById('checklist-root');
+      if (!root) return;
+      if (root.innerHTML && root.innerHTML.trim().length) return;
+
+      const def = {
+        date: new Date().toISOString().slice(0,10), time:'', direction:'Long',
+        mtfAligned:'', biasAligned:'', aPlusWindow:'', bosConfirmed:'', orbCondition:'',
+        ema10mRule:'', notDeadzone:'', emotionCheck:'', notes:''
+      };
+      const load = () => { try { return Object.assign({}, def, JSON.parse(localStorage.getItem(key)||'{}')); } catch { return Object.assign({}, def); } };
+      const save = (d) => localStorage.setItem(key, JSON.stringify(d));
+      const score = (d) => {
+        const fields = ['mtfAligned','biasAligned','aPlusWindow','bosConfirmed','orbCondition','ema10mRule','notDeadzone','emotionCheck'];
+        const yes = fields.filter(f => String(d[f]).toLowerCase()==='yes').length;
+        const critical = ['mtfAligned','biasAligned','aPlusWindow','emotionCheck'];
+        const criticalOk = critical.every(f => String(d[f]).toLowerCase()==='yes');
+        const grade = (criticalOk && yes>=7) ? 'A+' : (criticalOk && yes>=5) ? 'B' : 'NO TRADE';
+        return {yes,total:fields.length,grade};
+      };
+
+      function render(){
+        const d = load();
+        const s = score(d);
+        const yn = (name,label) => `<div class="field"><label>${label}</label><select name="${name}"><option value="" ${!d[name]?'selected':''}>—</option><option value="yes" ${d[name]==='yes'?'selected':''}>Yes</option><option value="no" ${d[name]==='no'?'selected':''}>No</option></select></div>`;
+        root.innerHTML = `
+          <div class="panel">
+            <div class="toolbar" style="grid-template-columns: repeat(4,minmax(0,1fr));">
+              <div class="field"><label>Date</label><input type="date" name="date" value="${d.date||''}" /></div>
+              <div class="field"><label>Time</label><input type="time" name="time" value="${d.time||''}" /></div>
+              <div class="field"><label>Direction</label><select name="direction"><option ${d.direction==='Long'?'selected':''}>Long</option><option ${d.direction==='Short'?'selected':''}>Short</option></select></div>
+              <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.1rem;">${s.grade} (${s.yes}/${s.total})</div></div>
+            </div>
+            <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr)); margin-top:10px;">
+              ${yn('mtfAligned','3/4+ MTF aligned with direction?')}
+              ${yn('biasAligned','Bias matches direction?')}
+              ${yn('aPlusWindow','A+ window?')}
+              ${yn('bosConfirmed','BOS confirmation present?')}
+              ${yn('orbCondition','ORB condition met?')}
+              ${yn('ema10mRule','10m 8EMA rule satisfied?')}
+              ${yn('notDeadzone','Not deadzone?')}
+              ${yn('emotionCheck','Emotion check passed (no FOMO/revenge)?')}
+            </div>
+            <div class="field" style="margin-top:10px;"><label>Notes</label><textarea name="notes" rows="2">${d.notes||''}</textarea></div>
+            <div style="display:flex; gap:8px; margin-top:10px;"><button id="ck-save" class="btn" type="button">Save Checklist</button><button id="ck-reset" class="btn" type="button">Reset</button></div>
+          </div>`;
+
+        root.querySelectorAll('input[name],select[name],textarea[name]').forEach(el=>{
+          el.addEventListener('change', ()=>{ const n = Object.assign({}, load(), {[el.name]: el.value}); save(n); render(); });
+        });
+        root.querySelector('#ck-save')?.addEventListener('click', ()=> alert(`Checklist saved: ${score(load()).grade}`));
+        root.querySelector('#ck-reset')?.addEventListener('click', ()=>{ save(def); render(); });
+      }
+      render();
+    })();
+  </script>
 </body>
 </html>
