@@ -101,6 +101,9 @@ tr[data-id]:hover { background: var(--panel-soft); }
 }
 .badge.long { color: var(--success); border-color: color-mix(in srgb, var(--success) 35%, var(--line)); background: color-mix(in srgb, var(--success) 12%, transparent); }
 .badge.short { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--line)); background: color-mix(in srgb, var(--danger) 12%, transparent); }
+.badge.status-open { color: #93c5fd; border-color: color-mix(in srgb, #60a5fa 35%, var(--line)); background: color-mix(in srgb, #60a5fa 12%, transparent); }
+.badge.status-closed { color: var(--success); border-color: color-mix(in srgb, var(--success) 35%, var(--line)); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.badge.status-rolled { color: #fcd34d; border-color: color-mix(in srgb, #f59e0b 35%, var(--line)); background: color-mix(in srgb, #f59e0b 12%, transparent); }
 
 .layout-2 { grid-template-columns: 2fr 1fr; align-items: start; }
 .note-list { display: grid; gap: 10px; }
