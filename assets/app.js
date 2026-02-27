@@ -26,7 +26,9 @@ const state = {
   formMounted: false,
   editTradeId: null,
   commissionPerContractRt: 1,
-  importStatus: ''
+  importStatus: '',
+  selectedFuturesDate: '',
+  selectedOptionsDate: ''
 };
 
 const fmtMoney = v => `${v >= 0 ? '+' : '-'}$${Math.abs(Number(v || 0)).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
@@ -490,7 +492,7 @@ function renderDailyHeatmap(trades, selector = '#daily-heatmap') {
     else if (v < -150) cls = 'heat-neg-3';
 
     const tradeLabel = day.count === 1 ? '1 trade' : `${day.count} trades`;
-    return `<div class="day-cell ${cls}" title="${d}: ${fmtMoney(v)} (${tradeLabel})"><div class="day-num">${d.slice(5)}</div><div>${fmtMoney(v)}</div><div class="muted" style="font-size:.65rem; margin-top:2px;">${tradeLabel}</div></div>`;
+    return `<div class="day-cell ${cls}" data-date="${d}" title="${d}: ${fmtMoney(v)} (${tradeLabel})"><div class="day-num">${d.slice(5)}</div><div>${fmtMoney(v)}</div><div class="muted" style="font-size:.65rem; margin-top:2px;">${tradeLabel}</div></div>`;
   }).join('');
 }
 
@@ -1161,7 +1163,11 @@ function renderInlineJournalForDate(selector, scopeTrades = []) {
   const host = document.querySelector(selector);
   if (!host) return;
 
-  const selectedDate = state.selectedTrade?.date || (scopeTrades[0]?.date || '');
+  const selectedDate =
+    (selector.includes('futures') ? state.selectedFuturesDate : '') ||
+    (selector.includes('options') ? state.selectedOptionsDate : '') ||
+    state.selectedTrade?.date ||
+    (scopeTrades[0]?.date || '');
   if (!selectedDate) {
     host.innerHTML = '<div class="panel muted">No trade date selected yet.</div>';
     return;
@@ -1344,6 +1350,22 @@ function rerender() {
   if (document.querySelector('#daily-heatmap-options')) renderDailyHeatmap(optionsOnly, '#daily-heatmap-options');
   if (document.querySelector('#daily-heatmap')) renderDailyHeatmap(trades, '#daily-heatmap');
 
+  // Clickable heatmaps: selecting a day filters recent trades + inline journal on split dashboards
+  document.querySelectorAll('#daily-heatmap-futures .day-cell').forEach(cell => {
+    cell.addEventListener('click', () => {
+      state.selectedFuturesDate = cell.dataset.date || '';
+      state.selectedTrade = null;
+      rerender();
+    });
+  });
+  document.querySelectorAll('#daily-heatmap-options .day-cell').forEach(cell => {
+    cell.addEventListener('click', () => {
+      state.selectedOptionsDate = cell.dataset.date || '';
+      state.selectedTrade = null;
+      rerender();
+    });
+  });
+
   if (document.querySelector('#filters')) renderFilterControls();
   if (document.querySelector('#data-ops')) renderDataOps();
   if (document.querySelector('#trade-form') && !state.formMounted) {
@@ -1353,8 +1375,16 @@ function rerender() {
   if (document.querySelector('#trades-table')) renderTradesTable('#trades-table', trades, true);
   if (document.querySelector('#strategy-analytics')) renderStrategyAnalytics(trades);
   if (document.querySelector('#dashboard-table')) renderTradesTable('#dashboard-table', trades.slice(0, 8));
-  if (document.querySelector('#dashboard-table-futures')) renderTradesTable('#dashboard-table-futures', futuresOnly.slice(0, 8), true);
-  if (document.querySelector('#dashboard-table-options')) renderTradesTable('#dashboard-table-options', optionsOnly.slice(0, 8), true);
+
+  const futuresScoped = state.selectedFuturesDate
+    ? futuresOnly.filter(t => t.date === state.selectedFuturesDate)
+    : futuresOnly;
+  const optionsScoped = state.selectedOptionsDate
+    ? optionsOnly.filter(t => t.date === state.selectedOptionsDate)
+    : optionsOnly;
+
+  if (document.querySelector('#dashboard-table-futures')) renderTradesTable('#dashboard-table-futures', futuresScoped.slice(0, 20), true);
+  if (document.querySelector('#dashboard-table-options')) renderTradesTable('#dashboard-table-options', optionsScoped.slice(0, 20), true);
 
   if (state.selectedTrade) {
     const latest = trades.find(t => t.id === state.selectedTrade.id);
@@ -1362,8 +1392,8 @@ function rerender() {
   }
   if (document.querySelector('#trade-detail')) renderTradeDetail('#trade-detail', state.selectedTrade);
   if (document.querySelector('#journal-list')) renderJournal('#journal-list');
-  if (document.querySelector('#journal-inline-futures')) renderInlineJournalForDate('#journal-inline-futures', futuresOnly);
-  if (document.querySelector('#journal-inline-options')) renderInlineJournalForDate('#journal-inline-options', optionsOnly);
+  if (document.querySelector('#journal-inline-futures')) renderInlineJournalForDate('#journal-inline-futures', futuresScoped);
+  if (document.querySelector('#journal-inline-options')) renderInlineJournalForDate('#journal-inline-options', optionsScoped);
   renderReportsPage(trades);
 }
 
