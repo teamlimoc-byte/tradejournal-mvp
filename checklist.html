@@ -30,7 +30,7 @@
   </main>
 
   <footer>Static/offline-friendly build for GitHub Pages</footer>
-  <script src="./assets/app.js?v=20260227t"></script>
+  <script src="./assets/app.js?v=20260227u"></script>
   <script>
     (function(){
       const key = 'mvp_pretrade_checklist_v1';
@@ -83,7 +83,7 @@
               <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.2rem;">${s.grade} (${s.yes}/${s.total})</div></div>
             </div>
             <div class="field" style="margin-top:10px;"><label>Notes</label><textarea name="notes" rows="2">${d.notes||''}</textarea></div>
-            <div style="display:flex; gap:8px; margin-top:10px;"><button id="ck-save" class="btn" type="button">Save Checklist</button><button id="ck-reset" class="btn" type="button">Reset</button></div>
+            <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;"><button id="ck-save" class="btn" type="button">Save Checklist</button><button id="ck-use" class="btn" type="button">Use in Trade Form</button><button id="ck-reset" class="btn" type="button">Reset</button></div>
           </div>`;
 
         root.querySelectorAll('input[name],select[name],textarea[name]').forEach(el=>{
@@ -104,6 +104,20 @@
           const ss = score(n);
           alert(`Checklist saved: ${ss.grade} (${ss.yes}/${ss.total}) at ${n.time}`);
           render();
+        });
+        root.querySelector('#ck-use')?.addEventListener('click', ()=>{
+          const n = Object.assign({}, load(), { time: nowHHMM() });
+          save(n);
+          const ss = score(n);
+          const draft = {
+            assetType: 'futures',
+            side: n.direction || 'Long',
+            setup: `Checklist ${ss.grade}`,
+            strategy: 'Pre-Trade Checklist',
+            notes: `Checklist ${ss.grade} (${ss.yes}/${ss.total}) | mtf:${n.mtfAligned||'-'} bias:${n.biasAligned||'-'} A+win:${n.aPlusWindow||'-'} BOS:${n.bosConfirmed||'-'} ORB:${n.orbCondition||'-'} 10mEMA:${n.ema10mRule||'-'} deadzone:${n.notDeadzone||'-'} emotion:${n.emotionCheck||'-'}${n.notes?` | ${n.notes}`:''}`
+          };
+          localStorage.setItem('mvp_trade_draft_v1', JSON.stringify(draft));
+          alert('Draft sent to Trade Form. Open Trades page to continue.');
         });
         root.querySelector('#ck-reset')?.addEventListener('click', ()=>{ save(def); render(); });
       }
