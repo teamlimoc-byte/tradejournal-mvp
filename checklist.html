@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trading Platform MVP — Trades</title>
+  <title>Trading Platform MVP — Pre-Trade Checklist</title>
   <link rel="stylesheet" href="./assets/styles.css?v=20260227h" />
 </head>
-<body>
+<body class="checklist-page">
   <header class="topbar">
     <div class="container">
       <div class="brand">Trade<span>Journal</span> MVP</div>
       <nav class="nav">
-        <a class="nav-link" href="index.html">Dashboard</a>
+        <a class="nav-link" href="index.html">Combined</a>
+        <a class="nav-link" href="dashboard-futures.html">Futures</a>
+        <a class="nav-link" href="dashboard-options.html">Options</a>
         <a class="nav-link" href="checklist.html">Checklist</a>
         <a class="nav-link" href="trades.html">Trades</a>
         <a class="nav-link" href="journal.html">Journal</a>
@@ -22,25 +24,9 @@
   </header>
 
   <main class="container">
-    <h1 class="page-title">Trades</h1>
-    <div class="subtle">Filter and review executions. Click any row for detail panel shell.</div>
-
-    <section id="filters" class="toolbar"></section>
-    <section id="data-ops"></section>
-
-    <section class="panel" style="margin-bottom:12px;">
-      <h2 style="margin:0 0 10px; font-size:1rem;">Add / Edit Trade</h2>
-      <form id="trade-form" class="trade-form-grid"></form>
-      <div class="small muted" style="margin-top:8px;">Imported/manual trades are editable and saved locally in this browser.</div>
-    </section>
-
-    <section class="grid layout-2">
-      <div>
-        <div id="trades-table"></div>
-        <div id="strategy-analytics"></div>
-      </div>
-      <aside id="trade-detail"></aside>
-    </section>
+    <h1 class="page-title">Pre-Trade Checklist</h1>
+    <div class="subtle">Run this before entry. Score and grade are saved into new trade records automatically.</div>
+    <section id="checklist-root" style="margin-top:12px;"></section>
   </main>
 
   <footer>Static/offline-friendly build for GitHub Pages</footer>

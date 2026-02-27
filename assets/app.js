@@ -968,11 +968,19 @@ function renderTradeForm() {
       if (!Number.isNaN(d.getTime())) entryTimestamp = d.toISOString();
     }
 
+    const checklist = state.checklistDraft || defaultChecklist();
+    const ck = checklistResult(checklist);
+
     const trade = normalizeTradeSchema({
       id: state.editTradeId || `MAN-${Date.now()}`,
       date: tradeDate,
       entryTime,
       entryTimestamp,
+      checklistDate: checklist.date || '',
+      checklistGrade: ck.grade,
+      checklistScore: `${ck.yes}/${ck.total}`,
+      checklistCriticalOk: ck.criticalOk,
+      checklistSnapshot: { ...checklist },
       assetType: String(fd.get('assetType') || 'futures').toLowerCase(),
       symbol: String(fd.get('symbol') || '').toUpperCase(),
       underlying: String(fd.get('underlying') || '').toUpperCase(),
@@ -1549,6 +1557,7 @@ function rerender() {
   if (document.querySelector('#journal-list')) renderJournal('#journal-list');
   if (document.querySelector('#journal-inline-futures')) renderInlineJournalForDate('#journal-inline-futures', futuresScoped);
   if (document.querySelector('#journal-inline-options')) renderInlineJournalForDate('#journal-inline-options', optionsScoped);
+  if (document.querySelector('#checklist-root')) renderChecklistPage();
   renderReportsPage(trades);
 }
 
