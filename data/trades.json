@@ -438,6 +438,34 @@
         "defensive-exit"
       ],
       "notes": "Buy market 24917.00; sell market 24905.75."
+    },
+    {
+      "id": "MAN-20260227-CC-01",
+      "date": "2026-02-27",
+      "entryTime": "06:39",
+      "assetType": "options",
+      "symbol": "AAPL 285C 2026-03-20",
+      "underlying": "AAPL",
+      "side": "Short",
+      "setup": "Covered Call",
+      "strategy": "Covered Call",
+      "qty": 1,
+      "contracts": 1,
+      "expiry": "2026-03-20",
+      "strike": 285,
+      "optionType": "CALL",
+      "entry": 2.88,
+      "exit": 0.84,
+      "pnl": 204,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "options",
+        "covered-call",
+        "income"
+      ],
+      "notes": "Opened short covered call on AAPL 285C (3/20). Exit field reflects current mark for tracking; position still open.",
+      "status": "open"
     }
   ],
   "journal": [
