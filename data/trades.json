@@ -471,23 +471,23 @@
   "journal": [
     {
       "date": "2026-02-21",
-      "title": "Live Journal Auto Entry — 2026-02-21 09:45 AM PST",
-      "mood": "—",
+      "title": "Live Journal Auto Entry \u2014 2026-02-21 09:45 AM PST",
+      "mood": "\u2014",
       "content": "",
       "ouraSleepScore": 81,
       "ouraReadinessScore": 78
     },
     {
       "date": "2026-02-20",
-      "title": "Trading Journal — Friday, February 20, 2026",
-      "mood": "—",
+      "title": "Trading Journal \u2014 Friday, February 20, 2026",
+      "mood": "\u2014",
       "content": "| Field | Value |",
       "ouraSleepScore": 83,
       "ouraReadinessScore": 80
     },
     {
       "date": "2026-02-19",
-      "title": "Trading Journal — Feb 19, 2026 (Wednesday)",
+      "title": "Trading Journal \u2014 Feb 19, 2026 (Wednesday)",
       "mood": "** Entered despite choppy conditions, hoped ORB bottom would hold",
       "content": "1. ALL MTF down + dead zone = NO TRADE",
       "ouraSleepScore": 76,
@@ -495,7 +495,7 @@
     },
     {
       "date": "2026-02-23",
-      "title": "Trading Journal — Monday, February 23, 2026",
+      "title": "Trading Journal \u2014 Monday, February 23, 2026",
       "mood": "Mixed but improving discipline",
       "content": "Key lesson: No stop order in market = no trade. Process improved after restoring ATM template. Followed TP-or-BE discipline on long setup.\n\nOura (prev night): Sleep 68, Readiness 75.",
       "setupContext": "Volatile session with bearish pressure early, then recovery attempts around key intraday levels. Used 2x BOS + FVG retest logic and A+ window filters.",
@@ -511,7 +511,7 @@
     },
     {
       "date": "2026-02-24",
-      "title": "Trading Journal — Tuesday, February 24, 2026",
+      "title": "Trading Journal \u2014 Tuesday, February 24, 2026",
       "mood": "Calm finish; process-first despite choppy tape",
       "setupContext": "Choppy session with mixed lower-timeframe swings, but valid short thesis appeared with 2x BOS + FVG retest.",
       "execution": "Entered MNQ short at 25000 with predefined SL 25032 and TP 24938.25. Price chopped and eventually tagged stop. No SL widening, no panic exit, no revenge trade.",
@@ -527,15 +527,15 @@
     },
     {
       "date": "2026-02-25",
-      "title": "Trading Journal — Wednesday, February 25, 2026",
+      "title": "Trading Journal \u2014 Wednesday, February 25, 2026",
       "mood": "Disciplined under chop and event-risk pressure",
       "setupContext": "Mixed/choppy session with multiple fake breaks and late-day NVDA earnings risk affecting conviction near highs.",
       "execution": "Trade 1 long (25312.75) stopped at 25278.75 after setup failed. Trade 2 long (25346.25) was valid but extended; exited early at 25339.50 to protect capital before earnings-driven uncertainty.",
       "psychology": "Managed FOMO better by respecting dead-zone rules and prioritizing process over chasing. Caught myself when hope-based thinking appeared.",
       "ruleAdherence": "Good overall: respected stop, avoided dead-zone override, and made defensive exit decision on extended late-day conditions.",
       "whatWentWell": "Followed A+ checklist more consistently, identified hope-vs-rule distinction in real time, and protected capital during uncertain conditions.",
-      "whatToImprove": "Don’t anchor on one signal (e.g., ORB retest) when BOS structure conflicts. Keep execution checklist explicit before entry.",
-      "lessonLearned": "“I’ll exit near BE unless reclaim confirms” is rule-based; “maybe it comes back” is hope-based. BOS line/level is context, BOS event is break-confirm action.",
+      "whatToImprove": "Don\u2019t anchor on one signal (e.g., ORB retest) when BOS structure conflicts. Keep execution checklist explicit before entry.",
+      "lessonLearned": "\u201cI\u2019ll exit near BE unless reclaim confirms\u201d is rule-based; \u201cmaybe it comes back\u201d is hope-based. BOS line/level is context, BOS event is break-confirm action.",
       "nextRule": "At +50% to TP, move SL to BE (or BE +1 tick) unless structure invalidation says otherwise.",
       "ouraSleepScore": 80,
       "ouraReadinessScore": 76,
@@ -543,7 +543,7 @@
     },
     {
       "date": "2026-02-26",
-      "title": "Trading Journal — Thursday, February 26, 2026",
+      "title": "Trading Journal \u2014 Thursday, February 26, 2026",
       "mood": "Disciplined and selective",
       "setupContext": "4 executed trades. Focused on A+ setups, break-retest confirmations, and momentum context while enforcing max-trade discipline.",
       "execution": "Trade 1: short +$13 (partial then protected). Trade 2: long stop-out -$62.50. Trade 3: long +$27 with context-managed deadzone exit. Trade 4: long +$44 momentum shift capture.",
@@ -559,22 +559,24 @@
     },
     {
       "date": "2026-02-27",
-      "title": "Trading Journal — Friday, February 27, 2026",
+      "title": "Trading Journal \u2014 Friday, February 27, 2026",
       "mood": "Disciplined finish despite choppy entries",
       "setupContext": "Negative-gamma/choppy conditions with repeated fake breaks around ORB and intraday levels.",
-      "execution": "5 trades from platform fills: 2 full stop-outs early, 1 small scalp winner, then 2 defensive exits. Session ended intentionally to stop forcing entries in chop.",
+      "execution": "5 MNQ trades from platform fills: 2 full stop-outs early, 1 small scalp winner, then 2 defensive exits. Added 1 covered-call overlay (AAPL 285C) for income; position remains open.",
       "psychology": "Strong self-regulation improvements: repeatedly waited extra candles, avoided forced deadzone entries, and honored shutdown decision.",
       "ruleAdherence": "Improving on discipline and defensive exits; entry timing still needs work in choppy context.",
-      "whatWentWell": "Defensive exits, no revenge spiral, and conscious pass decisions in chop.",
+      "whatWentWell": "Defensive exits, no revenge spiral, conscious pass decisions in chop, and willingness to stop forcing low-quality setups.",
       "whatToImprove": "Wait for stronger confirmation and avoid early entries in chop; maintain no-long-below-10m-8EMA unless reclaim+hold.",
       "lessonLearned": "In chop, patience and confirmation candles matter more than catching every move.",
       "nextRule": "No long below 10m 8EMA unless reclaim + hold. In uncertainty, wait one more candle (then one more if still unclear).",
-      "content": "Session summary: 5 trades logged, gross PnL -176.50, commissions 5.00, net PnL -181.50.\n\nMindset quotes:\n- \"Regret = pause. Rules = click.\"\n- \"That's how traders level up — not by catching every move, but by controlling themselves in real time.\"\n- \"Wait one more candle. Then wait one more candle if still unclear.\"",
+      "content": "Session summary: 5 MNQ trades logged, gross PnL -176.50, commissions 5.00, net PnL -181.50.\nOptions overlay: 1 covered-call entry tracked (current marked PnL +204.00; open positions: 1).\n\nMindset quotes:\n- \"Regret = pause. Rules = click.\"\n- \"That's how traders level up \u2014 not by catching every move, but by controlling themselves in real time.\"\n- \"Wait one more candle. Then wait one more candle if still unclear.\"\n\nRecovery context (Oura, previous night): Sleep 79, Readiness 82.",
       "quotes": [
         "Regret = pause. Rules = click.",
-        "That's how traders level up — not by catching every move, but by controlling themselves in real time.",
+        "That's how traders level up \u2014 not by catching every move, but by controlling themselves in real time.",
         "Wait one more candle. Then wait one more candle if still unclear."
-      ]
+      ],
+      "ouraSleepScore": 79,
+      "ouraReadinessScore": 82
     }
   ]
 }
