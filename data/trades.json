@@ -343,6 +343,66 @@
         "momentum-shift"
       ],
       "notes": "Strong momentum shift long; paid quickly to stack confidence and preserve discipline."
+    },
+    {
+      "id": "MAN-20260227-01",
+      "date": "2026-02-27",
+      "entryTime": "08:42",
+      "symbol": "MNQH6",
+      "side": "Scalp",
+      "setup": "Impulse entry (self-cut)",
+      "qty": 1,
+      "entry": 24938.75,
+      "exit": 24942.5,
+      "pnl": 7.5,
+      "commission": 1,
+      "r": 0.12,
+      "tags": [
+        "manual-log",
+        "impulse",
+        "quick-exit"
+      ],
+      "notes": "Impulse entry; exited quickly to avoid emotional hold."
+    },
+    {
+      "id": "MAN-20260227-02",
+      "date": "2026-02-27",
+      "entryTime": "09:28",
+      "symbol": "MNQH6",
+      "side": "Short",
+      "setup": "BOS short in chop",
+      "qty": 1,
+      "entry": 24906.25,
+      "exit": 24906.25,
+      "pnl": -22.5,
+      "commission": 1,
+      "r": -0.36,
+      "tags": [
+        "manual-log",
+        "defensive-exit",
+        "chop"
+      ],
+      "notes": "Short idea stalled in chop; defensive exit after bullish BOS/reclaim to protect capital."
+    },
+    {
+      "id": "MAN-20260227-03",
+      "date": "2026-02-27",
+      "entryTime": "09:46",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "ORB/FVG reclaim attempt",
+      "qty": 1,
+      "entry": 24917,
+      "exit": 24905.75,
+      "pnl": -22.5,
+      "commission": 1,
+      "r": -0.33,
+      "tags": [
+        "manual-log",
+        "mtf-conflict",
+        "risk-cut"
+      ],
+      "notes": "Long attempt while higher timeframe conflicted; cut early instead of waiting for full SL."
     }
   ],
   "journal": [
@@ -433,6 +493,20 @@
       "ouraSleepScore": 72,
       "ouraReadinessScore": 79,
       "content": "Session summary: 4 trades, gross PnL +21.50. Outcomes: +13.00, -62.50, +27.00, +44.00. Recovery context (Oura, previous night): Sleep 72, Readiness 79."
+    },
+    {
+      "date": "2026-02-27",
+      "title": "Trading Journal — Friday, February 27, 2026",
+      "mood": "Disciplined finish despite choppy entries",
+      "setupContext": "Negative-gamma/choppy conditions with repeated fake breaks around ORB and intraday levels.",
+      "execution": "Took 3 logged trades: one quick impulse scalp (+$7.50), one short exited defensively (-$22.50), one long exited early on MTF conflict (-$22.50). Stopped trading to preserve discipline.",
+      "psychology": "Strong self-regulation improvements: repeatedly waited extra candles, avoided forced deadzone entries, and honored shutdown decision.",
+      "ruleAdherence": "Mixed entries but strong management. Applied new rules in real time: “Regret = pause, rules = click” and “wait one more candle.”",
+      "whatWentWell": "Defensive exits, no revenge spiral, and conscious pass decisions in chop.",
+      "whatToImprove": "Entry timing and MTF alignment before trigger; avoid longs below 10m 8EMA without clear reclaim/hold.",
+      "lessonLearned": "In chop, patience and confirmation candles matter more than catching every move.",
+      "nextRule": "No long below 10m 8EMA unless reclaim + hold. In uncertainty, wait one more candle (then one more if still unclear).",
+      "content": "Session summary: 3 trades logged, gross PnL -37.50, commissions 3.00, net PnL -40.50. Ended session intentionally to protect discipline and capital."
     }
   ]
 }
