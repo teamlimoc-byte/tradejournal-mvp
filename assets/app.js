@@ -358,7 +358,7 @@ function renderReportControls(selector) {
   const host = document.querySelector(selector);
   if (!host) return;
   host.innerHTML = `
-    <div class="toolbar" style="grid-template-columns: 1fr 1fr 1fr 1fr auto; margin-top:10px;">
+    <div class="toolbar reports-toolbar" style="margin-top:10px;">
       <div class="field"><label>Date From</label><input id="rf-date-from" type="date" value="${state.reportFilters.dateFrom || ''}" /></div>
       <div class="field"><label>Date To</label><input id="rf-date-to" type="date" value="${state.reportFilters.dateTo || ''}" /></div>
       <div class="field"><label>Asset Type</label>
