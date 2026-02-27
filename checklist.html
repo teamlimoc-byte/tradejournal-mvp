@@ -30,7 +30,7 @@
   </main>
 
   <footer>Static/offline-friendly build for GitHub Pages</footer>
-  <script src="./assets/app.js?v=20260227y"></script>
+  <script src="./assets/app.js?v=20260227z"></script>
   <script>
     (function(){
       const key = 'mvp_pretrade_checklist_v1';
@@ -117,7 +117,10 @@
             notes: `Checklist ${ss.grade} (${ss.yes}/${ss.total}) | mtf:${n.mtfAligned||'-'} bias:${n.biasAligned||'-'} A+win:${n.aPlusWindow||'-'} BOS:${n.bosConfirmed||'-'} ORB:${n.orbCondition||'-'} 10mEMA:${n.ema10mRule||'-'} deadzone:${n.notDeadzone||'-'} emotion:${n.emotionCheck||'-'}${n.notes?` | ${n.notes}`:''}`
           };
           localStorage.setItem('mvp_trade_draft_v1', JSON.stringify(draft));
-          window.location.href = `./trades.html?from=checklist&side=${encodeURIComponent((n.direction||'Long').toLowerCase())}`;
+          const side = encodeURIComponent((n.direction||'Long').toLowerCase());
+          const date = encodeURIComponent(String(n.date || new Date().toISOString().slice(0,10)));
+          const time = encodeURIComponent(String(n.time || nowHHMM()));
+          window.location.href = `./trades.html?from=checklist&side=${side}&date=${date}&time=${time}`;
         });
         root.querySelector('#ck-reset')?.addEventListener('click', ()=>{ save(def); render(); });
       }
