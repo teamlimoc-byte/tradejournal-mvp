@@ -30,7 +30,7 @@
   </main>
 
   <footer>Static/offline-friendly build for GitHub Pages</footer>
-  <script src="./assets/app.js?v=20260227z"></script>
+  <script src="./assets/app.js?v=20260227zz"></script>
   <script>
     (function(){
       const key = 'mvp_pretrade_checklist_v1';
@@ -63,10 +63,13 @@
           const noOn = d[name] === 'no';
           return `<div class="field"><label>${label}</label><div style="display:flex; gap:8px; margin-top:6px;"><button type="button" class="btn yn-btn yn-yes ${yesOn?'active':''}" data-field="${name}" data-val="yes">${yesOn?'✓ ':''}Yes</button><button type="button" class="btn yn-btn yn-no ${noOn?'active':''}" data-field="${name}" data-val="no">${noOn?'✓ ':''}No</button></div></div>`;
         };
+        const now = new Date();
+        const autoDate = d.date || now.toISOString().slice(0,10);
+        const autoTime = d.time || nowHHMM();
         root.innerHTML = `
           <div class="panel">
             <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr));">
-              <div class="field"><label>Date</label><input type="date" name="date" value="${d.date||''}" /></div>
+              <div class="field"><label>Date (auto)</label><input type="date" name="date" value="${autoDate}" /></div>
               <div class="field"><label>Direction</label><select name="direction"><option ${d.direction==='Long'?'selected':''}>Long</option><option ${d.direction==='Short'?'selected':''}>Short</option></select></div>
             </div>
             <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr)); margin-top:10px;">
@@ -82,8 +85,29 @@
             <div class="toolbar" style="grid-template-columns: 1fr; margin-top:10px;">
               <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.2rem;">${s.grade} (${s.yes}/${s.total})</div></div>
             </div>
-            <div class="field" style="margin-top:10px;"><label>Notes</label><textarea name="notes" rows="2">${d.notes||''}</textarea></div>
-            <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;"><button id="ck-save" class="btn" type="button">Save Checklist</button><button id="ck-use" class="btn" type="button">Use in Trade Form</button><button id="ck-reset" class="btn" type="button">Reset</button></div>
+            <div class="field" style="margin-top:10px;"><label>Checklist Notes</label><textarea name="notes" rows="2">${d.notes||''}</textarea></div>
+            <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;"><button id="ck-save" class="btn" type="button">Save Checklist</button><button id="ck-reset" class="btn" type="button">Reset</button></div>
+          </div>
+
+          <div class="panel" style="margin-top:12px;">
+            <h3 style="margin:0 0 10px;">Quick Trade Entry (same page)</h3>
+            <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr));">
+              <div class="field"><label>Date (auto)</label><input name="t_date" type="date" value="${autoDate}" /></div>
+              <div class="field"><label>Entry Time (auto)</label><input name="t_time" type="time" value="${autoTime}" /></div>
+              <div class="field"><label>Symbol</label><input name="t_symbol" placeholder="MNQH6" value="MNQH6" /></div>
+              <div class="field"><label>Side</label><select name="t_side"><option ${d.direction==='Long'?'selected':''}>Long</option><option ${d.direction==='Short'?'selected':''}>Short</option></select></div>
+              <div class="field"><label>Qty</label><input name="t_qty" type="number" step="1" value="1" /></div>
+              <div class="field"><label>Commission</label><input name="t_comm" type="number" step="0.01" value="0" /></div>
+              <div class="field"><label>Entry</label><input name="t_entry" type="number" step="0.01" /></div>
+              <div class="field"><label>Exit</label><input name="t_exit" type="number" step="0.01" /></div>
+              <div class="field"><label>P&L (gross)</label><input name="t_pnl" type="number" step="0.01" /></div>
+              <div class="field"><label>R</label><input name="t_r" type="number" step="0.01" /></div>
+            </div>
+            <div class="field" style="margin-top:10px;"><label>Trade Notes</label><textarea name="t_notes" rows="2" placeholder="Execution notes"></textarea></div>
+            <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+              <button id="trade-save-inline" class="btn" type="button">Save Trade (with Checklist)</button>
+            </div>
+            <div id="trade-inline-msg" class="small muted" style="margin-top:8px;"></div>
           </div>`;
 
         root.querySelectorAll('input[name],select[name],textarea[name]').forEach(el=>{
@@ -99,29 +123,62 @@
           });
         });
         root.querySelector('#ck-save')?.addEventListener('click', ()=>{
-          const n = Object.assign({}, load(), { time: nowHHMM() }); // auto-log current time on save
+          const n = Object.assign({}, load(), { date: root.querySelector('input[name="date"]').value || def.date, time: nowHHMM() });
           save(n);
           const ss = score(n);
           alert(`Checklist saved: ${ss.grade} (${ss.yes}/${ss.total}) at ${n.time}`);
           render();
         });
-        root.querySelector('#ck-use')?.addEventListener('click', ()=>{
-          const n = Object.assign({}, load(), { time: nowHHMM() });
+
+        root.querySelector('#trade-save-inline')?.addEventListener('click', ()=>{
+          const n = Object.assign({}, load(), { date: root.querySelector('input[name="date"]').value || def.date, time: nowHHMM() });
           save(n);
           const ss = score(n);
-          const draft = {
+
+          const val = (name) => root.querySelector(`[name="${name}"]`)?.value || '';
+          const num = (name, dflt=0) => {
+            const v = Number(val(name));
+            return Number.isFinite(v) ? v : dflt;
+          };
+
+          const t = {
+            id: `MAN-${Date.now()}`,
+            date: val('t_date') || n.date || def.date,
+            entryTime: val('t_time') || n.time || nowHHMM(),
             assetType: 'futures',
-            side: n.direction || 'Long',
+            symbol: (val('t_symbol') || 'MNQH6').toUpperCase(),
+            underlying: 'NQ',
+            side: val('t_side') || n.direction || 'Long',
             setup: `Checklist ${ss.grade}`,
             strategy: 'Pre-Trade Checklist',
-            notes: `Checklist ${ss.grade} (${ss.yes}/${ss.total}) | mtf:${n.mtfAligned||'-'} bias:${n.biasAligned||'-'} A+win:${n.aPlusWindow||'-'} BOS:${n.bosConfirmed||'-'} ORB:${n.orbCondition||'-'} 10mEMA:${n.ema10mRule||'-'} deadzone:${n.notDeadzone||'-'} emotion:${n.emotionCheck||'-'}${n.notes?` | ${n.notes}`:''}`
+            qty: num('t_qty',1),
+            entry: num('t_entry',0),
+            exit: num('t_exit',0),
+            pnl: num('t_pnl',0),
+            commission: num('t_comm',0),
+            r: num('t_r',0),
+            tags: ['checklist', `grade:${ss.grade}`],
+            notes: `${val('t_notes')} | Checklist ${ss.grade} (${ss.yes}/${ss.total}) | mtf:${n.mtfAligned||'-'} bias:${n.biasAligned||'-'} A+:${n.aPlusWindow||'-'} BOS:${n.bosConfirmed||'-'} ORB:${n.orbCondition||'-'} 10mEMA:${n.ema10mRule||'-'} deadzone:${n.notDeadzone||'-'} emotion:${n.emotionCheck||'-'}${n.notes?` | ${n.notes}`:''}`,
+            checklistGrade: ss.grade,
+            checklistScore: `${ss.yes}/${ss.total}`,
+            checklistCriticalOk: ['mtfAligned','biasAligned','aPlusWindow','emotionCheck'].every(f=>String(n[f]||'').toLowerCase()==='yes'),
+            checklistSnapshot: n,
+            status: 'closed'
           };
-          localStorage.setItem('mvp_trade_draft_v1', JSON.stringify(draft));
-          const side = encodeURIComponent((n.direction||'Long').toLowerCase());
-          const date = encodeURIComponent(String(n.date || new Date().toISOString().slice(0,10)));
-          const time = encodeURIComponent(String(n.time || nowHHMM()));
-          window.location.href = `./handoff.html?side=${side}&date=${date}&time=${time}`;
+
+          try {
+            const key='mvp_manual_trades_v2';
+            const arr = JSON.parse(localStorage.getItem(key) || '[]');
+            arr.unshift(t);
+            localStorage.setItem(key, JSON.stringify(arr));
+            const msg = root.querySelector('#trade-inline-msg');
+            if (msg) msg.textContent = `Saved trade ${t.id} (${t.side}) with checklist ${ss.grade}.`;
+          } catch (e) {
+            const msg = root.querySelector('#trade-inline-msg');
+            if (msg) msg.textContent = `Save failed: ${String((e&&e.message)||e)}`;
+          }
         });
+
         root.querySelector('#ck-reset')?.addEventListener('click', ()=>{ save(def); render(); });
       }
       render();
