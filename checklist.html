@@ -120,7 +120,7 @@
           const side = encodeURIComponent((n.direction||'Long').toLowerCase());
           const date = encodeURIComponent(String(n.date || new Date().toISOString().slice(0,10)));
           const time = encodeURIComponent(String(n.time || nowHHMM()));
-          window.location.href = `./trades.html?v=20260227zz&from=checklist&side=${side}&date=${date}&time=${time}`;
+          window.location.href = `./handoff.html?side=${side}&date=${date}&time=${time}`;
         });
         root.querySelector('#ck-reset')?.addEventListener('click', ()=>{ save(def); render(); });
       }

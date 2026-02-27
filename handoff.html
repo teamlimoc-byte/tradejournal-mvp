@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklist Handoff</title>
+</head>
+<body>
+  <script>
+    (function(){
+      const q = new URLSearchParams(window.location.search);
+      const side = (q.get('side') || '').toLowerCase();
+      const date = q.get('date') || '';
+      const time = q.get('time') || '';
+      const draft = {
+        assetType: 'futures',
+        side: side ? side.charAt(0).toUpperCase() + side.slice(1) : 'Long',
+        date,
+        time,
+        setup: q.get('setup') || '',
+        strategy: q.get('strategy') || '',
+        notes: q.get('notes') || ''
+      };
+      try { localStorage.setItem('mvp_trade_draft_v1', JSON.stringify(draft)); } catch {}
+      const p = new URLSearchParams();
+      p.set('from','checklist');
+      if (side) p.set('side',side);
+      if (date) p.set('date',date);
+      if (time) p.set('time',time);
+      // always force latest script cache key via url nonce
+      p.set('v', '20260227handoff');
+      window.location.replace(`./trades.html?${p.toString()}`);
+    })();
+  </script>
+</body>
+</html>
