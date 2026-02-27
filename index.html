@@ -24,29 +24,39 @@
     <h1 class="page-title">Dashboard</h1>
     <div class="subtle">Tradervue-inspired performance snapshot from local journal pipeline JSON.</div>
 
-    <section id="kpis" class="grid kpi-grid"></section>
-
-    <section class="breakdown-grid" style="margin-top:12px;">
-      <div class="panel">
-        <h2 style="margin:0 0 10px">Equity Curve — Futures</h2>
-        <div id="equity-curve"></div>
-      </div>
-      <div class="panel">
-        <h2 style="margin:0 0 10px">Equity Curve — Options</h2>
-        <div id="equity-curve-options"></div>
-      </div>
+    <section style="margin-top:12px;">
+      <h2 style="margin:0 0 10px">Futures</h2>
+      <section id="kpis-futures" class="grid kpi-grid"></section>
+      <section class="breakdown-grid" style="margin-top:12px;">
+        <div class="panel">
+          <h2 style="margin:0 0 10px">Equity Curve — Futures</h2>
+          <div id="equity-curve"></div>
+        </div>
+        <div class="panel">
+          <h2 style="margin:0 0 10px">Daily Heatmap — Futures</h2>
+          <div id="daily-heatmap-futures"></div>
+        </div>
+      </section>
     </section>
 
-    <section class="breakdown-grid" style="margin-top:12px;">
-      <div class="panel">
-        <h2 style="margin:0 0 10px">Daily Heatmap</h2>
-        <div id="daily-heatmap"></div>
-      </div>
+    <section style="margin-top:18px;">
+      <h2 style="margin:0 0 10px">Options</h2>
+      <section id="kpis-options" class="grid kpi-grid"></section>
+      <section class="breakdown-grid" style="margin-top:12px;">
+        <div class="panel">
+          <h2 style="margin:0 0 10px">Equity Curve — Options</h2>
+          <div id="equity-curve-options"></div>
+        </div>
+        <div class="panel">
+          <h2 style="margin:0 0 10px">Daily Heatmap — Options</h2>
+          <div id="daily-heatmap-options"></div>
+        </div>
+      </section>
     </section>
 
     <section class="breakdown-grid">
       <div>
-        <h2 style="margin:0 0 10px">Recent Trades</h2>
+        <h2 style="margin:0 0 10px">Recent Trades (All)</h2>
         <div id="dashboard-table"></div>
       </div>
       <div id="dashboard-breakdown"></div>

@@ -413,8 +413,8 @@ function renderEquityCurve(trades, selector = '#equity-curve') {
   `;
 }
 
-function renderDailyHeatmap(trades) {
-  const host = document.querySelector('#daily-heatmap');
+function renderDailyHeatmap(trades, selector = '#daily-heatmap') {
+  const host = document.querySelector(selector);
   if (!host) return;
   const byDay = {};
   for (const t of trades) {
@@ -1255,17 +1255,19 @@ function markActiveNav() {
 
 function rerender() {
   const trades = getTrades();
-  renderKpis('#kpis', trades);
+  const futuresOnly = trades.filter(t => String(t.assetType || inferAssetType(t.symbol)).toLowerCase() === 'futures');
+  const optionsOnly = trades.filter(t => String(t.assetType || inferAssetType(t.symbol)).toLowerCase() === 'options');
+
+  if (document.querySelector('#kpis-futures')) renderKpis('#kpis-futures', futuresOnly);
+  if (document.querySelector('#kpis-options')) renderKpis('#kpis-options', optionsOnly);
+  if (document.querySelector('#kpis')) renderKpis('#kpis', trades);
+
   if (document.querySelector('#dashboard-breakdown')) renderDashboardBreakdown(trades);
-  if (document.querySelector('#equity-curve')) {
-    const futuresOnly = trades.filter(t => String(t.assetType || inferAssetType(t.symbol)).toLowerCase() === 'futures');
-    renderEquityCurve(futuresOnly, '#equity-curve');
-  }
-  if (document.querySelector('#equity-curve-options')) {
-    const optionsOnly = trades.filter(t => String(t.assetType || inferAssetType(t.symbol)).toLowerCase() === 'options');
-    renderEquityCurve(optionsOnly, '#equity-curve-options');
-  }
-  if (document.querySelector('#daily-heatmap')) renderDailyHeatmap(trades);
+  if (document.querySelector('#equity-curve')) renderEquityCurve(futuresOnly, '#equity-curve');
+  if (document.querySelector('#equity-curve-options')) renderEquityCurve(optionsOnly, '#equity-curve-options');
+  if (document.querySelector('#daily-heatmap-futures')) renderDailyHeatmap(futuresOnly, '#daily-heatmap-futures');
+  if (document.querySelector('#daily-heatmap-options')) renderDailyHeatmap(optionsOnly, '#daily-heatmap-options');
+  if (document.querySelector('#daily-heatmap')) renderDailyHeatmap(trades, '#daily-heatmap');
 
   if (document.querySelector('#filters')) renderFilterControls();
   if (document.querySelector('#data-ops')) renderDataOps();
