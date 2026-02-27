@@ -372,8 +372,8 @@ function renderDashboardBreakdown(trades) {
   `;
 }
 
-function renderEquityCurve(trades) {
-  const host = document.querySelector('#equity-curve');
+function renderEquityCurve(trades, selector = '#equity-curve') {
+  const host = document.querySelector(selector);
   if (!host) return;
   const sorted = [...trades].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
   if (!sorted.length) {
@@ -1259,7 +1259,11 @@ function rerender() {
   if (document.querySelector('#dashboard-breakdown')) renderDashboardBreakdown(trades);
   if (document.querySelector('#equity-curve')) {
     const futuresOnly = trades.filter(t => String(t.assetType || inferAssetType(t.symbol)).toLowerCase() === 'futures');
-    renderEquityCurve(futuresOnly);
+    renderEquityCurve(futuresOnly, '#equity-curve');
+  }
+  if (document.querySelector('#equity-curve-options')) {
+    const optionsOnly = trades.filter(t => String(t.assetType || inferAssetType(t.symbol)).toLowerCase() === 'options');
+    renderEquityCurve(optionsOnly, '#equity-curve-options');
   }
   if (document.querySelector('#daily-heatmap')) renderDailyHeatmap(trades);
 
