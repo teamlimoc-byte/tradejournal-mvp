@@ -541,7 +541,12 @@
       "whatToImprove": "Wait for stronger confirmation and avoid early entries in chop; maintain no-long-below-10m-8EMA unless reclaim+hold.",
       "lessonLearned": "In chop, patience and confirmation candles matter more than catching every move.",
       "nextRule": "No long below 10m 8EMA unless reclaim + hold. In uncertainty, wait one more candle (then one more if still unclear).",
-      "content": "Session summary: 5 trades logged, gross PnL -176.50, commissions 5.00, net PnL -181.50."
+      "content": "Session summary: 5 trades logged, gross PnL -176.50, commissions 5.00, net PnL -181.50.\n\nMindset quotes:\n- \"Regret = pause. Rules = click.\"\n- \"That's how traders level up — not by catching every move, but by controlling themselves in real time.\"\n- \"Wait one more candle. Then wait one more candle if still unclear.\"",
+      "quotes": [
+        "Regret = pause. Rules = click.",
+        "That's how traders level up — not by catching every move, but by controlling themselves in real time.",
+        "Wait one more candle. Then wait one more candle if still unclear."
+      ]
     }
   ]
 }
