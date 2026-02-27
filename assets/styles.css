@@ -119,17 +119,28 @@ tr[data-id]:hover { background: var(--panel-soft); }
 .list-compact li { margin: 5px 0; font-size: .9rem; }
 
 #equity-curve svg { width: 100%; height: 220px; display:block; }
-#daily-heatmap { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; }
+#daily-heatmap,
+#daily-heatmap-futures,
+#daily-heatmap-options {
+  display:grid;
+  grid-template-columns: repeat(7, minmax(0,1fr));
+  gap:6px;
+}
 .day-cell {
   border: 1px solid var(--line);
   border-radius: 6px;
-  min-height: 32px;
-  padding: 4px;
+  min-height: 42px;
+  padding: 5px 6px;
   font-size: .7rem;
   color: var(--text);
   background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.day-cell .day-num { color: var(--muted); font-size: .65rem; }
+.day-cell .day-num { color: var(--muted); font-size: .64rem; line-height: 1.1; }
+.day-cell div:nth-child(2) { font-size: .72rem; line-height: 1.1; }
+.day-cell div:nth-child(3) { font-size: .64rem; line-height: 1.1; color: var(--muted); }
 .heat-0 { background: #f9fafb; }
 .heat-1 { background: #ecfdf5; }
 .heat-2 { background: #bbf7d0; }
