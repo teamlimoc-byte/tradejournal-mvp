@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trading Platform MVP — Pre-Trade Checklist</title>
-  <link rel="stylesheet" href="./assets/styles.css?v=20260227h" />
+  <link rel="stylesheet" href="./assets/styles.css?v=20260227i" />
 </head>
 <body class="checklist-page">
   <header class="topbar">
@@ -57,7 +57,7 @@
       function render(){
         const d = load();
         const s = score(d);
-        const yn = (name,label) => `<div class="field"><label>${label}</label><select name="${name}"><option value="" ${!d[name]?'selected':''}>—</option><option value="yes" ${d[name]==='yes'?'selected':''}>Yes</option><option value="no" ${d[name]==='no'?'selected':''}>No</option></select></div>`;
+        const yn = (name,label) => `<div class="field"><label>${label}</label><div style="display:flex; gap:8px; margin-top:6px;"><button type="button" class="btn yn-btn ${d[name]==='yes'?'active':''}" data-field="${name}" data-val="yes">Yes</button><button type="button" class="btn yn-btn ${d[name]==='no'?'active':''}" data-field="${name}" data-val="no">No</button></div></div>`;
         root.innerHTML = `
           <div class="panel">
             <div class="toolbar" style="grid-template-columns: repeat(4,minmax(0,1fr));">
@@ -82,6 +82,15 @@
 
         root.querySelectorAll('input[name],select[name],textarea[name]').forEach(el=>{
           el.addEventListener('change', ()=>{ const n = Object.assign({}, load(), {[el.name]: el.value}); save(n); render(); });
+        });
+        root.querySelectorAll('.yn-btn').forEach(btn=>{
+          btn.addEventListener('click', ()=>{
+            const f = btn.dataset.field;
+            const v = btn.dataset.val;
+            const n = Object.assign({}, load(), {[f]: v});
+            save(n);
+            render();
+          });
         });
         root.querySelector('#ck-save')?.addEventListener('click', ()=> alert(`Checklist saved: ${score(load()).grade}`));
         root.querySelector('#ck-reset')?.addEventListener('click', ()=>{ save(def); render(); });
