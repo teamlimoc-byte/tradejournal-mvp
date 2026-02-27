@@ -21,7 +21,7 @@ const MOCK_DATA = {
 const state = {
   data: null,
   filters: { symbol: '', side: 'All', setup: 'All', dateFrom: '', dateTo: '', sort: 'date-desc' },
-  reportFilters: { dateFrom: '', dateTo: '', sortBy: 'pnl' },
+  reportFilters: { dateFrom: '', dateTo: '', assetType: 'all', sortBy: 'pnl' },
   selectedTrade: null,
   formMounted: false,
   editTradeId: null,
@@ -345,6 +345,11 @@ function getReportTrades(trades) {
   return (trades || []).filter(t => {
     if (state.reportFilters.dateFrom && t.date < state.reportFilters.dateFrom) return false;
     if (state.reportFilters.dateTo && t.date > state.reportFilters.dateTo) return false;
+    const f = String(state.reportFilters.assetType || 'all').toLowerCase();
+    if (f !== 'all') {
+      const at = String(t.assetType || inferAssetType(t.symbol)).toLowerCase();
+      if (at !== f) return false;
+    }
     return true;
   });
 }
@@ -353,9 +358,16 @@ function renderReportControls(selector) {
   const host = document.querySelector(selector);
   if (!host) return;
   host.innerHTML = `
-    <div class="toolbar" style="grid-template-columns: 1fr 1fr 1fr auto; margin-top:10px;">
+    <div class="toolbar" style="grid-template-columns: 1fr 1fr 1fr 1fr auto; margin-top:10px;">
       <div class="field"><label>Date From</label><input id="rf-date-from" type="date" value="${state.reportFilters.dateFrom || ''}" /></div>
       <div class="field"><label>Date To</label><input id="rf-date-to" type="date" value="${state.reportFilters.dateTo || ''}" /></div>
+      <div class="field"><label>Asset Type</label>
+        <select id="rf-asset-type">
+          <option value="all" ${state.reportFilters.assetType === 'all' ? 'selected' : ''}>All</option>
+          <option value="futures" ${state.reportFilters.assetType === 'futures' ? 'selected' : ''}>Futures</option>
+          <option value="options" ${state.reportFilters.assetType === 'options' ? 'selected' : ''}>Options</option>
+        </select>
+      </div>
       <div class="field"><label>Sort Rows By</label>
         <select id="rf-sort">
           <option value="pnl" ${state.reportFilters.sortBy === 'pnl' ? 'selected' : ''}>Net P&L</option>
@@ -368,11 +380,13 @@ function renderReportControls(selector) {
   `;
   document.querySelector('#rf-date-from')?.addEventListener('change', e => { state.reportFilters.dateFrom = e.target.value || ''; rerender(); });
   document.querySelector('#rf-date-to')?.addEventListener('change', e => { state.reportFilters.dateTo = e.target.value || ''; rerender(); });
+  document.querySelector('#rf-asset-type')?.addEventListener('change', e => { state.reportFilters.assetType = e.target.value || 'all'; rerender(); });
   document.querySelector('#rf-sort')?.addEventListener('change', e => { state.reportFilters.sortBy = e.target.value || 'pnl'; rerender(); });
   document.querySelector('#rf-clear')?.addEventListener('click', e => {
     e.preventDefault();
     state.reportFilters.dateFrom = '';
     state.reportFilters.dateTo = '';
+    state.reportFilters.assetType = 'all';
     state.reportFilters.sortBy = 'pnl';
     rerender();
   });
