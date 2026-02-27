@@ -1258,7 +1258,10 @@ function renderSelectedDateSummary(selector, scopeTrades = [], selectedDate = ''
   const host = document.querySelector(selector);
   if (!host) return;
   if (!selectedDate) {
-    host.innerHTML = '<div class="small muted">Tip: tap a heatmap day to focus trades + journal for that session.</div>';
+    host.innerHTML = `<div class="panel" style="padding:10px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <div class="small muted">Tip: tap a heatmap day to focus trades + journal for that session.</div>
+      <button class="btn" type="button" id="export-visible-${type}">Export visible CSV</button>
+    </div>`;
     return;
   }
   const rows = (scopeTrades || []).filter(t => t.date === selectedDate);
@@ -1269,7 +1272,10 @@ function renderSelectedDateSummary(selector, scopeTrades = [], selectedDate = ''
         Reviewing <strong>${selectedDate}</strong> • <strong>${rows.length}</strong> trade${rows.length === 1 ? '' : 's'} •
         <strong class="${net >= 0 ? 'money-pos' : 'money-neg'}">${fmtMoney(net)}</strong>
       </div>
-      <button class="btn" type="button" id="clear-date-filter-${type}">Clear date filter</button>
+      <div style="display:flex; gap:8px;">
+        <button class="btn" type="button" id="export-visible-${type}">Export visible CSV</button>
+        <button class="btn" type="button" id="clear-date-filter-${type}">Clear date filter</button>
+      </div>
     </div>
   `;
 }
@@ -1461,6 +1467,41 @@ function rerender() {
     state.selectedOptionsDate = '';
     rerender();
   });
+
+  document.querySelector('#export-visible-futures')?.addEventListener('click', () => {
+    exportRowsCsv(futuresScoped, `futures-visible-${new Date().toISOString().slice(0,10)}.csv`);
+  });
+  document.querySelector('#export-visible-options')?.addEventListener('click', () => {
+    exportRowsCsv(optionsScoped, `options-visible-${new Date().toISOString().slice(0,10)}.csv`);
+  });
+
+  document.querySelector('#toggle-insights-futures')?.addEventListener('click', (e) => {
+    const sec = document.querySelector('#insights-section-futures');
+    const body = document.querySelector('#dashboard-breakdown-futures');
+    if (!sec || !body) return;
+    const hidden = body.style.display === 'none';
+    body.style.display = hidden ? '' : 'none';
+    e.currentTarget.textContent = hidden ? 'Hide' : 'Show';
+    localStorage.setItem('hideInsightsFutures', hidden ? '0' : '1');
+  });
+  document.querySelector('#toggle-insights-options')?.addEventListener('click', (e) => {
+    const sec = document.querySelector('#insights-section-options');
+    const body = document.querySelector('#dashboard-breakdown-options');
+    if (!sec || !body) return;
+    const hidden = body.style.display === 'none';
+    body.style.display = hidden ? '' : 'none';
+    e.currentTarget.textContent = hidden ? 'Hide' : 'Show';
+    localStorage.setItem('hideInsightsOptions', hidden ? '0' : '1');
+  });
+
+  const hideF = localStorage.getItem('hideInsightsFutures') === '1';
+  const hideO = localStorage.getItem('hideInsightsOptions') === '1';
+  const bf = document.querySelector('#dashboard-breakdown-futures');
+  const bo = document.querySelector('#dashboard-breakdown-options');
+  const tf = document.querySelector('#toggle-insights-futures');
+  const to = document.querySelector('#toggle-insights-options');
+  if (bf && tf) { bf.style.display = hideF ? 'none' : ''; tf.textContent = hideF ? 'Show' : 'Hide'; }
+  if (bo && to) { bo.style.display = hideO ? 'none' : ''; to.textContent = hideO ? 'Show' : 'Hide'; }
 
   document.querySelectorAll('.quick-chip').forEach(btn => {
     btn.addEventListener('click', () => {
