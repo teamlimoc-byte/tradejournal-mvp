@@ -857,6 +857,8 @@ function validateTradeInput(trade, allTrades = []) {
   const errs = [];
   if (!trade.date) errs.push('Date is required');
   if (!trade.symbol) errs.push('Symbol is required');
+  if (!trade.entryTimestamp && !trade.entryTime) errs.push('Entry time is required (entryTime or entryTimestamp)');
+  if (!trade.assetType) errs.push('Asset type is required');
   if (!trade.side) errs.push('Side is required');
   if (!Number.isFinite(Number(trade.qty)) || Number(trade.qty) <= 0) errs.push('Qty must be > 0');
   if (!Number.isFinite(Number(trade.entry))) errs.push('Entry must be a valid number');
@@ -1200,6 +1202,26 @@ function renderInlineJournalForDate(selector, scopeTrades = []) {
   `;
 }
 
+function renderSelectedDateSummary(selector, scopeTrades = [], selectedDate = '', type = 'futures') {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  if (!selectedDate) {
+    host.innerHTML = '<div class="small muted">Tip: tap a heatmap day to focus trades + journal for that session.</div>';
+    return;
+  }
+  const rows = (scopeTrades || []).filter(t => t.date === selectedDate);
+  const net = rows.reduce((a, t) => a + netPnl(t), 0);
+  host.innerHTML = `
+    <div class="panel" style="padding:10px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <div class="small">
+        Reviewing <strong>${selectedDate}</strong> • <strong>${rows.length}</strong> trade${rows.length === 1 ? '' : 's'} •
+        <strong class="${net >= 0 ? 'money-pos' : 'money-neg'}">${fmtMoney(net)}</strong>
+      </div>
+      <button class="btn" type="button" id="clear-date-filter-${type}">Clear date filter</button>
+    </div>
+  `;
+}
+
 function sortReportRows(rows) {
   const mode = state.reportFilters.sortBy || 'pnl';
   const sorted = [...(rows || [])];
@@ -1379,6 +1401,15 @@ function rerender() {
     });
   });
 
+  document.querySelector('#clear-date-filter-futures')?.addEventListener('click', () => {
+    state.selectedFuturesDate = '';
+    rerender();
+  });
+  document.querySelector('#clear-date-filter-options')?.addEventListener('click', () => {
+    state.selectedOptionsDate = '';
+    rerender();
+  });
+
   if (document.querySelector('#filters')) renderFilterControls();
   if (document.querySelector('#data-ops')) renderDataOps();
   if (document.querySelector('#trade-form') && !state.formMounted) {
@@ -1395,6 +1426,9 @@ function rerender() {
   const optionsScoped = state.selectedOptionsDate
     ? optionsOnly.filter(t => t.date === state.selectedOptionsDate)
     : optionsOnly;
+
+  if (document.querySelector('#selected-date-summary-futures')) renderSelectedDateSummary('#selected-date-summary-futures', futuresOnly, state.selectedFuturesDate, 'futures');
+  if (document.querySelector('#selected-date-summary-options')) renderSelectedDateSummary('#selected-date-summary-options', optionsOnly, state.selectedOptionsDate, 'options');
 
   if (document.querySelector('#dashboard-table-futures')) renderTradesTable('#dashboard-table-futures', futuresScoped.slice(0, 20), true);
   if (document.querySelector('#dashboard-table-options')) renderTradesTable('#dashboard-table-options', optionsScoped.slice(0, 20), true);
