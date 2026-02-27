@@ -347,10 +347,48 @@
     {
       "id": "MAN-20260227-01",
       "date": "2026-02-27",
-      "entryTime": "08:42",
+      "entryTime": "06:39",
       "symbol": "MNQH6",
-      "side": "Scalp",
-      "setup": "Impulse entry (self-cut)",
+      "side": "Long",
+      "setup": "Stop entry",
+      "qty": 1,
+      "entry": 24907.75,
+      "exit": 24876.5,
+      "pnl": -62.5,
+      "commission": 1,
+      "r": -1,
+      "tags": [
+        "manual-log",
+        "sl-hit"
+      ],
+      "notes": "Buy stop filled 24907.75; sell stop filled 24876.50."
+    },
+    {
+      "id": "MAN-20260227-02",
+      "date": "2026-02-27",
+      "entryTime": "06:51",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "Market entry",
+      "qty": 1,
+      "entry": 24927.75,
+      "exit": 24896.5,
+      "pnl": -62.5,
+      "commission": 1,
+      "r": -1,
+      "tags": [
+        "manual-log",
+        "sl-hit"
+      ],
+      "notes": "Buy market 24927.75; sell stop 24896.50."
+    },
+    {
+      "id": "MAN-20260227-03",
+      "date": "2026-02-27",
+      "entryTime": "07:05",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "Impulse scalp",
       "qty": 1,
       "entry": 24938.75,
       "exit": 24942.5,
@@ -359,38 +397,36 @@
       "r": 0.12,
       "tags": [
         "manual-log",
-        "impulse",
-        "quick-exit"
+        "quick-scalp"
       ],
-      "notes": "Impulse entry; exited quickly to avoid emotional hold."
+      "notes": "Buy market 24938.75; sell market 24942.50."
     },
     {
-      "id": "MAN-20260227-02",
+      "id": "MAN-20260227-04",
       "date": "2026-02-27",
-      "entryTime": "09:28",
+      "entryTime": "10:34",
       "symbol": "MNQH6",
       "side": "Short",
-      "setup": "BOS short in chop",
+      "setup": "Short attempt",
       "qty": 1,
       "entry": 24906.25,
-      "exit": 24906.25,
-      "pnl": -22.5,
+      "exit": 24924.5,
+      "pnl": -36.5,
       "commission": 1,
-      "r": -0.36,
+      "r": -0.58,
       "tags": [
         "manual-log",
-        "defensive-exit",
-        "chop"
+        "defensive-exit"
       ],
-      "notes": "Short idea stalled in chop; defensive exit after bullish BOS/reclaim to protect capital."
+      "notes": "Sell market 24906.25; buy market 24924.50."
     },
     {
-      "id": "MAN-20260227-03",
+      "id": "MAN-20260227-05",
       "date": "2026-02-27",
-      "entryTime": "09:46",
+      "entryTime": "11:13",
       "symbol": "MNQH6",
       "side": "Long",
-      "setup": "ORB/FVG reclaim attempt",
+      "setup": "Long attempt",
       "qty": 1,
       "entry": 24917,
       "exit": 24905.75,
@@ -399,29 +435,9 @@
       "r": -0.33,
       "tags": [
         "manual-log",
-        "mtf-conflict",
-        "risk-cut"
+        "defensive-exit"
       ],
-      "notes": "Long attempt while higher timeframe conflicted; cut early instead of waiting for full SL."
-    },
-    {
-      "id": "MAN-20260227-04",
-      "date": "2026-02-27",
-      "entryTime": "08:00",
-      "symbol": "MNQH6",
-      "side": "Short",
-      "setup": "Early short attempt",
-      "qty": 1,
-      "entry": 24997.75,
-      "exit": 25029,
-      "pnl": -62.5,
-      "commission": 1,
-      "r": -1,
-      "tags": [
-        "manual-log",
-        "sl-hit"
-      ],
-      "notes": "User-confirmed missing trade. Original note: entry 24997.75, SL 25029.00 (31.25 pts), TP 24970.25; SL hit."
+      "notes": "Buy market 24917.00; sell market 24905.75."
     }
   ],
   "journal": [
@@ -518,14 +534,14 @@
       "title": "Trading Journal — Friday, February 27, 2026",
       "mood": "Disciplined finish despite choppy entries",
       "setupContext": "Negative-gamma/choppy conditions with repeated fake breaks around ORB and intraday levels.",
-      "execution": "Took 4 logged trades. Included one missing early short (SL hit), then later impulse scalp and defensive exits in chop. Ended session to protect discipline.",
+      "execution": "5 trades from platform fills: 2 full stop-outs early, 1 small scalp winner, then 2 defensive exits. Session ended intentionally to stop forcing entries in chop.",
       "psychology": "Strong self-regulation improvements: repeatedly waited extra candles, avoided forced deadzone entries, and honored shutdown decision.",
-      "ruleAdherence": "Mixed entries but strong management. Applied new rules in real time: “Regret = pause, rules = click” and “wait one more candle.”",
+      "ruleAdherence": "Improving on discipline and defensive exits; entry timing still needs work in choppy context.",
       "whatWentWell": "Defensive exits, no revenge spiral, and conscious pass decisions in chop.",
-      "whatToImprove": "Entry timing and MTF alignment before trigger; avoid longs below 10m 8EMA without clear reclaim/hold.",
+      "whatToImprove": "Wait for stronger confirmation and avoid early entries in chop; maintain no-long-below-10m-8EMA unless reclaim+hold.",
       "lessonLearned": "In chop, patience and confirmation candles matter more than catching every move.",
       "nextRule": "No long below 10m 8EMA unless reclaim + hold. In uncertainty, wait one more candle (then one more if still unclear).",
-      "content": "Session summary: 4 trades logged, gross PnL -100.00, commissions 4.00, net PnL -104.00. Ended session intentionally to protect discipline and capital."
+      "content": "Session summary: 5 trades logged, gross PnL -176.50, commissions 5.00, net PnL -181.50."
     }
   ]
 }
