@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trading Platform MVP — Pre-Trade Checklist</title>
-  <link rel="stylesheet" href="./assets/styles.css?v=20260227i" />
+  <link rel="stylesheet" href="./assets/styles.css?v=20260227j" />
 </head>
 <body class="checklist-page">
   <header class="topbar">
@@ -54,15 +54,20 @@
         return {yes,total:fields.length,grade};
       };
 
+      function nowHHMM(){ const n = new Date(); return String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0'); }
       function render(){
         const d = load();
         const s = score(d);
-        const yn = (name,label) => `<div class="field"><label>${label}</label><div style="display:flex; gap:8px; margin-top:6px;"><button type="button" class="btn yn-btn ${d[name]==='yes'?'active':''}" data-field="${name}" data-val="yes">Yes</button><button type="button" class="btn yn-btn ${d[name]==='no'?'active':''}" data-field="${name}" data-val="no">No</button></div></div>`;
+        const yn = (name,label) => {
+          const yesOn = d[name] === 'yes';
+          const noOn = d[name] === 'no';
+          return `<div class="field"><label>${label}</label><div style="display:flex; gap:8px; margin-top:6px;"><button type="button" class="btn yn-btn yn-yes ${yesOn?'active':''}" data-field="${name}" data-val="yes">${yesOn?'✓ ':''}Yes</button><button type="button" class="btn yn-btn yn-no ${noOn?'active':''}" data-field="${name}" data-val="no">${noOn?'✓ ':''}No</button></div></div>`;
+        };
         root.innerHTML = `
           <div class="panel">
             <div class="toolbar" style="grid-template-columns: repeat(4,minmax(0,1fr));">
               <div class="field"><label>Date</label><input type="date" name="date" value="${d.date||''}" /></div>
-              <div class="field"><label>Time</label><input type="time" name="time" value="${d.time||''}" /></div>
+              <div class="field"><label>Time</label><div style="display:flex; gap:8px;"><input type="time" name="time" value="${d.time||''}" /><button class="btn" id="ck-now" type="button">Now</button></div></div>
               <div class="field"><label>Direction</label><select name="direction"><option ${d.direction==='Long'?'selected':''}>Long</option><option ${d.direction==='Short'?'selected':''}>Short</option></select></div>
               <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.1rem;">${s.grade} (${s.yes}/${s.total})</div></div>
             </div>
@@ -92,7 +97,18 @@
             render();
           });
         });
-        root.querySelector('#ck-save')?.addEventListener('click', ()=> alert(`Checklist saved: ${score(load()).grade}`));
+        root.querySelector('#ck-now')?.addEventListener('click', ()=>{
+          const n = Object.assign({}, load(), { time: nowHHMM() });
+          save(n);
+          render();
+        });
+        root.querySelector('#ck-save')?.addEventListener('click', ()=>{
+          const n = Object.assign({}, load(), { time: nowHHMM() }); // auto-log current time on save
+          save(n);
+          const ss = score(n);
+          alert(`Checklist saved: ${ss.grade} (${ss.yes}/${ss.total}) at ${n.time}`);
+          render();
+        });
         root.querySelector('#ck-reset')?.addEventListener('click', ()=>{ save(def); render(); });
       }
       render();
