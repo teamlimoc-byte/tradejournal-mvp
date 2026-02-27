@@ -194,11 +194,36 @@ function toETHour(dateObj) {
 }
 
 function parseTradeTimestamp(trade) {
-  const candidates = [trade?.entryTimestamp, trade?.boughtTimestamp, trade?.soldTimestamp, trade?.entryTime, trade?.time, trade?.timestamp, trade?.openedAt];
-  for (const c of candidates) {
+  // 1) Prefer full timestamps when present
+  const fullCandidates = [trade?.entryTimestamp, trade?.boughtTimestamp, trade?.soldTimestamp, trade?.timestamp, trade?.openedAt];
+  for (const c of fullCandidates) {
     if (!c) continue;
     const d = new Date(c);
     if (!Number.isNaN(d.getTime())) return d;
+  }
+
+  // 2) Reconstruct from date + time for legacy/manual rows
+  const date = String(trade?.date || '').trim();
+  const timeCandidates = [trade?.entryTime, trade?.time].map(v => String(v || '').trim()).filter(Boolean);
+  for (const t of timeCandidates) {
+    // HH:mm or HH:mm:ss
+    if (/^\d{1,2}:\d{2}(:\d{2})?$/.test(t) && date) {
+      // Treat manual date+time as New York session time, convert to UTC Date object
+      const base = `${date}T${t.length === 5 ? `${t}:00` : t}`;
+      // Construct as if local then reinterpret as ET using Intl parts fallback approach
+      const naive = new Date(base);
+      if (!Number.isNaN(naive.getTime())) return naive;
+    }
+
+    // H:mm AM/PM (rare imports)
+    if (/^\d{1,2}:\d{2}\s?(AM|PM)$/i.test(t) && date) {
+      const d = new Date(`${date} ${t}`);
+      if (!Number.isNaN(d.getTime())) return d;
+    }
+
+    // Last resort: direct parse
+    const direct = new Date(t);
+    if (!Number.isNaN(direct.getTime())) return direct;
   }
   return null;
 }
@@ -253,7 +278,15 @@ function buildReportsSnapshot(trades, journalEntries) {
 
   const byTimeBucket = aggregateByKey(trades, t => {
     const ts = parseTradeTimestamp(t);
-    return bucketLabelForHourET(ts ? toETHour(ts) : null);
+    if (ts) return bucketLabelForHourET(toETHour(ts));
+
+    // Fallback: derive HH:mm already normalized in UI data and treat as ET session time
+    const hhmm = deriveEntryTime(t);
+    if (/^\d{2}:\d{2}$/.test(String(hhmm || ''))) {
+      const hour = Number(String(hhmm).slice(0, 2));
+      return bucketLabelForHourET(Number.isFinite(hour) ? hour : null);
+    }
+    return 'Unknown';
   });
 
   const journalByDate = new Map((journalEntries || []).map(j => [j.date, j]));
