@@ -200,6 +200,46 @@ function toETHour(dateObj) {
   }
 }
 
+function compareNewest(a, b) {
+  const ad = String(a?.date || '');
+  const bd = String(b?.date || '');
+  if (ad !== bd) return bd.localeCompare(ad);
+  const at = String(deriveEntryTime(a) || '00:00');
+  const bt = String(deriveEntryTime(b) || '00:00');
+  return bt.localeCompare(at);
+}
+
+function applyQuickFilter(rows = [], mode = 'all') {
+  const m = String(mode || 'all').toLowerCase();
+  if (m === 'all') return rows;
+  if (m === 'red') return rows.filter(t => netPnl(t) < 0);
+
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const dd = String(now.getDate()).padStart(2, '0');
+  const today = `${yyyy}-${mm}-${dd}`;
+
+  if (m === 'today') return rows.filter(t => t.date === today);
+
+  if (m === 'week') {
+    const day = now.getDay();
+    const diff = (day + 6) % 7; // monday-based
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - diff);
+    monday.setHours(0,0,0,0);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    sunday.setHours(23,59,59,999);
+    return rows.filter(t => {
+      const d = new Date(`${t.date}T12:00:00`);
+      return !Number.isNaN(d.getTime()) && d >= monday && d <= sunday;
+    });
+  }
+
+  return rows;
+}
+
 function parseTradeTimestamp(trade) {
   // 1) Prefer full timestamps when present
   const fullCandidates = [trade?.entryTimestamp, trade?.boughtTimestamp, trade?.soldTimestamp, trade?.timestamp, trade?.openedAt];
@@ -1202,6 +1242,18 @@ function renderInlineJournalForDate(selector, scopeTrades = []) {
   `;
 }
 
+function renderQuickFilters(selector, current = 'all', kind = 'futures') {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const items = [
+    ['all','All'],
+    ['today','Today'],
+    ['week','This Week'],
+    ['red','Red Days']
+  ];
+  host.innerHTML = items.map(([v,label]) => `<button type="button" class="btn quick-chip ${current===v?'active':''}" data-kind="${kind}" data-val="${v}">${label}</button>`).join(' ');
+}
+
 function renderSelectedDateSummary(selector, scopeTrades = [], selectedDate = '', type = 'futures') {
   const host = document.querySelector(selector);
   if (!host) return;
@@ -1410,6 +1462,16 @@ function rerender() {
     rerender();
   });
 
+  document.querySelectorAll('.quick-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const kind = btn.dataset.kind;
+      const val = btn.dataset.val || 'all';
+      if (kind === 'futures') state.quickFilterFutures = val;
+      if (kind === 'options') state.quickFilterOptions = val;
+      rerender();
+    });
+  });
+
   if (document.querySelector('#filters')) renderFilterControls();
   if (document.querySelector('#data-ops')) renderDataOps();
   if (document.querySelector('#trade-form') && !state.formMounted) {
@@ -1420,15 +1482,20 @@ function rerender() {
   if (document.querySelector('#strategy-analytics')) renderStrategyAnalytics(trades);
   if (document.querySelector('#dashboard-table')) renderTradesTable('#dashboard-table', trades.slice(0, 8));
 
-  const futuresScoped = state.selectedFuturesDate
+  let futuresScoped = state.selectedFuturesDate
     ? futuresOnly.filter(t => t.date === state.selectedFuturesDate)
     : futuresOnly;
-  const optionsScoped = state.selectedOptionsDate
+  let optionsScoped = state.selectedOptionsDate
     ? optionsOnly.filter(t => t.date === state.selectedOptionsDate)
     : optionsOnly;
 
+  futuresScoped = applyQuickFilter(futuresScoped, state.quickFilterFutures).slice().sort(compareNewest);
+  optionsScoped = applyQuickFilter(optionsScoped, state.quickFilterOptions).slice().sort(compareNewest);
+
   if (document.querySelector('#selected-date-summary-futures')) renderSelectedDateSummary('#selected-date-summary-futures', futuresOnly, state.selectedFuturesDate, 'futures');
   if (document.querySelector('#selected-date-summary-options')) renderSelectedDateSummary('#selected-date-summary-options', optionsOnly, state.selectedOptionsDate, 'options');
+  if (document.querySelector('#quick-filters-futures')) renderQuickFilters('#quick-filters-futures', state.quickFilterFutures, 'futures');
+  if (document.querySelector('#quick-filters-options')) renderQuickFilters('#quick-filters-options', state.quickFilterOptions, 'options');
 
   if (document.querySelector('#dashboard-table-futures')) renderTradesTable('#dashboard-table-futures', futuresScoped.slice(0, 20), true);
   if (document.querySelector('#dashboard-table-options')) renderTradesTable('#dashboard-table-options', optionsScoped.slice(0, 20), true);
