@@ -65,11 +65,9 @@
         };
         root.innerHTML = `
           <div class="panel">
-            <div class="toolbar" style="grid-template-columns: repeat(4,minmax(0,1fr));">
+            <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr));">
               <div class="field"><label>Date</label><input type="date" name="date" value="${d.date||''}" /></div>
-              <div class="field"><label>Time</label><div style="display:flex; gap:8px;"><input type="time" name="time" value="${d.time||''}" /><button class="btn" id="ck-now" type="button">Now</button></div></div>
               <div class="field"><label>Direction</label><select name="direction"><option ${d.direction==='Long'?'selected':''}>Long</option><option ${d.direction==='Short'?'selected':''}>Short</option></select></div>
-              <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.1rem;">${s.grade} (${s.yes}/${s.total})</div></div>
             </div>
             <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr)); margin-top:10px;">
               ${yn('mtfAligned','3/4+ MTF aligned with direction?')}
@@ -80,6 +78,10 @@
               ${yn('ema10mRule','10m 8EMA rule satisfied?')}
               ${yn('notDeadzone','Not deadzone?')}
               ${yn('emotionCheck','Emotion check passed (no FOMO/revenge)?')}
+            </div>
+            <div class="toolbar" style="grid-template-columns: 1.3fr 1fr; margin-top:10px;">
+              <div class="field"><label>Time</label><div style="display:flex; gap:8px;"><input type="time" name="time" value="${d.time||''}" /><button class="btn" id="ck-now" type="button">Now</button></div></div>
+              <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.2rem;">${s.grade} (${s.yes}/${s.total})</div></div>
             </div>
             <div class="field" style="margin-top:10px;"><label>Notes</label><textarea name="notes" rows="2">${d.notes||''}</textarea></div>
             <div style="display:flex; gap:8px; margin-top:10px;"><button id="ck-save" class="btn" type="button">Save Checklist</button><button id="ck-reset" class="btn" type="button">Reset</button></div>
