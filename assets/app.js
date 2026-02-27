@@ -1257,7 +1257,10 @@ function rerender() {
   const trades = getTrades();
   renderKpis('#kpis', trades);
   if (document.querySelector('#dashboard-breakdown')) renderDashboardBreakdown(trades);
-  if (document.querySelector('#equity-curve')) renderEquityCurve(trades);
+  if (document.querySelector('#equity-curve')) {
+    const futuresOnly = trades.filter(t => String(t.assetType || inferAssetType(t.symbol)).toLowerCase() === 'futures');
+    renderEquityCurve(futuresOnly);
+  }
   if (document.querySelector('#daily-heatmap')) renderDailyHeatmap(trades);
 
   if (document.querySelector('#filters')) renderFilterControls();
