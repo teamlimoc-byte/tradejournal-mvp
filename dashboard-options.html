@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trading Platform MVP — Options Dashboard</title>
+  <link rel="stylesheet" href="./assets/styles.css?v=20260227c" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">Trade<span>Journal</span> MVP</div>
+      <nav class="nav">
+        <a class="nav-link" href="index.html">Combined</a>
+        <a class="nav-link" href="dashboard-futures.html">Futures</a>
+        <a class="nav-link" href="dashboard-options.html">Options</a>
+        <a class="nav-link" href="trades.html">Trades</a>
+        <a class="nav-link" href="journal.html">Journal</a>
+        <a class="nav-link" href="reports.html">Reports</a>
+        <button id="theme-toggle" class="btn" type="button" style="padding:7px 10px;">🌙</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Options Dashboard</h1>
+    <div class="subtle">Options-only performance (including covered calls).</div>
+
+    <section id="kpis-options" class="grid kpi-grid"></section>
+
+    <section class="breakdown-grid" style="margin-top:12px;">
+      <div class="panel">
+        <h2 style="margin:0 0 10px">Equity Curve — Options</h2>
+        <div id="equity-curve-options"></div>
+      </div>
+      <div class="panel">
+        <h2 style="margin:0 0 10px">Daily Heatmap — Options</h2>
+        <div id="daily-heatmap-options"></div>
+      </div>
+    </section>
+
+    <section class="breakdown-grid">
+      <div>
+        <h2 style="margin:0 0 10px">Recent Options Trades</h2>
+        <div id="dashboard-table-options"></div>
+      </div>
+      <div id="dashboard-breakdown-options"></div>
+    </section>
+  </main>
+
+  <footer>Static/offline-friendly build for GitHub Pages</footer>
+  <script src="./assets/app.js?v=20260227e"></script>
+</body>
+</html>

@@ -345,8 +345,8 @@ function renderReportControls(selector) {
   });
 }
 
-function renderDashboardBreakdown(trades) {
-  const host = document.querySelector('#dashboard-breakdown');
+function renderDashboardBreakdown(trades, selector = '#dashboard-breakdown') {
+  const host = document.querySelector(selector);
   if (!host) return;
 
   const bySetup = {};
@@ -1262,7 +1262,10 @@ function rerender() {
   if (document.querySelector('#kpis-options')) renderKpis('#kpis-options', optionsOnly);
   if (document.querySelector('#kpis')) renderKpis('#kpis', trades);
 
-  if (document.querySelector('#dashboard-breakdown')) renderDashboardBreakdown(trades);
+  if (document.querySelector('#dashboard-breakdown')) renderDashboardBreakdown(trades, '#dashboard-breakdown');
+  if (document.querySelector('#dashboard-breakdown-futures')) renderDashboardBreakdown(futuresOnly, '#dashboard-breakdown-futures');
+  if (document.querySelector('#dashboard-breakdown-options')) renderDashboardBreakdown(optionsOnly, '#dashboard-breakdown-options');
+
   if (document.querySelector('#equity-curve')) renderEquityCurve(futuresOnly, '#equity-curve');
   if (document.querySelector('#equity-curve-options')) renderEquityCurve(optionsOnly, '#equity-curve-options');
   if (document.querySelector('#daily-heatmap-futures')) renderDailyHeatmap(futuresOnly, '#daily-heatmap-futures');
@@ -1278,6 +1281,8 @@ function rerender() {
   if (document.querySelector('#trades-table')) renderTradesTable('#trades-table', trades, true);
   if (document.querySelector('#strategy-analytics')) renderStrategyAnalytics(trades);
   if (document.querySelector('#dashboard-table')) renderTradesTable('#dashboard-table', trades.slice(0, 8));
+  if (document.querySelector('#dashboard-table-futures')) renderTradesTable('#dashboard-table-futures', futuresOnly.slice(0, 8));
+  if (document.querySelector('#dashboard-table-options')) renderTradesTable('#dashboard-table-options', optionsOnly.slice(0, 8));
 
   if (state.selectedTrade) {
     const latest = trades.find(t => t.id === state.selectedTrade.id);
