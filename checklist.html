@@ -79,8 +79,7 @@
               ${yn('notDeadzone','Not deadzone?')}
               ${yn('emotionCheck','Emotion check passed (no FOMO/revenge)?')}
             </div>
-            <div class="toolbar" style="grid-template-columns: 1.3fr 1fr; margin-top:10px;">
-              <div class="field"><label>Time</label><div style="display:flex; gap:8px;"><input type="time" name="time" value="${d.time||''}" /><button class="btn" id="ck-now" type="button">Now</button></div></div>
+            <div class="toolbar" style="grid-template-columns: 1fr; margin-top:10px;">
               <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.2rem;">${s.grade} (${s.yes}/${s.total})</div></div>
             </div>
             <div class="field" style="margin-top:10px;"><label>Notes</label><textarea name="notes" rows="2">${d.notes||''}</textarea></div>
@@ -98,11 +97,6 @@
             save(n);
             render();
           });
-        });
-        root.querySelector('#ck-now')?.addEventListener('click', ()=>{
-          const n = Object.assign({}, load(), { time: nowHHMM() });
-          save(n);
-          render();
         });
         root.querySelector('#ck-save')?.addEventListener('click', ()=>{
           const n = Object.assign({}, load(), { time: nowHHMM() }); // auto-log current time on save
