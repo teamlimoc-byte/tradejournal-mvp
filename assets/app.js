@@ -379,6 +379,7 @@ function renderReportControls(selector) {
         <select id="rf-sort">
           <option value="pnl" ${state.reportFilters.sortBy === 'pnl' ? 'selected' : ''}>Net P&L</option>
           <option value="winRate" ${state.reportFilters.sortBy === 'winRate' ? 'selected' : ''}>Win Rate</option>
+          <option value="expectancy" ${state.reportFilters.sortBy === 'expectancy' ? 'selected' : ''}>Expectancy</option>
           <option value="trades" ${state.reportFilters.sortBy === 'trades' ? 'selected' : ''}>Trades</option>
         </select>
       </div>
