@@ -403,6 +403,25 @@
         "risk-cut"
       ],
       "notes": "Long attempt while higher timeframe conflicted; cut early instead of waiting for full SL."
+    },
+    {
+      "id": "MAN-20260227-04",
+      "date": "2026-02-27",
+      "entryTime": "08:00",
+      "symbol": "MNQH6",
+      "side": "Short",
+      "setup": "Early short attempt",
+      "qty": 1,
+      "entry": 24997.75,
+      "exit": 25029,
+      "pnl": -62.5,
+      "commission": 1,
+      "r": -1,
+      "tags": [
+        "manual-log",
+        "sl-hit"
+      ],
+      "notes": "User-confirmed missing trade. Original note: entry 24997.75, SL 25029.00 (31.25 pts), TP 24970.25; SL hit."
     }
   ],
   "journal": [
@@ -499,14 +518,14 @@
       "title": "Trading Journal — Friday, February 27, 2026",
       "mood": "Disciplined finish despite choppy entries",
       "setupContext": "Negative-gamma/choppy conditions with repeated fake breaks around ORB and intraday levels.",
-      "execution": "Took 3 logged trades: one quick impulse scalp (+$7.50), one short exited defensively (-$22.50), one long exited early on MTF conflict (-$22.50). Stopped trading to preserve discipline.",
+      "execution": "Took 4 logged trades. Included one missing early short (SL hit), then later impulse scalp and defensive exits in chop. Ended session to protect discipline.",
       "psychology": "Strong self-regulation improvements: repeatedly waited extra candles, avoided forced deadzone entries, and honored shutdown decision.",
       "ruleAdherence": "Mixed entries but strong management. Applied new rules in real time: “Regret = pause, rules = click” and “wait one more candle.”",
       "whatWentWell": "Defensive exits, no revenge spiral, and conscious pass decisions in chop.",
       "whatToImprove": "Entry timing and MTF alignment before trigger; avoid longs below 10m 8EMA without clear reclaim/hold.",
       "lessonLearned": "In chop, patience and confirmation candles matter more than catching every move.",
       "nextRule": "No long below 10m 8EMA unless reclaim + hold. In uncertainty, wait one more candle (then one more if still unclear).",
-      "content": "Session summary: 3 trades logged, gross PnL -37.50, commissions 3.00, net PnL -40.50. Ended session intentionally to protect discipline and capital."
+      "content": "Session summary: 4 trades logged, gross PnL -100.00, commissions 4.00, net PnL -104.00. Ended session intentionally to protect discipline and capital."
     }
   ]
 }
