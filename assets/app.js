@@ -1020,6 +1020,7 @@ function renderTradesTable(selector, trades, clickable = false) {
       if (e.target.closest('.row-edit') || e.target.closest('.row-delete')) return;
       state.selectedTrade = trades.find(t => t.id === row.dataset.id) || null;
       renderTradeDetail('#trade-detail', state.selectedTrade);
+      rerender();
     }));
   }
 
@@ -1154,6 +1155,30 @@ function renderJournal(selector) {
 
   const autoLessons = renderAutoTradeLessons(getTrades());
   host.innerHTML = journalHtml + (autoLessons ? `<div style="margin-top:10px;"><h3 style="margin:0 0 8px;">Recent Trade Lessons</h3>${autoLessons}</div>` : '');
+}
+
+function renderInlineJournalForDate(selector, scopeTrades = []) {
+  const host = document.querySelector(selector);
+  if (!host) return;
+
+  const selectedDate = state.selectedTrade?.date || (scopeTrades[0]?.date || '');
+  if (!selectedDate) {
+    host.innerHTML = '<div class="panel muted">No trade date selected yet.</div>';
+    return;
+  }
+
+  const entry = (state.data?.journal || []).find(j => j.date === selectedDate);
+  if (!entry) {
+    host.innerHTML = `<div class="panel muted">No journal entry found for ${selectedDate}.</div>`;
+    return;
+  }
+
+  host.innerHTML = `
+    <article class="note-item">
+      <h4>${entry.date || '—'} — ${entry.title || 'Journal Entry'}</h4>
+      ${renderDetailedJournalEntry(entry)}
+    </article>
+  `;
 }
 
 function sortReportRows(rows) {
@@ -1328,8 +1353,8 @@ function rerender() {
   if (document.querySelector('#trades-table')) renderTradesTable('#trades-table', trades, true);
   if (document.querySelector('#strategy-analytics')) renderStrategyAnalytics(trades);
   if (document.querySelector('#dashboard-table')) renderTradesTable('#dashboard-table', trades.slice(0, 8));
-  if (document.querySelector('#dashboard-table-futures')) renderTradesTable('#dashboard-table-futures', futuresOnly.slice(0, 8));
-  if (document.querySelector('#dashboard-table-options')) renderTradesTable('#dashboard-table-options', optionsOnly.slice(0, 8));
+  if (document.querySelector('#dashboard-table-futures')) renderTradesTable('#dashboard-table-futures', futuresOnly.slice(0, 8), true);
+  if (document.querySelector('#dashboard-table-options')) renderTradesTable('#dashboard-table-options', optionsOnly.slice(0, 8), true);
 
   if (state.selectedTrade) {
     const latest = trades.find(t => t.id === state.selectedTrade.id);
@@ -1337,6 +1362,8 @@ function rerender() {
   }
   if (document.querySelector('#trade-detail')) renderTradeDetail('#trade-detail', state.selectedTrade);
   if (document.querySelector('#journal-list')) renderJournal('#journal-list');
+  if (document.querySelector('#journal-inline-futures')) renderInlineJournalForDate('#journal-inline-futures', futuresOnly);
+  if (document.querySelector('#journal-inline-options')) renderInlineJournalForDate('#journal-inline-options', optionsOnly);
   renderReportsPage(trades);
 }
 
