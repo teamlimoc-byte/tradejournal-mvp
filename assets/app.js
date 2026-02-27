@@ -1034,7 +1034,7 @@ function renderTradesTable(selector, trades, clickable = false) {
 
   if (clickable) {
     host.querySelectorAll('tr[data-id]').forEach(row => row.addEventListener('click', (e) => {
-      if (e.target.closest('.row-edit') || e.target.closest('.row-delete')) return;
+      if (e.target.closest('.row-edit') || e.target.closest('.row-delete') || e.target.closest('.row-close') || e.target.closest('.row-roll')) return;
       state.selectedTrade = trades.find(t => t.id === row.dataset.id) || null;
       renderTradeDetail('#trade-detail', state.selectedTrade);
       rerender();
