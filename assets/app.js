@@ -773,10 +773,17 @@ function fillFormForEdit(trade) {
   if (!form || !trade) return;
   form.querySelector('[name="date"]').value = trade.date || '';
   form.querySelector('[name="entryTime"]').value = deriveEntryTime(trade);
+  form.querySelector('[name="assetType"]').value = trade.assetType || 'futures';
   form.querySelector('[name="symbol"]').value = trade.symbol || '';
+  form.querySelector('[name="underlying"]').value = trade.underlying || '';
   form.querySelector('[name="side"]').value = trade.side || 'Long';
   form.querySelector('[name="setup"]').value = trade.setup || '';
+  form.querySelector('[name="strategy"]').value = trade.strategy || '';
   form.querySelector('[name="qty"]').value = trade.qty ?? 1;
+  form.querySelector('[name="contracts"]').value = trade.contracts ?? '';
+  form.querySelector('[name="expiry"]').value = trade.expiry || '';
+  form.querySelector('[name="strike"]').value = trade.strike || '';
+  form.querySelector('[name="optionType"]').value = trade.optionType || '';
   form.querySelector('[name="entry"]').value = trade.entry ?? '';
   form.querySelector('[name="exit"]').value = trade.exit ?? '';
   form.querySelector('[name="pnl"]').value = trade.pnl ?? '';
@@ -797,6 +804,12 @@ function validateTradeInput(trade, allTrades = []) {
   if (!Number.isFinite(Number(trade.entry))) errs.push('Entry must be a valid number');
   if (!Number.isFinite(Number(trade.exit))) errs.push('Exit must be a valid number');
   if (!Number.isFinite(Number(trade.commission)) || Number(trade.commission) < 0) errs.push('Commission cannot be negative');
+  if (String(trade.assetType || '') === 'options') {
+    if (!trade.underlying) errs.push('Options trade requires underlying');
+    if (!trade.expiry) errs.push('Options trade requires expiry');
+    if (!Number.isFinite(Number(trade.strike)) || Number(trade.strike) <= 0) errs.push('Options trade requires valid strike');
+    if (!['CALL', 'PUT'].includes(String(trade.optionType || '').toUpperCase())) errs.push('Options trade requires option type (CALL/PUT)');
+  }
 
   const duplicate = allTrades.find(t => t.id === trade.id && t.id !== state.editTradeId);
   if (duplicate) errs.push(`Duplicate trade ID detected: ${trade.id}`);
@@ -809,10 +822,17 @@ function renderTradeForm() {
   host.innerHTML = `
     <div class="field"><label>Date</label><input name="date" type="date" required /></div>
     <div class="field"><label>Entry Time</label><input name="entryTime" type="time" /></div>
-    <div class="field"><label>Symbol</label><input name="symbol" placeholder="MNQ" required /></div>
+    <div class="field"><label>Asset Type</label><select name="assetType"><option value="futures">Futures</option><option value="options">Options</option><option value="stock">Stock</option></select></div>
+    <div class="field"><label>Symbol</label><input name="symbol" placeholder="MNQH6 or AAPL" required /></div>
+    <div class="field"><label>Underlying</label><input name="underlying" placeholder="NQ / SPY / AAPL" /></div>
     <div class="field"><label>Side</label><select name="side"><option>Long</option><option>Short</option></select></div>
     <div class="field"><label>Setup</label><input name="setup" placeholder="Pullback" /></div>
+    <div class="field"><label>Strategy</label><input name="strategy" placeholder="Covered Call / BOS Hybrid" /></div>
     <div class="field"><label>Qty</label><input name="qty" type="number" step="1" value="1" /></div>
+    <div class="field"><label>Contracts (options)</label><input name="contracts" type="number" step="1" value="" /></div>
+    <div class="field"><label>Expiry (options)</label><input name="expiry" type="date" /></div>
+    <div class="field"><label>Strike (options)</label><input name="strike" type="number" step="0.01" /></div>
+    <div class="field"><label>Option Type</label><select name="optionType"><option value="">—</option><option value="CALL">CALL</option><option value="PUT">PUT</option></select></div>
     <div class="field"><label>Entry</label><input name="entry" type="number" step="0.01" /></div>
     <div class="field"><label>Exit</label><input name="exit" type="number" step="0.01" /></div>
     <div class="field"><label>P&L (Gross)</label><input name="pnl" type="number" step="0.01" /></div>
@@ -851,10 +871,17 @@ function renderTradeForm() {
       date: tradeDate,
       entryTime,
       entryTimestamp,
+      assetType: String(fd.get('assetType') || 'futures').toLowerCase(),
       symbol: String(fd.get('symbol') || '').toUpperCase(),
+      underlying: String(fd.get('underlying') || '').toUpperCase(),
       side,
       setup: String(fd.get('setup') || 'Manual'),
+      strategy: String(fd.get('strategy') || ''),
       qty: Number(fd.get('qty') || 1),
+      contracts: Number(fd.get('contracts') || 0),
+      expiry: String(fd.get('expiry') || ''),
+      strike: Number(fd.get('strike') || 0),
+      optionType: String(fd.get('optionType') || '').toUpperCase(),
       entry,
       exit,
       pnl,
@@ -913,7 +940,7 @@ function renderTradesTable(selector, trades, clickable = false) {
     <div class="table-wrap panel">
       <table>
         <thead>
-          <tr><th>Date</th><th>Time</th><th>ID</th><th>Symbol</th><th>Side</th><th>Setup</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Comm</th><th>Net P&L</th><th>R</th><th>Actions</th></tr>
+          <tr><th>Date</th><th>Time</th><th>ID</th><th>Type</th><th>Symbol</th><th>Side</th><th>Setup</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Comm</th><th>Net P&L</th><th>R</th><th>Actions</th></tr>
         </thead>
         <tbody>
           ${trades.map(t => `
@@ -921,6 +948,7 @@ function renderTradesTable(selector, trades, clickable = false) {
               <td>${t.date || ''}</td>
               <td>${deriveEntryTime(t) || '—'}</td>
               <td>${t.id || ''}</td>
+              <td>${t.assetType || ''}</td>
               <td>${t.symbol || ''}</td>
               <td><span class="badge ${(t.side || '').toLowerCase()}">${t.side || ''}</span></td>
               <td>${t.setup || ''}</td>
@@ -982,6 +1010,7 @@ function renderTradeDetail(selector, trade) {
     <div class="panel detail-box">
       <h3 style="margin:0 0 6px">${trade.symbol || '—'} • ${trade.side || '—'}</h3>
       <div class="small muted">${trade.id || '—'} • ${trade.date || '—'} ${deriveEntryTime(trade) ? `@ ${deriveEntryTime(trade)}` : ''} • ${trade.setup || '—'}</div>
+      ${trade.assetType === 'options' ? `<div class="small muted" style="margin-top:4px;">Options: ${trade.underlying || '—'} ${trade.expiry || '—'} ${trade.strike || '—'} ${trade.optionType || '—'} • contracts ${trade.contracts || trade.qty || 0}</div>` : ''}
       <div class="meta-grid">
         <div><div class="muted small">Entry</div><div>${fmtNum(trade.entry)}</div></div>
         <div><div class="muted small">Exit</div><div>${fmtNum(trade.exit)}</div></div>
