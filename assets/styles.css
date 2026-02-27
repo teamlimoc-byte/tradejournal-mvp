@@ -141,6 +141,10 @@ tr[data-id]:hover { background: var(--panel-soft); }
   flex-direction: column;
   justify-content: space-between;
 }
+.day-cell.selected {
+  outline: 2px solid color-mix(in srgb, var(--accent) 70%, white 30%);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
+}
 .day-cell .day-num { color: var(--muted); font-size: .64rem; line-height: 1.1; }
 .day-cell div:nth-child(2) { font-size: .72rem; line-height: 1.1; }
 .day-cell div:nth-child(3) { font-size: .64rem; line-height: 1.1; color: var(--muted); }
