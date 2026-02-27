@@ -12,8 +12,8 @@ const THEME_KEY = 'trading-platform-mvp.theme.v1';
 
 const MOCK_DATA = {
   trades: [
-    { id: 'T-1024', date: '2026-02-20', symbol: 'NVDA', side: 'Long', setup: 'ORB', qty: 100, entry: 714.5, exit: 721.8, pnl: 730, r: 1.4, tags: ['A+ setup', 'trend'], notes: 'Strong open drive + continuation.' },
-    { id: 'T-1025', date: '2026-02-20', symbol: 'TSLA', side: 'Short', setup: 'Fade', qty: 80, entry: 212.9, exit: 214.2, pnl: -104, r: -0.4, tags: ['overtrade'], notes: 'Entered too early before rejection confirmation.' }
+    { id: 'T-1024', date: '2026-02-20', symbol: 'NVDA', assetType: 'stock', side: 'Long', setup: 'ORB', qty: 100, entry: 714.5, exit: 721.8, pnl: 730, r: 1.4, tags: ['A+ setup', 'trend'], notes: 'Strong open drive + continuation.' },
+    { id: 'T-1025', date: '2026-02-20', symbol: 'TSLA', assetType: 'stock', side: 'Short', setup: 'Fade', qty: 80, entry: 212.9, exit: 214.2, pnl: -104, r: -0.4, tags: ['overtrade'], notes: 'Entered too early before rejection confirmation.' }
   ],
   journal: []
 };
@@ -31,6 +31,41 @@ const state = {
 
 const fmtMoney = v => `${v >= 0 ? '+' : '-'}$${Math.abs(Number(v || 0)).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
 const fmtNum = v => Number(v || 0).toLocaleString(undefined, { maximumFractionDigits: 2 });
+
+function inferAssetType(symbol = '') {
+  const s = String(symbol || '').toUpperCase();
+  if (/^[MESNQRTYGC6ECLYM][A-Z]\d$/.test(s) || /^MNQ|^NQ|^MES|^ES/.test(s)) return 'futures';
+  return 'stock';
+}
+
+function normalizeTradeSchema(t) {
+  const trade = { ...(t || {}) };
+  trade.assetType = String(trade.assetType || inferAssetType(trade.symbol));
+  trade.underlying = String(trade.underlying || trade.symbol || '').toUpperCase();
+  trade.strategy = String(trade.strategy || trade.setup || '');
+
+  // Options fields (backward-compatible defaults for non-options trades)
+  if (trade.assetType === 'options') {
+    trade.optionType = String(trade.optionType || '').toUpperCase();
+    trade.expiry = String(trade.expiry || '');
+    trade.strike = Number(trade.strike || 0) || 0;
+    trade.contracts = Number(trade.contracts || trade.qty || 0) || 0;
+  } else {
+    trade.optionType = trade.optionType || '';
+    trade.expiry = trade.expiry || '';
+    trade.strike = Number(trade.strike || 0) || 0;
+    trade.contracts = Number(trade.contracts || 0) || 0;
+  }
+
+  return trade;
+}
+
+function normalizeDataSchema(data) {
+  const out = { ...(data || {}) };
+  out.trades = (out.trades || []).map(normalizeTradeSchema);
+  out.journal = out.journal || [];
+  return out;
+}
 const isLocalTrade = (t) => String(t?.id || '').startsWith('MAN-') || String(t?.id || '').startsWith('CSV-');
 const effectiveCommission = (t) => {
   const explicit = Number(t?.commission);
@@ -88,11 +123,11 @@ async function loadData() {
           if (!id || !byId.has(id)) byId.set(id, t);
         }
         parsed.trades = Array.from(byId.values());
-        return parsed;
+        return normalizeDataSchema(parsed);
       }
     } catch (_) {}
   }
-  return { ...MOCK_DATA, trades: [...MOCK_DATA.trades, ...readLocalTrades()] };
+  return normalizeDataSchema({ ...MOCK_DATA, trades: [...MOCK_DATA.trades, ...readLocalTrades()] });
 }
 
 function getTrades() {
@@ -500,14 +535,14 @@ function renderFilterControls() {
 
 function toCsv(rows) {
   if (!rows.length) return '';
-  const headers = ['id', 'date', 'symbol', 'side', 'setup', 'qty', 'entry', 'exit', 'pnl', 'commission', 'netPnl', 'r', 'tags', 'notes'];
+  const headers = ['id', 'date', 'entryTime', 'assetType', 'symbol', 'underlying', 'side', 'setup', 'strategy', 'qty', 'contracts', 'expiry', 'strike', 'optionType', 'entry', 'exit', 'pnl', 'commission', 'netPnl', 'r', 'tags', 'notes'];
   const esc = (v) => {
     const s = String(v ?? '');
     if (s.includes('"') || s.includes(',') || s.includes('\n')) return `"${s.replace(/"/g, '""')}"`;
     return s;
   };
   return [headers.join(','), ...rows.map(t => [
-    t.id, t.date, t.symbol, t.side, t.setup, t.qty, t.entry, t.exit, t.pnl, (t.commission || 0), netPnl(t), t.r, (t.tags || []).join('|'), t.notes || ''
+    t.id, t.date, deriveEntryTime(t), t.assetType || '', t.symbol, t.underlying || '', t.side, t.setup, t.strategy || '', t.qty, t.contracts || '', t.expiry || '', t.strike || '', t.optionType || '', t.entry, t.exit, t.pnl, (t.commission || 0), netPnl(t), t.r, (t.tags || []).join('|'), t.notes || ''
   ].map(esc).join(','))].join('\n');
 }
 
@@ -554,10 +589,17 @@ function parseCsv(text) {
   const aliases = {
     id: ['id', 'tradeid', 'ticketid', 'orderid'],
     date: ['date', 'tradedate', 'opendate', 'closedate', 'boughttime', 'soldtime', 'boughttimestamp', 'soldtimestamp'],
+    assetType: ['assettype', 'instrumenttype', 'type'],
     symbol: ['symbol', 'ticker', 'instrument'],
+    underlying: ['underlying', 'underlyingsymbol'],
     side: ['side', 'direction', 'position', 'action'],
     setup: ['setup', 'strategy', 'playbook', 'pattern'],
+    strategy: ['strategy', 'setupname'],
     qty: ['qty', 'quantity', 'size', 'shares', 'contracts'],
+    contracts: ['contracts', 'contractqty'],
+    expiry: ['expiry', 'expiration', 'expdate'],
+    strike: ['strike', 'strikeprice'],
+    optionType: ['optiontype', 'callput', 'right'],
     entry: ['entry', 'entryprice', 'open', 'openprice', 'avgentry', 'buyprice'],
     exit: ['exit', 'exitprice', 'close', 'closeprice', 'avgexit', 'sellprice'],
     buyPrice: ['buyprice'],
@@ -623,13 +665,20 @@ function parseCsv(text) {
         ? new Date(dateRaw).toISOString().slice(0, 10)
         : new Date().toISOString().slice(0, 10);
 
-    rows.push({
+    rows.push(normalizeTradeSchema({
       id: getField(parts, 'id') || `CSV-${Date.now()}-${i}`,
       date,
       symbol: (getField(parts, 'symbol') || '').toUpperCase(),
+      assetType: (getField(parts, 'assetType') || '').toLowerCase(),
+      underlying: (getField(parts, 'underlying') || '').toUpperCase(),
       side,
       setup: getField(parts, 'setup') || 'CSV Import',
+      strategy: getField(parts, 'strategy') || '',
       qty: parseNum(getField(parts, 'qty'), 1),
+      contracts: parseNum(getField(parts, 'contracts'), 0),
+      expiry: getField(parts, 'expiry') || '',
+      strike: parseNum(getField(parts, 'strike'), 0),
+      optionType: (getField(parts, 'optionType') || '').toUpperCase(),
       entry,
       exit,
       pnl: Number.isFinite(pnl) ? pnl : 0,
@@ -637,7 +686,7 @@ function parseCsv(text) {
       r: parseNum(getField(parts, 'r'), 0),
       tags: String(getField(parts, 'tags') || '').split(/[|;,]/).map(s => s.trim()).filter(Boolean),
       notes: getField(parts, 'notes') || ''
-    });
+    }));
   }
   return rows;
 }
@@ -682,7 +731,7 @@ function renderDataOps() {
     const valid = parsed.filter(t => t.symbol && Number.isFinite(Number(t.entry)) && Number.isFinite(Number(t.exit)));
     const skipped = parsed.length - valid.length;
 
-    const imported = valid.map(t => ({
+    const imported = valid.map(t => normalizeTradeSchema({
       ...t,
       commission: Number(t.commission || 0) || (Number(t.qty || 1) * Number(state.commissionPerContractRt || 0)),
       id: String(t.id || '').startsWith('CSV-') ? t.id : `CSV-${t.id || Date.now()}`
@@ -797,7 +846,7 @@ function renderTradeForm() {
       if (!Number.isNaN(d.getTime())) entryTimestamp = d.toISOString();
     }
 
-    const trade = {
+    const trade = normalizeTradeSchema({
       id: state.editTradeId || `MAN-${Date.now()}`,
       date: tradeDate,
       entryTime,
@@ -813,7 +862,7 @@ function renderTradeForm() {
       r: Number(fd.get('r') || 0),
       tags: String(fd.get('tags') || '').split(',').map(x => x.trim()).filter(Boolean),
       notes: String(fd.get('notes') || '')
-    };
+    });
 
     const errs = validateTradeInput(trade, state.data.trades || []);
     const errHost = host.querySelector('#trade-form-errors');
