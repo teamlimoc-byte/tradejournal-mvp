@@ -66,8 +66,13 @@
         const now = new Date();
         const autoDate = d.date || now.toISOString().slice(0,10);
         const autoTime = d.time || nowHHMM();
+        const noTradeBanner = s.grade === 'NO TRADE'
+          ? `<div style="margin-bottom:10px; padding:10px 12px; border:1px solid rgba(239,68,68,.45); background:rgba(239,68,68,.12); color:#fecaca; border-radius:10px; font-weight:700;">⛔ NO TRADE — Checklist conditions not met. Stand down and wait for A+ setup.</div>`
+          : '';
+
         root.innerHTML = `
           <div class="panel">
+            ${noTradeBanner}
             <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr));">
               <div class="field"><label>Date (auto)</label><input type="date" name="date" value="${autoDate}" /></div>
               <div class="field"><label>Direction</label><select name="direction"><option ${d.direction==='Long'?'selected':''}>Long</option><option ${d.direction==='Short'?'selected':''}>Short</option></select></div>
