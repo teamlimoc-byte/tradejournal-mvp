@@ -88,7 +88,13 @@
               ${yn('emotionCheck','Emotion check passed (no FOMO/revenge)?')}
             </div>
             <div class="toolbar" style="grid-template-columns: 1fr; margin-top:10px;">
-              <div class="field"><label>Checklist Grade</label><div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.2rem;">${s.grade} (${s.yes}/${s.total})</div></div>
+              <div class="field">
+                <label>Checklist Grade</label>
+                <div class="kpi-value ${s.grade==='A+'?'money-pos':(s.grade==='NO TRADE'?'money-neg':'')}" style="font-size:1.2rem;">${s.grade} (${s.yes}/${s.total})</div>
+                <div class="small" style="margin-top:4px; color:${s.grade==='NO TRADE'?'#fecaca':(s.grade==='A+'?'#86efac':'var(--muted)')};">
+                  ${s.grade==='NO TRADE' ? '⛔ NO TRADE — conditions not met. Wait for A+.' : (s.grade==='A+' ? '✅ A+ setup quality — execution allowed.' : '⚠️ B setup — reduce size or wait for cleaner confirmation.')}
+                </div>
+              </div>
             </div>
             <div class="field" style="margin-top:10px;"><label>Checklist Notes</label><textarea name="notes" rows="2">${d.notes||''}</textarea></div>
             <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;"><button id="ck-save" class="btn" type="button">Save Checklist</button><button id="ck-reset" class="btn" type="button">Reset</button></div>
