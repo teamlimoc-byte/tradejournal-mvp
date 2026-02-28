@@ -35,6 +35,8 @@ body {
 a { color: inherit; text-decoration: none; }
 .container { max-width: 1200px; margin: 0 auto; padding: 18px; }
 
+:root { --table-sticky-offset: 56px; }
+
 .topbar {
   position: sticky;
   top: 0;
@@ -88,6 +90,12 @@ input, select, textarea {
 table { width: 100%; border-collapse: collapse; min-width: 860px; }
 th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
 th { color: var(--muted); font-weight: 600; text-align: left; white-space: nowrap; }
+.table-wrap thead th {
+  position: sticky;
+  top: var(--table-sticky-offset);
+  z-index: 6;
+  background: var(--panel);
+}
 tr[data-id]:hover { background: var(--panel-soft); }
 
 .badge {
@@ -219,6 +227,7 @@ footer { color: var(--muted); text-align:center; padding: 20px 0 10px; font-size
   .reports-toolbar { grid-template-columns: 1fr; }
   .container { padding: 12px; }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
+  :root { --table-sticky-offset: 98px; }
 
   .topbar .container {
     flex-direction: column;
@@ -236,5 +245,25 @@ footer { color: var(--muted); text-align:center; padding: 20px 0 10px; font-size
   .nav-link, #theme-toggle {
     flex: 0 0 auto;
     white-space: nowrap;
+    min-height: 40px;
+    padding: 9px 12px;
+  }
+
+  /* Checklist readability + tap targets */
+  .checklist-page .field label {
+    font-size: .84rem;
+    letter-spacing: .02em;
+  }
+  .checklist-page input,
+  .checklist-page select,
+  .checklist-page textarea,
+  .checklist-page .btn {
+    min-height: 42px;
+    font-size: .98rem;
+  }
+  .checklist-page .yn-btn {
+    min-width: 84px;
+    min-height: 42px;
+    font-weight: 600;
   }
 }

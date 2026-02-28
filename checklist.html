@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trading Platform MVP — Pre-Trade Checklist</title>
-  <link rel="stylesheet" href="./assets/styles.css?v=20260227j" />
+  <link rel="stylesheet" href="./assets/styles.css?v=20260228m3" />
 </head>
 <body class="checklist-page">
   <header class="topbar">
@@ -30,7 +30,7 @@
   </main>
 
   <footer>Static/offline-friendly build for GitHub Pages</footer>
-  <script src="./assets/app.js?v=20260227zz"></script>
+  <script src="./assets/app.js?v=20260228m3"></script>
   <script>
     (function(){
       const key = 'mvp_pretrade_checklist_v1';
@@ -73,19 +73,19 @@
         root.innerHTML = `
           <div class="panel">
             ${noTradeBanner}
-            <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr));">
+            <div class="toolbar" style="grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr);">
               <div class="field"><label>Date (auto)</label><input type="date" name="date" value="${autoDate}" /></div>
               <div class="field"><label>Direction</label><select name="direction"><option ${d.direction==='Long'?'selected':''}>Long</option><option ${d.direction==='Short'?'selected':''}>Short</option></select></div>
             </div>
             <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr)); margin-top:10px;">
-              ${yn('mtfAligned','3/4+ MTF aligned with direction?')}
-              ${yn('biasAligned','Bias matches direction?')}
-              ${yn('aPlusWindow','A+ window?')}
-              ${yn('bosConfirmed','BOS confirmation present?')}
-              ${yn('orbCondition','ORB condition met?')}
-              ${yn('ema10mRule','10m 8EMA rule satisfied?')}
-              ${yn('notDeadzone','Not deadzone?')}
-              ${yn('emotionCheck','Emotion check passed (no FOMO/revenge)?')}
+              ${yn('mtfAligned','3/4 MTF ALIGNED?')}
+              ${yn('biasAligned','BIAS MATCHED?')}
+              ${yn('aPlusWindow','A+ WINDOW?')}
+              ${yn('bosConfirmed','BOS CONFIRMED?')}
+              ${yn('orbCondition','ORB CONDITION MET?')}
+              ${yn('ema10mRule','10M 8EMA RULE OK?')}
+              ${yn('notDeadzone','NOT DEADZONE?')}
+              ${yn('emotionCheck','EMOTION CHECK PASS?')}
             </div>
             <div class="toolbar" style="grid-template-columns: 1fr; margin-top:10px;">
               <div class="field">
@@ -102,7 +102,7 @@
 
           <div class="panel" style="margin-top:12px;">
             <h3 style="margin:0 0 10px;">Quick Trade Entry (same page)</h3>
-            <div class="toolbar" style="grid-template-columns: repeat(2,minmax(0,1fr));">
+            <div class="toolbar" style="grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr);">
               <div class="field"><label>Date (auto)</label><input name="t_date" type="date" value="${autoDate}" /></div>
               <div class="field"><label>Entry Time (auto)</label><input name="t_time" type="time" value="${autoTime}" /></div>
               <div class="field"><label>Symbol</label><input name="t_symbol" placeholder="MNQH6" value="MNQH6" /></div>
