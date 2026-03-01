@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trading Platform MVP — Pre-Trade Checklist</title>
-  <link rel="stylesheet" href="./assets/styles.css?v=20260228m3" />
+  <link rel="stylesheet" href="./assets/styles.css?v=20260228m5" />
 </head>
 <body class="checklist-page">
   <header class="topbar">
@@ -30,7 +30,7 @@
   </main>
 
   <footer>Static/offline-friendly build for GitHub Pages</footer>
-  <script src="./assets/app.js?v=20260228m3"></script>
+  <script src="./assets/app.js?v=20260228m5"></script>
   <script>
     (function(){
       const key = 'mvp_pretrade_checklist_v1';
@@ -41,12 +41,12 @@
       const def = {
         date: new Date().toISOString().slice(0,10), time:'', direction:'Long',
         mtfAligned:'', biasAligned:'', aPlusWindow:'', bosConfirmed:'', orbCondition:'',
-        ema10mRule:'', notDeadzone:'', emotionCheck:'', notes:''
+        clearPath:'', waitOneMin:'', emotionCheck:'', notes:''
       };
       const load = () => { try { return Object.assign({}, def, JSON.parse(localStorage.getItem(key)||'{}')); } catch { return Object.assign({}, def); } };
       const save = (d) => localStorage.setItem(key, JSON.stringify(d));
       const score = (d) => {
-        const fields = ['mtfAligned','biasAligned','aPlusWindow','bosConfirmed','orbCondition','ema10mRule','notDeadzone','emotionCheck'];
+        const fields = ['mtfAligned','biasAligned','aPlusWindow','bosConfirmed','orbCondition','clearPath','waitOneMin','emotionCheck'];
         const yes = fields.filter(f => String(d[f]).toLowerCase()==='yes').length;
         const critical = ['mtfAligned','biasAligned','aPlusWindow','emotionCheck'];
         const criticalOk = critical.every(f => String(d[f]).toLowerCase()==='yes');
@@ -83,8 +83,8 @@
               ${yn('aPlusWindow','A+ WINDOW?')}
               ${yn('bosConfirmed','BOS CONFIRMED?')}
               ${yn('orbCondition','ORB CONDITION MET?')}
-              ${yn('ema10mRule','10M 8EMA RULE OK?')}
-              ${yn('notDeadzone','NOT DEADZONE?')}
+              ${yn('clearPath','CLEAR PATH TO TARGET?')}
+              ${yn('waitOneMin','WAITED 1 MORE CANDLE?')}
               ${yn('emotionCheck','EMOTION CHECK PASS?')}
             </div>
             <div class="toolbar" style="grid-template-columns: 1fr; margin-top:10px;">
@@ -169,7 +169,7 @@
             commission: num('t_comm',0),
             r: num('t_r',0),
             tags: ['checklist', `grade:${ss.grade}`],
-            notes: `${val('t_notes')} | Checklist ${ss.grade} (${ss.yes}/${ss.total}) | mtf:${n.mtfAligned||'-'} bias:${n.biasAligned||'-'} A+:${n.aPlusWindow||'-'} BOS:${n.bosConfirmed||'-'} ORB:${n.orbCondition||'-'} 10mEMA:${n.ema10mRule||'-'} deadzone:${n.notDeadzone||'-'} emotion:${n.emotionCheck||'-'}${n.notes?` | ${n.notes}`:''}`,
+            notes: `${val('t_notes')} | Checklist ${ss.grade} (${ss.yes}/${ss.total}) | mtf:${n.mtfAligned||'-'} bias:${n.biasAligned||'-'} A+:${n.aPlusWindow||'-'} BOS:${n.bosConfirmed||'-'} ORB:${n.orbCondition||'-'} path:${n.clearPath||'-'} wait1m:${n.waitOneMin||'-'} emotion:${n.emotionCheck||'-'}${n.notes?` | ${n.notes}`:''}`,
             checklistGrade: ss.grade,
             checklistScore: `${ss.yes}/${ss.total}`,
             checklistCriticalOk: ['mtfAligned','biasAligned','aPlusWindow','emotionCheck'].every(f=>String(n[f]||'').toLowerCase()==='yes'),
