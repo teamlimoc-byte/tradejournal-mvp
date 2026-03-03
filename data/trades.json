@@ -1,6 +1,6 @@
 {
   "source": "live-chat-manual-log",
-  "generatedAt": "2026-03-03T18:39:16Z",
+  "generatedAt": "2026-03-03T18:52:18Z",
   "trades": [
     {
       "id": "CSV-0070",
@@ -483,6 +483,29 @@
       "strategy": "8EMA",
       "status": "Closed",
       "notes": "Entered before 10m close confirmation; SL hit"
+    },
+    {
+      "id": "MAN-20260303-MNQ-SUMMARY",
+      "date": "2026-03-03",
+      "entryTime": "10:30",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Mixed",
+      "setup": "Scalp session summary",
+      "strategy": "Manual summary log",
+      "qty": 1,
+      "entry": 0,
+      "exit": 0,
+      "pnl": 124.5,
+      "commission": 1,
+      "r": 0.0,
+      "tags": [
+        "manual-log",
+        "session-summary",
+        "overtrading"
+      ],
+      "notes": "Manual session summary from broker panel: Total P/L +124.50 on 2026-03-03. Multiple scalp trades in chop; process breach noted.",
+      "status": "closed"
     }
   ],
   "journal": [
