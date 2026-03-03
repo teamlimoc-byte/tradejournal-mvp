@@ -1,9 +1,5 @@
 const DATA_CANDIDATES = [
-  './data/trades.json',
-  './data/live-journal.json',
-  '../../trading/live-journal/output/trades.json',
-  '../live-journal/data/trades.json',
-  '../live-journal/output/trades.json'
+  './data/trades.json'
 ];
 
 const LOCAL_TRADES_KEY = 'trading-platform-mvp.localTrades.v1';
@@ -117,7 +113,8 @@ function syncLocalTradesFromState() {
 async function loadData() {
   for (const path of DATA_CANDIDATES) {
     try {
-      const r = await fetch(path, { cache: 'no-store' });
+      const bust = `${path}${path.includes('?') ? '&' : '?'}t=${Date.now()}`;
+      const r = await fetch(bust, { cache: 'no-store' });
       if (!r.ok) continue;
       const parsed = await r.json();
       if (parsed?.trades?.length) {
