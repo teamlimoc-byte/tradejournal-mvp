@@ -192,6 +192,24 @@
       "notes": "Long in A+ window with 250/125 ATM; moved SL to BE and exited small winner."
     },
     {
+      "id": "MAN-20260224-00",
+      "date": "2026-02-24",
+      "symbol": "MNQH6",
+      "side": "Long",
+      "setup": "2x BOS + FVG Retest",
+      "qty": 1,
+      "entry": 25012.5,
+      "exit": 24985,
+      "pnl": -55,
+      "commission": 1,
+      "r": -1,
+      "tags": [
+        "manual-log",
+        "draft-restored"
+      ],
+      "notes": "Restored first trade record from earlier log state."
+    },
+    {
       "id": "MAN-20260224-01",
       "date": "2026-02-24",
       "symbol": "MNQH6",
@@ -209,24 +227,6 @@
         "stop-respected"
       ],
       "notes": "Short entry at 25000 after 2x BOS + FVG retest. Held original plan in chop and accepted stop at 25032 without revenge trade."
-    },
-    {
-      "id": "MAN-20260224-00",
-      "date": "2026-02-24",
-      "symbol": "MNQH6",
-      "side": "Long",
-      "setup": "2x BOS + FVG Retest",
-      "qty": 1,
-      "entry": 25012.5,
-      "exit": 24985,
-      "pnl": -55,
-      "commission": 1,
-      "r": -1,
-      "tags": [
-        "manual-log",
-        "draft-restored"
-      ],
-      "notes": "Restored first trade record from earlier log state."
     },
     {
       "id": "MAN-20260225-01",
@@ -364,6 +364,35 @@
       "notes": "Buy stop filled 24907.75; sell stop filled 24876.50."
     },
     {
+      "id": "MAN-20260227-CC-01",
+      "date": "2026-02-27",
+      "entryTime": "06:39",
+      "assetType": "options",
+      "symbol": "AAPL 285C 2026-03-20",
+      "underlying": "AAPL",
+      "side": "Short",
+      "setup": "Covered Call",
+      "strategy": "Covered Call",
+      "qty": 1,
+      "contracts": 1,
+      "expiry": "2026-03-20",
+      "strike": 285,
+      "optionType": "CALL",
+      "entry": 2.88,
+      "exit": 0.6,
+      "pnl": 228.0,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "options",
+        "covered-call",
+        "income"
+      ],
+      "notes": "Covered call closed on 2026-03-02 at 0.60; realized pnl +228.00.",
+      "status": "closed",
+      "exitDate": "2026-03-02"
+    },
+    {
       "id": "MAN-20260227-02",
       "date": "2026-02-27",
       "entryTime": "06:51",
@@ -440,35 +469,6 @@
       "notes": "Buy market 24917.00; sell market 24905.75."
     },
     {
-      "id": "MAN-20260227-CC-01",
-      "date": "2026-02-27",
-      "entryTime": "06:39",
-      "assetType": "options",
-      "symbol": "AAPL 285C 2026-03-20",
-      "underlying": "AAPL",
-      "side": "Short",
-      "setup": "Covered Call",
-      "strategy": "Covered Call",
-      "qty": 1,
-      "contracts": 1,
-      "expiry": "2026-03-20",
-      "strike": 285,
-      "optionType": "CALL",
-      "entry": 2.88,
-      "exit": 0.6,
-      "pnl": 228.0,
-      "commission": 1,
-      "r": 0,
-      "tags": [
-        "options",
-        "covered-call",
-        "income"
-      ],
-      "notes": "Covered call closed on 2026-03-02 at 0.60; realized pnl +228.00.",
-      "status": "closed",
-      "exitDate": "2026-03-02"
-    },
-    {
       "id": "2026-03-02-mnqh6-0824-long-1",
       "date": "2026-03-02",
       "time": "08:24",
@@ -485,26 +485,233 @@
       "notes": "Entered before 10m close confirmation; SL hit"
     },
     {
-      "id": "MAN-20260303-MNQ-SUMMARY",
+      "id": "MAN-20260303-01",
       "date": "2026-03-03",
-      "entryTime": "10:30",
+      "entryTime": "06:45",
       "symbol": "MNQH6",
       "assetType": "futures",
-      "side": "Mixed",
-      "setup": "Scalp session summary",
-      "strategy": "Manual summary log",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
       "qty": 1,
-      "entry": 0,
-      "exit": 0,
-      "pnl": 124.5,
+      "entry": 24569.5,
+      "exit": 24586.0,
+      "pnl": 33.0,
       "commission": 1,
-      "r": 0.0,
+      "r": 0,
       "tags": [
         "manual-log",
-        "session-summary",
-        "overtrading"
+        "csv-import",
+        "scalp"
       ],
-      "notes": "Manual session summary from broker panel: Total P/L +124.50 on 2026-03-03. Multiple scalp trades in chop; process breach noted.",
+      "notes": "buyFillId 400171094239 / sellFillId 400171094267 / duration 47sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-02",
+      "date": "2026-03-03",
+      "entryTime": "06:56",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24493.5,
+      "exit": 24515.5,
+      "pnl": 44.0,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094304 / sellFillId 400171094276 / duration 1min 53sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-03",
+      "date": "2026-03-03",
+      "entryTime": "07:04",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24469.25,
+      "exit": 24478.0,
+      "pnl": 17.5,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094341 / sellFillId 400171094313 / duration 22sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-04",
+      "date": "2026-03-03",
+      "entryTime": "07:07",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24496.0,
+      "exit": 24512.75,
+      "pnl": 33.5,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094378 / sellFillId 400171094350 / duration 25sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-05",
+      "date": "2026-03-03",
+      "entryTime": "07:56",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Short",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24407.25,
+      "exit": 24406.75,
+      "pnl": -1.0,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094415 / sellFillId 400171094387 / duration 23sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-06",
+      "date": "2026-03-03",
+      "entryTime": "08:13",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24571.0,
+      "exit": 24583.75,
+      "pnl": 25.5,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094424 / sellFillId 400171094452 / duration 30sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-07",
+      "date": "2026-03-03",
+      "entryTime": "09:19",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24677.75,
+      "exit": 24691.75,
+      "pnl": 28.0,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094461 / sellFillId 400171094493 / duration 3min 56sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-08",
+      "date": "2026-03-03",
+      "entryTime": "10:09",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24692.25,
+      "exit": 24696.75,
+      "pnl": 9.0,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094502 / sellFillId 400171094534 / duration 27sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-09",
+      "date": "2026-03-03",
+      "entryTime": "10:13",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Short",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24689.75,
+      "exit": 24658.5,
+      "pnl": -62.5,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094543 / sellFillId 400171094568 / duration 53sec",
+      "status": "closed"
+    },
+    {
+      "id": "MAN-20260303-10",
+      "date": "2026-03-03",
+      "entryTime": "10:14",
+      "symbol": "MNQH6",
+      "assetType": "futures",
+      "side": "Long",
+      "setup": "Scalp",
+      "strategy": "Manual import (fills csv)",
+      "qty": 1,
+      "entry": 24673.0,
+      "exit": 24676.75,
+      "pnl": 7.5,
+      "commission": 1,
+      "r": 0,
+      "tags": [
+        "manual-log",
+        "csv-import",
+        "scalp"
+      ],
+      "notes": "buyFillId 400171094580 / sellFillId 400171094612 / duration 39sec",
       "status": "closed"
     }
   ],
