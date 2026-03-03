@@ -1,6 +1,6 @@
 {
   "source": "live-chat-manual-log",
-  "generatedAt": "2026-02-26T21:15:00+00:00",
+  "generatedAt": "2026-03-03T18:39:16Z",
   "trades": [
     {
       "id": "CSV-0070",
@@ -610,6 +610,14 @@
       "content": "Session summary: 2 executed trades logged for today. MNQH6 Long, qty 1, entry 24929.50, exit 24898.25, gross PnL -62.50, commission 1.00. AAPL 285C (2026-03-20) covered-call close, qty 1, sold 2.88 and bought back 0.60, gross PnL +228.00. Net gross across logged trades: +165.50. Post-trade behavior improved: no revenge trades; stepped away after stress spike. Recovery context (Oura, previous night): Sleep 73, Readiness 74.",
       "ouraSleepScore": 73,
       "ouraReadinessScore": 74
+    },
+    {
+      "date": "2026-03-03",
+      "title": "Process Review \u2014 Overtrading in Chop, Exit Discipline Reset",
+      "mood": "Honest self-assessment; slight tilt carryover from prior AAPL incident",
+      "content": "Session summary: Overtraded via scalp behavior in choppy/dead-zone conditions despite checklist hits. Main issue was process drift, not setup identification. Trader noted emotional carryover from prior AAPL covered-call execution mistake, likely increasing urgency and early-profit protection behavior. Key insight: results can look okay while process grade is poor; this is risky reinforcement. Reset plan locked for next session: (1) No trades in CHOPPY/DEAD ZONE unless clean break + retest + hold, (2) Option A exits: take 50% at +1R, move stop to BE after structure confirms, hold runner for 2R or structure break, (3) AAPL no-touch first 90 minutes, (4) max 3 trades/day, (5) auto shutdown after second rule break. Priority for next session: process quality over PnL outcome.",
+      "ouraSleepScore": 86,
+      "ouraReadinessScore": 90
     }
   ]
 }
