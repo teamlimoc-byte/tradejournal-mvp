@@ -739,7 +739,7 @@
       "qty": 1,
       "pnl": -66.5,
       "result": "LOSS",
-      "notes": "Manual post-session update from chat: day PnL -66.50, balance 24655.00. Includes non-system catch-knife entry note.",
+      "notes": "Session summary: Executed multiple longs with mixed quality; one non-system catch-knife entry caused avoidable drawdown. Best execution came from waiting for reclaim confirmation (e.g., reclaim above 25204 with two closes) and then honoring predefined SL/TP. Psychology win: committed to consistency over outcome, avoided stop widening, and accepted stop-outs without revenge escalation. Process leak identified: entering from support hold alone without full trigger sequence. Rule reinforced for next session: No reclaim + no full setup = no trade. Risk plan: A+ setups only, max 3 trades, start 0.5x if conditions are noisy, and treat dead-zone as no-trade unless explicit rule allows.",
       "source": "manual-chat-update",
       "balance": 24655.0,
       "createdAt": "2026-03-04T21:35:29.981138+00:00"
@@ -889,7 +889,7 @@
       "worstTrade": null,
       "ouraSleepScore": 82,
       "ouraReadinessScore": 82,
-      "content": "No executed trades were logged today after session close. Focus was on discipline and preserving capital by avoiding subpar setups. Recovery context from Oura (previous night): Sleep Score 82, Readiness Score 82 \u2014 solid baseline, so the key lesson is process adherence rather than energy limitation. Plan for next session: pre-define A+ setups, commit to max 3 trades, and avoid forcing entries during chop.",
+      "content": "Session summary: Executed multiple longs with mixed quality; one non-system catch-knife entry caused avoidable drawdown. Best execution came from waiting for reclaim confirmation (e.g., reclaim above 25204 with two closes) and then honoring predefined SL/TP. Psychology win: committed to consistency over outcome, avoided stop widening, and accepted stop-outs without revenge escalation. Process leak identified: entering from support hold alone without full trigger sequence. Rule reinforced for next session: No reclaim + no full setup = no trade. Risk plan: A+ setups only, max 3 trades, start 0.5x if conditions are noisy, and treat dead-zone as no-trade unless explicit rule allows.",
       "lessons": [
         "No-trade days are acceptable when edge is unclear; capital preservation is a valid outcome.",
         "Keep pre-session criteria strict to reduce impulsive entries.",
@@ -902,7 +902,7 @@
       ],
       "pnl": -66.5,
       "balance": 24655.0,
-      "notes": "Updated from chat: executed non-system catch-knife trade; recommitted to process consistency."
+      "notes": "Session summary: Executed multiple longs with mixed quality; one non-system catch-knife entry caused avoidable drawdown. Best execution came from waiting for reclaim confirmation (e.g., reclaim above 25204 with two closes) and then honoring predefined SL/TP. Psychology win: committed to consistency over outcome, avoided stop widening, and accepted stop-outs without revenge escalation. Process leak identified: entering from support hold alone without full trigger sequence. Rule reinforced for next session: No reclaim + no full setup = no trade. Risk plan: A+ setups only, max 3 trades, start 0.5x if conditions are noisy, and treat dead-zone as no-trade unless explicit rule allows."
     }
   ]
 }
