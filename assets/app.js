@@ -1317,7 +1317,7 @@ function renderReportsHighlights(selector, snapshot) {
   const host = document.querySelector(selector);
   if (!host) return;
   const top3 = [...(snapshot.bySetup || [])].sort((a, b) => b.pnl - a.pnl).slice(0, 3);
-  const bottom4 = [...(snapshot.bySetup || [])].sort((a, b) => a.pnl - b.pnl).slice(0, 3);
+  const bottom3 = [...(snapshot.bySetup || [])].sort((a, b) => a.pnl - b.pnl).slice(0, 3);
   host.innerHTML = `
     <div class="panel">
       <div class="small muted" style="margin-bottom:6px;">Top 3 Setups</div>
@@ -1566,78 +1566,3 @@ function rerender() {
   rerender();
 })();
 
-
-// REPORTS DATA BACKFILL HOTFIX
-(function reportsDataBackfill(){
-  const fmt=(n)=> (n>=0?'+':'') + Number(n||0).toFixed(2);
-  const pct=(n)=> (Number(n||0)*100).toFixed(1)+'%';
-  const money=(n)=> (n>=0?'+$':'-$') + Math.abs(Number(n||0)).toFixed(2);
-  function byKey(arr,key){
-    const m=new Map();
-    for(const t of arr){
-      const k=(t&&t[key]!=null&&String(t[key]).trim())?String(t[key]).trim():'(none)';
-      const p=Number(t?.pnl||0);
-      const rec=m.get(k)||{count:0,pnl:0,w:0,l:0};
-      rec.count++; rec.pnl+=p; if(p>0) rec.w++; if(p<0) rec.l++;
-      m.set(k,rec);
-    }
-    return [...m.entries()].sort((a,b)=>b[1].pnl-a[1].pnl);
-  }
-  function bucketET(dateStr){
-    try{
-      const d=new Date(dateStr);
-      const et=new Intl.DateTimeFormat('en-US',{hour:'2-digit',hour12:false,timeZone:'America/New_York'}).format(d);
-      const h=Number(et);
-      if(h<10) return 'Pre-10';
-      if(h<12) return '10-12';
-      if(h<14) return '12-14';
-      return '14+';
-    }catch{return '(unknown)'}
-  }
-  function weekday(dateStr){
-    try{return new Intl.DateTimeFormat('en-US',{weekday:'short'}).format(new Date(dateStr));}catch{return '(unknown)'}
-  }
-  function ensureListAfterHeading(text, rows){
-    const els=[...document.querySelectorAll('h1,h2,h3,h4,strong,div,p')];
-    const h=els.find(e=> (e.textContent||'').trim()===text);
-    if(!h) return false;
-    let c=h.nextElementSibling;
-    if(!c || !c.classList || !c.classList.contains('report-hotfix-list')){
-      c=document.createElement('div');
-      c.className='report-hotfix-list';
-      c.style.margin='8px 0 18px';
-      c.style.fontSize='12px';
-      c.style.opacity='0.95';
-      h.insertAdjacentElement('afterend',c);
-    }
-    c.innerHTML=rows.length?rows.map(r=>`<div style="display:flex;justify-content:space-between;gap:12px;padding:2px 0;"><span>${r.left}</span><span style="font-weight:600;${r.rightColor?`color:${r.rightColor};`:''}">${r.right}</span></div>`).join(''):'<div style="opacity:.7">No data</div>';
-    return true;
-  }
-  async function run(){
-    if(!location.href.includes('teamlimoc-byte.github.io') && !location.href.includes('trading-platform-mvp')) return;
-    try{
-      const r=await fetch('./data/trades.json?rb=reports1',{cache:'no-store'});
-      if(!r.ok) return;
-      const j=await r.json();
-      const trades=(j?.trades||[]).filter(t=>t && t.date);
-      if(!trades.length) return;
-
-      const setup=byKey(trades,'setup').slice(0,6).map(([k,v])=>({left:`${k} (${v.count})`, right:money(v.pnl), rightColor:v.pnl>=0?'#34d399':'#f87171'}));
-      const symbol=byKey(trades,'symbol').slice(0,6).map(([k,v])=>({left:`${k} (${v.count})`, right:money(v.pnl), rightColor:v.pnl>=0?'#34d399':'#f87171'}));
-      const tag=byKey(trades,'tag').slice(0,6).map(([k,v])=>({left:`${k} (${v.count})`, right:money(v.pnl), rightColor:v.pnl>=0?'#34d399':'#f87171'}));
-
-      const bucketRows=(()=>{const m=new Map(); for(const t of trades){const b=bucketET(t.date); const p=Number(t.pnl||0); const rec=m.get(b)||{c:0,p:0}; rec.c++; rec.p+=p; m.set(b,rec);} return [...m.entries()].map(([k,v])=>({left:`${k} (${v.c})`, right:money(v.p), rightColor:v.p>=0?'#34d399':'#f87171'}));})();
-      const weekRows=(()=>{const m=new Map(); for(const t of trades){const b=weekday(t.date); const p=Number(t.pnl||0); const rec=m.get(b)||{c:0,p:0}; rec.c++; rec.p+=p; m.set(b,rec);} return [...m.entries()].map(([k,v])=>({left:`${k} (${v.c})`, right:money(v.p), rightColor:v.p>=0?'#34d399':'#f87171'}));})();
-
-      ensureListAfterHeading('By Setup', setup);
-      ensureListAfterHeading('By Symbol', symbol);
-      ensureListAfterHeading('By Tag', tag);
-      ensureListAfterHeading('By Time Bucket (ET)', bucketRows);
-      ensureListAfterHeading('P&L by Weekday', weekRows);
-    } catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', run);
-  else run();
-  setTimeout(run, 700);
-  setTimeout(run, 1800);
-})();
