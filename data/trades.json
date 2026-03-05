@@ -380,7 +380,7 @@
       "optionType": "CALL",
       "entry": 2.88,
       "exit": 0.6,
-      "pnl": 228.0,
+      "pnl": 228,
       "commission": 1,
       "r": 0,
       "tags": [
@@ -478,7 +478,7 @@
       "entry": 24929.5,
       "exit": 24898.25,
       "pnl": -62.5,
-      "commission": 1.0,
+      "commission": 1,
       "setup": "pullback",
       "strategy": "8EMA",
       "status": "Closed",
@@ -495,8 +495,8 @@
       "strategy": "Manual import (fills csv)",
       "qty": 1,
       "entry": 24569.5,
-      "exit": 24586.0,
-      "pnl": 33.0,
+      "exit": 24586,
+      "pnl": 33,
       "commission": 1,
       "r": 0,
       "tags": [
@@ -534,7 +534,7 @@
       "qty": 1,
       "entry": 24493.5,
       "exit": 24515.5,
-      "pnl": 44.0,
+      "pnl": 44,
       "commission": 1,
       "r": 0,
       "tags": [
@@ -556,7 +556,7 @@
       "strategy": "Manual import (fills csv)",
       "qty": 1,
       "entry": 24469.25,
-      "exit": 24478.0,
+      "exit": 24478,
       "pnl": 17.5,
       "commission": 1,
       "r": 0,
@@ -578,7 +578,7 @@
       "setup": "Scalp",
       "strategy": "Manual import (fills csv)",
       "qty": 1,
-      "entry": 24496.0,
+      "entry": 24496,
       "exit": 24512.75,
       "pnl": 33.5,
       "commission": 1,
@@ -603,7 +603,7 @@
       "qty": 1,
       "entry": 24407.25,
       "exit": 24406.75,
-      "pnl": -1.0,
+      "pnl": -1,
       "commission": 1,
       "r": 0,
       "tags": [
@@ -624,7 +624,7 @@
       "setup": "Scalp",
       "strategy": "Manual import (fills csv)",
       "qty": 1,
-      "entry": 24571.0,
+      "entry": 24571,
       "exit": 24583.75,
       "pnl": 25.5,
       "commission": 1,
@@ -649,7 +649,7 @@
       "qty": 1,
       "entry": 24677.75,
       "exit": 24691.75,
-      "pnl": 28.0,
+      "pnl": 28,
       "commission": 1,
       "r": 0,
       "tags": [
@@ -672,7 +672,7 @@
       "qty": 1,
       "entry": 24692.25,
       "exit": 24696.75,
-      "pnl": 9.0,
+      "pnl": 9,
       "commission": 1,
       "r": 0,
       "tags": [
@@ -716,7 +716,7 @@
       "setup": "Scalp",
       "strategy": "Manual import (fills csv)",
       "qty": 1,
-      "entry": 24673.0,
+      "entry": 24673,
       "exit": 24676.75,
       "pnl": 7.5,
       "commission": 1,
@@ -741,30 +741,30 @@
       "result": "LOSS",
       "notes": "Session summary: Executed multiple longs with mixed quality; one non-system catch-knife entry caused avoidable drawdown. Best execution came from waiting for reclaim confirmation (e.g., reclaim above 25204 with two closes) and then honoring predefined SL/TP. Psychology win: committed to consistency over outcome, avoided stop widening, and accepted stop-outs without revenge escalation. Process leak identified: entering from support hold alone without full trigger sequence. Rule reinforced for next session: No reclaim + no full setup = no trade. Risk plan: A+ setups only, max 3 trades, start 0.5x if conditions are noisy, and treat dead-zone as no-trade unless explicit rule allows.",
       "source": "manual-chat-update",
-      "balance": 24655.0,
+      "balance": 24655,
       "createdAt": "2026-03-04T21:35:29.981138+00:00"
     }
   ],
   "journal": [
     {
       "date": "2026-02-21",
-      "title": "Live Journal Auto Entry \u2014 2026-02-21 09:45 AM PST",
-      "mood": "\u2014",
+      "title": "Live Journal Auto Entry — 2026-02-21 09:45 AM PST",
+      "mood": "—",
       "content": "",
       "ouraSleepScore": 81,
       "ouraReadinessScore": 78
     },
     {
       "date": "2026-02-20",
-      "title": "Trading Journal \u2014 Friday, February 20, 2026",
-      "mood": "\u2014",
+      "title": "Trading Journal — Friday, February 20, 2026",
+      "mood": "—",
       "content": "| Field | Value |",
       "ouraSleepScore": 83,
       "ouraReadinessScore": 80
     },
     {
       "date": "2026-02-19",
-      "title": "Trading Journal \u2014 Feb 19, 2026 (Wednesday)",
+      "title": "Trading Journal — Feb 19, 2026 (Wednesday)",
       "mood": "** Entered despite choppy conditions, hoped ORB bottom would hold",
       "content": "1. ALL MTF down + dead zone = NO TRADE",
       "ouraSleepScore": 76,
@@ -772,7 +772,7 @@
     },
     {
       "date": "2026-02-23",
-      "title": "Trading Journal \u2014 Monday, February 23, 2026",
+      "title": "Trading Journal — Monday, February 23, 2026",
       "mood": "Mixed but improving discipline",
       "content": "Key lesson: No stop order in market = no trade. Process improved after restoring ATM template. Followed TP-or-BE discipline on long setup.\n\nOura (prev night): Sleep 68, Readiness 75.",
       "setupContext": "Volatile session with bearish pressure early, then recovery attempts around key intraday levels. Used 2x BOS + FVG retest logic and A+ window filters.",
@@ -788,7 +788,7 @@
     },
     {
       "date": "2026-02-24",
-      "title": "Trading Journal \u2014 Tuesday, February 24, 2026",
+      "title": "Trading Journal — Tuesday, February 24, 2026",
       "mood": "Calm finish; process-first despite choppy tape",
       "setupContext": "Choppy session with mixed lower-timeframe swings, but valid short thesis appeared with 2x BOS + FVG retest.",
       "execution": "Entered MNQ short at 25000 with predefined SL 25032 and TP 24938.25. Price chopped and eventually tagged stop. No SL widening, no panic exit, no revenge trade.",
@@ -804,15 +804,15 @@
     },
     {
       "date": "2026-02-25",
-      "title": "Trading Journal \u2014 Wednesday, February 25, 2026",
+      "title": "Trading Journal — Wednesday, February 25, 2026",
       "mood": "Disciplined under chop and event-risk pressure",
       "setupContext": "Mixed/choppy session with multiple fake breaks and late-day NVDA earnings risk affecting conviction near highs.",
       "execution": "Trade 1 long (25312.75) stopped at 25278.75 after setup failed. Trade 2 long (25346.25) was valid but extended; exited early at 25339.50 to protect capital before earnings-driven uncertainty.",
       "psychology": "Managed FOMO better by respecting dead-zone rules and prioritizing process over chasing. Caught myself when hope-based thinking appeared.",
       "ruleAdherence": "Good overall: respected stop, avoided dead-zone override, and made defensive exit decision on extended late-day conditions.",
       "whatWentWell": "Followed A+ checklist more consistently, identified hope-vs-rule distinction in real time, and protected capital during uncertain conditions.",
-      "whatToImprove": "Don\u2019t anchor on one signal (e.g., ORB retest) when BOS structure conflicts. Keep execution checklist explicit before entry.",
-      "lessonLearned": "\u201cI\u2019ll exit near BE unless reclaim confirms\u201d is rule-based; \u201cmaybe it comes back\u201d is hope-based. BOS line/level is context, BOS event is break-confirm action.",
+      "whatToImprove": "Don’t anchor on one signal (e.g., ORB retest) when BOS structure conflicts. Keep execution checklist explicit before entry.",
+      "lessonLearned": "“I’ll exit near BE unless reclaim confirms” is rule-based; “maybe it comes back” is hope-based. BOS line/level is context, BOS event is break-confirm action.",
       "nextRule": "At +50% to TP, move SL to BE (or BE +1 tick) unless structure invalidation says otherwise.",
       "ouraSleepScore": 80,
       "ouraReadinessScore": 76,
@@ -820,7 +820,7 @@
     },
     {
       "date": "2026-02-26",
-      "title": "Trading Journal \u2014 Thursday, February 26, 2026",
+      "title": "Trading Journal — Thursday, February 26, 2026",
       "mood": "Disciplined and selective",
       "setupContext": "4 executed trades. Focused on A+ setups, break-retest confirmations, and momentum context while enforcing max-trade discipline.",
       "execution": "Trade 1: short +$13 (partial then protected). Trade 2: long stop-out -$62.50. Trade 3: long +$27 with context-managed deadzone exit. Trade 4: long +$44 momentum shift capture.",
@@ -836,7 +836,7 @@
     },
     {
       "date": "2026-02-27",
-      "title": "Trading Journal \u2014 Friday, February 27, 2026",
+      "title": "Trading Journal — Friday, February 27, 2026",
       "mood": "Disciplined finish despite choppy entries",
       "setupContext": "Negative-gamma/choppy conditions with repeated fake breaks around ORB and intraday levels.",
       "execution": "5 MNQ trades from platform fills: 2 full stop-outs early, 1 small scalp winner, then 2 defensive exits. Added 1 covered-call overlay (AAPL 285C) for income; position remains open.",
@@ -846,10 +846,10 @@
       "whatToImprove": "Wait for stronger confirmation and avoid early entries in chop; maintain no-long-below-10m-8EMA unless reclaim+hold.",
       "lessonLearned": "In chop, patience and confirmation candles matter more than catching every move.",
       "nextRule": "No long below 10m 8EMA unless reclaim + hold. In uncertainty, wait one more candle (then one more if still unclear).",
-      "content": "Session summary: 5 MNQ trades logged, gross PnL -176.50, commissions 5.00, net PnL -181.50.\nOptions overlay: 1 covered-call entry tracked (current marked PnL +204.00; open positions: 1).\n\nMindset quotes:\n- \"Regret = pause. Rules = click.\"\n- \"That's how traders level up \u2014 not by catching every move, but by controlling themselves in real time.\"\n- \"Wait one more candle. Then wait one more candle if still unclear.\"\n\nRecovery context (Oura, previous night): Sleep 79, Readiness 82.",
+      "content": "Session summary: 5 MNQ trades logged, gross PnL -176.50, commissions 5.00, net PnL -181.50.\nOptions overlay: 1 covered-call entry tracked (current marked PnL +204.00; open positions: 1).\n\nMindset quotes:\n- \"Regret = pause. Rules = click.\"\n- \"That's how traders level up — not by catching every move, but by controlling themselves in real time.\"\n- \"Wait one more candle. Then wait one more candle if still unclear.\"\n\nRecovery context (Oura, previous night): Sleep 79, Readiness 82.",
       "quotes": [
         "Regret = pause. Rules = click.",
-        "That's how traders level up \u2014 not by catching every move, but by controlling themselves in real time.",
+        "That's how traders level up — not by catching every move, but by controlling themselves in real time.",
         "Wait one more candle. Then wait one more candle if still unclear."
       ],
       "ouraSleepScore": 79,
@@ -857,7 +857,7 @@
     },
     {
       "date": "2026-03-02",
-      "title": "Trading Journal \u2014 Monday, March 2, 2026",
+      "title": "Trading Journal — Monday, March 2, 2026",
       "mood": "Disciplined under stress; one controlled loss",
       "setupContext": "High-volatility, squeeze-prone session; took one long pullback based on 10m 8EMA/trendline confluence.",
       "execution": "Executed 1 MNQ long (entry 24929.50, exit 24898.25) and closed 1 AAPL covered call (sold 2.88, bought back 0.60). Then stood down to avoid emotional overtrading.",
@@ -873,11 +873,19 @@
     },
     {
       "date": "2026-03-03",
-      "title": "Process Review \u2014 Overtrading in Chop, Exit Discipline Reset",
-      "mood": "Honest self-assessment; slight tilt carryover from prior AAPL incident",
-      "content": "Session summary: Overtraded via scalp behavior in choppy/dead-zone conditions despite checklist hits. Main issue was process drift, not setup identification. Trader noted emotional carryover from prior AAPL covered-call execution mistake, likely increasing urgency and early-profit protection behavior. Key insight: results can look okay while process grade is poor; this is risky reinforcement. Reset plan locked for next session: (1) No trades in CHOPPY/DEAD ZONE unless clean break + retest + hold, (2) Option A exits: take 50% at +1R, move stop to BE after structure confirms, hold runner for 2R or structure break, (3) AAPL no-touch first 90 minutes, (4) max 3 trades/day, (5) auto shutdown after second rule break. Priority for next session: process quality over PnL outcome.",
+      "title": "Trading Journal — Monday, March 3, 2026",
+      "mood": "Honest self-assessment. Slight emotional tilt carried over from prior AAPL incident.",
+      "content": "Session summary: Process review day. Overtrading and emotional carryover were the core problems. Strong corrective action taken with a clear reset framework focused on execution discipline over short-term outcome.",
       "ouraSleepScore": 86,
-      "ouraReadinessScore": 90
+      "ouraReadinessScore": 90,
+      "setupContext": "Market conditions were mostly choppy/dead-zone. Setups appeared tradable on checklist surface, but follow-through quality was poor and required stricter filtering.",
+      "execution": "Overtraded scalp-style in low-quality conditions. Main issue was not setup identification but process drift in execution and trade selection. Exit behavior leaned too protective too early due to prior emotional carryover.",
+      "psychology": "Underlying urgency to “do something” influenced decisions. Recognized that acceptable PnL can hide poor process quality, which is dangerous reinforcement.",
+      "ruleAdherence": "Partial. Checklist awareness existed, but dead-zone participation and overtrading behavior violated process intent.",
+      "whatWentWell": "Honest review instead of rationalizing results. Identified root cause (process drift > strategy failure). Locked concrete reset rules for next session.",
+      "whatToImprove": "No CHOPPY/DEAD-ZONE trades without break + retest + hold. Improve exit structure discipline (no premature protection from fear). Reduce emotional carryover from prior-day mistakes.",
+      "lessonLearned": "Good outcomes with bad process are a trap. Process quality must be graded independently from PnL.",
+      "nextRule": "No trade in chop/dead-zone unless clean break + retest + hold. Max 3 trades/day. Auto shutdown after second rule break."
     },
     {
       "date": "2026-03-04",
@@ -889,7 +897,7 @@
       "worstTrade": null,
       "ouraSleepScore": 82,
       "ouraReadinessScore": 82,
-      "content": "Session summary: Executed multiple longs with mixed quality; one non-system catch-knife entry caused avoidable drawdown. Best execution came from waiting for reclaim confirmation (e.g., reclaim above 25204 with two closes) and then honoring predefined SL/TP. Psychology win: committed to consistency over outcome, avoided stop widening, and accepted stop-outs without revenge escalation. Process leak identified: entering from support hold alone without full trigger sequence. Rule reinforced for next session: No reclaim + no full setup = no trade. Risk plan: A+ setups only, max 3 trades, start 0.5x if conditions are noisy, and treat dead-zone as no-trade unless explicit rule allows.",
+      "content": "Session summary: Net red day (~-66.5), but process quality improved versus prior session: better stop discipline, reduced emotional escalation, and clearer identification of valid vs invalid entries.",
       "lessons": [
         "No-trade days are acceptable when edge is unclear; capital preservation is a valid outcome.",
         "Keep pre-session criteria strict to reduce impulsive entries.",
@@ -901,8 +909,18 @@
         "no-trade-day"
       ],
       "pnl": -66.5,
-      "balance": 24655.0,
-      "notes": "Session summary: Executed multiple longs with mixed quality; one non-system catch-knife entry caused avoidable drawdown. Best execution came from waiting for reclaim confirmation (e.g., reclaim above 25204 with two closes) and then honoring predefined SL/TP. Psychology win: committed to consistency over outcome, avoided stop widening, and accepted stop-outs without revenge escalation. Process leak identified: entering from support hold alone without full trigger sequence. Rule reinforced for next session: No reclaim + no full setup = no trade. Risk plan: A+ setups only, max 3 trades, start 0.5x if conditions are noisy, and treat dead-zone as no-trade unless explicit rule allows."
+      "balance": 24655,
+      "notes": "Session summary: Executed multiple longs with mixed quality; one non-system catch-knife entry caused avoidable drawdown. Best execution came from waiting for reclaim confirmation (e.g., reclaim above 25204 with two closes) and then honoring predefined SL/TP. Psychology win: committed to consistency over outcome, avoided stop widening, and accepted stop-outs without revenge escalation. Process leak identified: entering from support hold alone without full trigger sequence. Rule reinforced for next session: No reclaim + no full setup = no trade. Risk plan: A+ setups only, max 3 trades, start 0.5x if conditions are noisy, and treat dead-zone as no-trade unless explicit rule allows.",
+      "title": "Trading Journal — Tuesday, March 4, 2026",
+      "mood": "More stable and process-aware. Intentional focus on consistency over outcome.",
+      "setupContext": "Mixed-quality long opportunities in noisy conditions. Edge existed only when reclaim confirmation was clear; support-hold-only entries were unreliable.",
+      "execution": "Multiple long attempts with mixed quality. One non-system catch-knife entry created avoidable drawdown. Best execution came from waiting for reclaim confirmation (ex: reclaim above 25204 with confirming closes) and honoring predefined SL/TP.",
+      "psychology": "Psychology improved after recognizing process leaks. No stop widening, no revenge escalation after losses. Stronger acceptance of stop-outs.",
+      "ruleAdherence": "Moderate-to-good. Broke process on one non-system entry, but recovered discipline and maintained hard risk controls.",
+      "whatWentWell": "Honored stops. Avoided revenge spirals. Returned to confirmation-based entries. Kept consistency as priority.",
+      "whatToImprove": "Remove support-hold-only entries without full trigger sequence. Treat dead-zone as default no-trade unless rule-based exception triggers. Keep A+ filter strict when market quality drops.",
+      "lessonLearned": "No reclaim + no full setup = no trade. Capital preservation and process protection are valid wins in unclear tape.",
+      "nextRule": "A+ setups only. Max 3 trades. Start 0.5x in noisy conditions. Dead-zone = no trade unless explicit confirmation rules are met."
     }
   ]
 }
