@@ -1565,3 +1565,58 @@ function rerender() {
   state.data = await loadData();
   rerender();
 })();
+
+
+// REPORTS UX HOTFIX
+
+(function reportsUxHotfix(){
+  function isoToday(){
+    const d=new Date();
+    const tzOffset=d.getTimezoneOffset()*60000;
+    return new Date(d.getTime()-tzOffset).toISOString().slice(0,10);
+  }
+  function apply(){
+    try {
+      // Rename scaffold header if present
+      const headers=[...document.querySelectorAll('h1,h2,h3')];
+      headers.forEach(h=>{
+        if((h.textContent||'').includes('Reports (Scaffold)')) h.textContent='Reports';
+      });
+
+      // Default report date range to Today when empty
+      const dateInputs=[...document.querySelectorAll('input[type="date"]')];
+      if(dateInputs.length>=2){
+        const from=dateInputs[0], to=dateInputs[1];
+        const t=isoToday();
+        let changed=false;
+        if(!from.value){ from.value=t; changed=true; }
+        if(!to.value){ to.value=t; changed=true; }
+        if(changed){
+          from.dispatchEvent(new Event('input',{bubbles:true}));
+          from.dispatchEvent(new Event('change',{bubbles:true}));
+          to.dispatchEvent(new Event('input',{bubbles:true}));
+          to.dispatchEvent(new Event('change',{bubbles:true}));
+        }
+      }
+
+      // Clarify net P&L card scope to reduce confusion
+      const cards=[...document.querySelectorAll('*')];
+      cards.forEach(el=>{
+        if(el && el.childNodes && (el.textContent||'').trim()==='NET P&L'){
+          const sub=el.parentElement && el.parentElement.querySelector('.scope-note');
+          if(!sub && el.parentElement){
+            const note=document.createElement('div');
+            note.className='scope-note';
+            note.style.fontSize='11px';
+            note.style.opacity='0.75';
+            note.textContent='(date-filtered)';
+            el.parentElement.appendChild(note);
+          }
+        }
+      });
+    } catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', apply);
+  else setTimeout(apply,0);
+  setTimeout(apply,500);
+})();
