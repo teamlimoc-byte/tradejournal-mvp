@@ -69,7 +69,7 @@ function normalizeDataSchema(data) {
   out.journal = out.journal || [];
   return out;
 }
-const isLocalTrade = (t) => String(t?.id || '').startsWith('MAN-') || String(t?.id || '').startsWith('CSV-');
+const isLocalTrade = (t) => String(t?.id || '').startsWith('MAN-');
 const effectiveCommission = (t) => {
   const explicit = Number(t?.commission);
   if (Number.isFinite(explicit) && explicit > 0) return explicit;
