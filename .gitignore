@@ -1,0 +1,7 @@
+# local backups / runtime artifacts
+assets/*.bak-*
+backups/
+intake/inbox.ndjson
+intake/.offset
+logs/*.log
+data/trade-journal-queue.csv.bak-*
