@@ -1,10 +1,10 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-03-07T20:46:19.146645Z",
+  "generatedAt": "2026-03-07T20:51:22.679Z",
   "entries": [
     {
       "date": "2026-03-05",
-      "title": "Trading Journal \u2014 Thursday, March 5, 2026",
+      "title": "Trading Journal — Thursday, March 5, 2026",
       "mood": "Emotionally tested early after two quick losses, then stabilized through honest self-awareness and process resets. Ended calmer and more selective.",
       "content": "Session summary: 11 trades logged. Gross PnL 20.00, commissions 11.00, net PnL 9.00. Win/Loss/BE = 8/3/0 (Winrate 72.7%). Best trade: CSV-0086 (MNQH6) 52.50. Worst trade: CSV-0079 (MNQH6) -63.50.",
       "setupContext": "Open was choppy with repeated fake reclaims and knife-catch temptation around 25125/25055. Later session offered quick scalp opportunities but still required strict confirmation due to neutral/disagreeing LTF context.",
@@ -20,7 +20,7 @@
     },
     {
       "date": "2026-03-04",
-      "title": "Trading Journal \u2014 Wednesday, March 4, 2026",
+      "title": "Trading Journal — Wednesday, March 4, 2026",
       "mood": "More stable and process-aware. Intentional focus on consistency over outcome.",
       "content": "Session summary: 1 trades logged. Gross PnL -66.50, commissions 0.00, net PnL -66.50. Win/Loss/BE = 0/1/0 (Winrate 0.0%). Best trade: manual-2026-03-04-bcd1fc75 (MNQ) -66.50. Worst trade: manual-2026-03-04-bcd1fc75 (MNQ) -66.50.",
       "setupContext": "Mixed-quality long opportunities in noisy conditions. Edge existed only when reclaim confirmation was clear; support-hold-only entries were unreliable.",
@@ -36,12 +36,12 @@
     },
     {
       "date": "2026-03-03",
-      "title": "Trading Journal \u2014 Tuesday, March 3, 2026",
+      "title": "Trading Journal — Tuesday, March 3, 2026",
       "mood": "Honest self-assessment. Slight emotional tilt carried over from prior AAPL incident.",
       "content": "Session summary: 10 trades logged. Gross PnL 134.50, commissions 10.00, net PnL 124.50. Win/Loss/BE = 8/2/0 (Winrate 80.0%). Best trade: MAN-20260303-02 (MNQH6) 44.00. Worst trade: MAN-20260303-09 (MNQH6) -62.50.",
       "setupContext": "Market conditions were mostly choppy/dead-zone. Setups appeared tradable on checklist surface, but follow-through quality was poor and required stricter filtering.",
       "execution": "Overtraded scalp-style in low-quality conditions. Main issue was not setup identification but process drift in execution and trade selection. Exit behavior leaned too protective too early due to prior emotional carryover.",
-      "psychology": "Underlying urgency to \u201cdo something\u201d influenced decisions. Recognized that acceptable PnL can hide poor process quality, which is dangerous reinforcement.",
+      "psychology": "Underlying urgency to “do something” influenced decisions. Recognized that acceptable PnL can hide poor process quality, which is dangerous reinforcement.",
       "ruleAdherence": "Partial. Checklist awareness existed, but dead-zone participation and overtrading behavior violated process intent.",
       "whatIDidGood": "Honest review instead of rationalizing results. Identified root cause (process drift > strategy failure). Locked concrete reset rules for next session.",
       "whatToImprove": "No CHOPPY/DEAD-ZONE trades without break + retest + hold. Improve exit structure discipline (no premature protection from fear). Reduce emotional carryover from prior-day mistakes.",
@@ -52,7 +52,7 @@
     },
     {
       "date": "2026-03-02",
-      "title": "Trading Journal \u2014 Monday, March 2, 2026",
+      "title": "Trading Journal — Monday, March 2, 2026",
       "mood": "Disciplined under stress; one controlled loss with process awareness.",
       "content": "Session summary: 1 trades logged. Gross PnL -62.50, commissions 1.00, net PnL -63.50. Win/Loss/BE = 0/1/0 (Winrate 0.0%). Best trade: 2026-03-02-mnqh6-0824-long-1 (MNQH6) -62.50. Worst trade: 2026-03-02-mnqh6-0824-long-1 (MNQH6) -62.50.",
       "setupContext": "Mixed tape with selective opportunities. Futures setup quality was uneven, while options/covered-call management required tighter process focus.",
@@ -68,7 +68,7 @@
     },
     {
       "date": "2026-02-27",
-      "title": "Trading Journal \u2014 Friday, February 27, 2026",
+      "title": "Trading Journal — Friday, February 27, 2026",
       "mood": "Disciplined finish despite choppy entries",
       "content": "Session summary: 6 trades logged. Gross PnL 51.50, commissions 6.00, net PnL 45.50. Win/Loss/BE = 2/4/0 (Winrate 33.3%). Best trade: MAN-20260227-CC-01 (AAPL 285C 2026-03-20) 228.00. Worst trade: MAN-20260227-01 (MNQH6) -62.50.",
       "setupContext": "Negative-gamma/choppy conditions with repeated fake breaks around ORB and intraday levels.",
@@ -84,7 +84,7 @@
     },
     {
       "date": "2026-02-26",
-      "title": "Trading Journal \u2014 Thursday, February 26, 2026",
+      "title": "Trading Journal — Thursday, February 26, 2026",
       "mood": "Disciplined and selective",
       "content": "Session summary: 4 trades logged. Gross PnL 21.50, commissions 4.00, net PnL 17.50. Win/Loss/BE = 3/1/0 (Winrate 75.0%). Best trade: MAN-20260226-04 (MNQH6) 44.00. Worst trade: MAN-20260226-02 (MNQH6) -62.50.",
       "setupContext": "4 executed trades. Focused on A+ setups, break-retest confirmations, and momentum context while enforcing max-trade discipline.",
@@ -100,7 +100,7 @@
     },
     {
       "date": "2026-02-25",
-      "title": "Trading Journal \u2014 Wednesday, February 25, 2026",
+      "title": "Trading Journal — Wednesday, February 25, 2026",
       "mood": "Disciplined under chop and event-risk pressure",
       "content": "Session summary: 2 trades logged. Gross PnL -81.50, commissions 2.00, net PnL -83.50. Win/Loss/BE = 0/2/0 (Winrate 0.0%). Best trade: MAN-20260225-02 (MNQH6) -13.50. Worst trade: MAN-20260225-01 (MNQH6) -68.00.",
       "setupContext": "Mixed/choppy session with multiple fake breaks and late-day NVDA earnings risk affecting conviction near highs.",
@@ -108,15 +108,15 @@
       "psychology": "Managed FOMO better by respecting dead-zone rules and prioritizing process over chasing. Caught myself when hope-based thinking appeared.",
       "ruleAdherence": "Good overall: respected stop, avoided dead-zone override, and made defensive exit decision on extended late-day conditions.",
       "whatIDidGood": "Followed A+ checklist more consistently, identified hope-vs-rule distinction in real time, and protected capital during uncertain conditions.",
-      "whatToImprove": "Don\u2019t anchor on one signal (e.g., ORB retest) when BOS structure conflicts. Keep execution checklist explicit before entry.",
-      "lessonLearned": "\u201cI\u2019ll exit near BE unless reclaim confirms\u201d is rule-based; \u201cmaybe it comes back\u201d is hope-based. BOS line/level is context, BOS event is break-confirm action.",
+      "whatToImprove": "Don’t anchor on one signal (e.g., ORB retest) when BOS structure conflicts. Keep execution checklist explicit before entry.",
+      "lessonLearned": "“I’ll exit near BE unless reclaim confirms” is rule-based; “maybe it comes back” is hope-based. BOS line/level is context, BOS event is break-confirm action.",
       "nextTradeRule": "At +50% to TP, move SL to BE (or BE +1 tick) unless structure invalidation says otherwise.",
       "ouraSleepScore": 80,
       "ouraReadinessScore": 76
     },
     {
       "date": "2026-02-24",
-      "title": "Trading Journal \u2014 Tuesday, February 24, 2026",
+      "title": "Trading Journal — Tuesday, February 24, 2026",
       "mood": "Calm finish; process-first despite choppy tape",
       "content": "Session summary: 2 trades logged. Gross PnL -119.00, commissions 2.00, net PnL -121.00. Win/Loss/BE = 0/2/0 (Winrate 0.0%). Best trade: MAN-20260224-00 (MNQH6) -55.00. Worst trade: MAN-20260224-01 (MNQH6) -64.00.",
       "setupContext": "Choppy session with mixed lower-timeframe swings, but valid short thesis appeared with 2x BOS + FVG retest.",
@@ -132,7 +132,7 @@
     },
     {
       "date": "2026-02-23",
-      "title": "Trading Journal \u2014 Monday, February 23, 2026",
+      "title": "Trading Journal — Monday, February 23, 2026",
       "mood": "Mixed but improving discipline",
       "content": "Session summary: 3 trades logged. Gross PnL -119.50, commissions 3.00, net PnL -122.50. Win/Loss/BE = 1/2/0 (Winrate 33.3%). Best trade: MAN-20260223-03 (MNQH6) 7.50. Worst trade: MAN-20260223-02 (MNQH6) -69.00.",
       "setupContext": "Volatile session with bearish pressure early, then recovery attempts around key intraday levels. Used 2x BOS + FVG retest logic and A+ window filters.",
@@ -148,8 +148,8 @@
     },
     {
       "date": "2026-02-21",
-      "title": "Live Journal Auto Entry \u2014 2026-02-21 09:45 AM PST",
-      "mood": "\u2014",
+      "title": "Live Journal Auto Entry — 2026-02-21 09:45 AM PST",
+      "mood": "—",
       "content": "",
       "setupContext": "",
       "execution": "",
@@ -164,8 +164,8 @@
     },
     {
       "date": "2026-02-20",
-      "title": "Trading Journal \u2014 Friday, February 20, 2026",
-      "mood": "\u2014",
+      "title": "Trading Journal — Friday, February 20, 2026",
+      "mood": "—",
       "content": "Session summary: 2 trades logged. Gross PnL 218.00, commissions 0.00, net PnL 218.00. Win/Loss/BE = 2/0/0 (Winrate 100.0%). Best trade: CSV-0077 (MNQH6) 150.00. Worst trade: CSV-0078 (MNQH6) 68.00.",
       "setupContext": "Auto-generated from latest trade logs.",
       "execution": "Entries updated automatically from imported trades.",
@@ -180,7 +180,7 @@
     },
     {
       "date": "2026-02-19",
-      "title": "Trading Journal \u2014 Thursday, February 19, 2026",
+      "title": "Trading Journal — Thursday, February 19, 2026",
       "mood": "** Entered despite choppy conditions, hoped ORB bottom would hold",
       "content": "Session summary: 5 trades logged. Gross PnL -17.00, commissions 0.00, net PnL -17.00. Win/Loss/BE = 4/1/0 (Winrate 80.0%). Best trade: CSV-0076 (MNQH6) 9.00. Worst trade: CSV-0075 (MNQH6) -36.00.",
       "setupContext": "Auto-generated from latest trade logs.",
@@ -196,7 +196,7 @@
     },
     {
       "date": "2026-02-18",
-      "title": "Trading Journal \u2014 Wednesday, February 18, 2026",
+      "title": "Trading Journal — Wednesday, February 18, 2026",
       "mood": "Process-focused.",
       "content": "Session summary: 2 trades logged. Gross PnL 72.50, commissions 0.00, net PnL 72.50. Win/Loss/BE = 1/1/0 (Winrate 50.0%). Best trade: CSV-0071 (MNQH6) 150.00. Worst trade: CSV-0070 (MNQH6) -77.50.",
       "setupContext": "Auto-generated from latest trade logs.",
@@ -209,6 +209,10 @@
       "nextTradeRule": "No full confirmation, no trade.",
       "ouraSleepScore": null,
       "ouraReadinessScore": null
+    },
+    {
+      "date": "2026-03-06",
+      "summary": "overtraded because of frustration with Maverick"
     }
   ]
 }
