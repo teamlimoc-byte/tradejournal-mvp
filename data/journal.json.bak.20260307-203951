@@ -1,0 +1,29 @@
+{
+  "source": "canonical",
+  "generatedAt": "2026-03-07T18:49:24.907Z",
+  "entries": [
+    {
+      "date": "2026-03-07",
+      "text": "I overtraded because of frustration with AI.",
+      "mood": "7/10",
+      "recoveryMetrics": "Reset after frustration",
+      "setupContext": "Weekend rebuild reflection",
+      "execution": "No live trades",
+      "psychology": "Calmer, focused",
+      "ruleAdherence": "N/A",
+      "whatIDidGood": "Stopped before overforcing",
+      "whatToImprove": "Smaller steps",
+      "lessonLearned": "Stability first",
+      "nextTradeRule": "One verified change at a time",
+      "summary": "edited via edit.sh"
+    },
+    {
+      "date": "YYYY-MM-DD",
+      "text": "full journal text"
+    },
+    {
+      "date": "2026-03-06",
+      "text": "I overtraded because of frustration with AI."
+    }
+  ]
+}
