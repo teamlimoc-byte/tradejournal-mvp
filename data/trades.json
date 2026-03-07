@@ -980,12 +980,53 @@
   ],
   "journal": [
     {
-      "date": "2026-03-07",
-      "text": "I overtraded because of frustration with AI."
+      "date": "2026-03-06",
+      "title": "Journal Entry",
+      "mood": null,
+      "content": "I overtraded because of frustration with AI.",
+      "setupContext": "",
+      "execution": "",
+      "psychology": "",
+      "ruleAdherence": "",
+      "whatWentWell": "",
+      "whatToImprove": "",
+      "lessonLearned": "",
+      "nextRule": "",
+      "ouraSleepScore": null,
+      "ouraReadinessScore": null
     },
     {
-      "date": "2026-03-06",
-      "text": "I overtraded because of frustration with AI."
+      "date": "2026-03-07",
+      "title": "Journal Entry",
+      "mood": "7/10",
+      "content": "I overtraded because of frustration with AI.",
+      "setupContext": "Weekend rebuild reflection",
+      "execution": "No live trades",
+      "psychology": "Calmer, focused",
+      "ruleAdherence": "N/A",
+      "whatWentWell": "Stopped before overforcing",
+      "whatToImprove": "Smaller steps",
+      "lessonLearned": "Stability first",
+      "nextRule": "One verified change at a time",
+      "ouraSleepScore": null,
+      "ouraReadinessScore": null
+    },
+    {
+      "date": "YYYY-MM-DD",
+      "title": "Journal Entry",
+      "mood": null,
+      "content": "full journal text",
+      "setupContext": "",
+      "execution": "",
+      "psychology": "",
+      "ruleAdherence": "",
+      "whatWentWell": "",
+      "whatToImprove": "",
+      "lessonLearned": "",
+      "nextRule": "",
+      "ouraSleepScore": null,
+      "ouraReadinessScore": null
     }
-  ]
+  ],
+  "updatedAt": "2026-03-07T20:43:35.288Z"
 }
