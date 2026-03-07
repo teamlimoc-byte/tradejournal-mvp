@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-03-07T03:03:19.126Z",
+  "generatedAt": "2026-03-07T03:05:25.561Z",
   "entries": [
     {
       "date": "2026-03-07",
@@ -9,6 +9,10 @@
     {
       "date": "YYYY-MM-DD",
       "text": "full journal text"
+    },
+    {
+      "date": "2026-03-06",
+      "text": "I overtraded because of frustration with AI."
     }
   ]
 }
