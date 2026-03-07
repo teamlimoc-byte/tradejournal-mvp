@@ -1,6 +1,6 @@
 {
   "source": "live-chat-manual-log",
-  "generatedAt": "2026-03-07T02:56:19.951Z",
+  "generatedAt": "2026-03-07T02:57:49.651Z",
   "trades": [
     {
       "id": "CSV-0070",
@@ -982,6 +982,17 @@
       "exit": 25010,
       "pnl": 20,
       "notes": "canonical pipeline test",
+      "setup": "Manual"
+    },
+    {
+      "id": "MAN-1772852269",
+      "date": "2026-03-07",
+      "symbol": "MNQ",
+      "side": "Long",
+      "entry": 25000,
+      "exit": 25010,
+      "pnl": 20,
+      "notes": "canonical test note",
       "setup": "Manual"
     }
   ],
