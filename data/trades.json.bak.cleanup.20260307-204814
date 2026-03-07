@@ -963,6 +963,19 @@
       "boughtTimestamp": "03/05/2026 12:53:01",
       "soldTimestamp": "03/05/2026 12:54:40",
       "source": "csv-manual-import"
+    },
+    {
+      "id": "MAN-TEST-001",
+      "date": "2026-03-10",
+      "symbol": "MNQ",
+      "side": "LONG",
+      "entry": 18240,
+      "stop": 18220,
+      "target": 18280,
+      "exit": 18275,
+      "qty": 2,
+      "pnl": 350,
+      "notes": "test upsert"
     }
   ],
   "journal": [
