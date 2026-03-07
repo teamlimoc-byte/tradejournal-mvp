@@ -5,3 +5,4 @@ timestamp_utc,type,symbol,side,entry,exit,pnl,note
 2026-03-07T00:58:58Z,trade,MNQ,Long,24929.50,24898.25,-62.50,"wait for 10m candle close"
 2026-03-07T01:02:18Z,journal,,,,,,"test sync check"
 2026-03-07T01:03:15Z,journal,,,,,,"test sync check 2"
+2026-03-07T01:05:28Z,journal,,,,,,"pipeline smoke test 2026-03-07T01:05:28Z"
