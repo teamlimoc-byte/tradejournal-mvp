@@ -35,7 +35,7 @@ body {
 a { color: inherit; text-decoration: none; }
 .container { max-width: 1200px; margin: 0 auto; padding: 18px; }
 
-:root { --table-sticky-offset: 56px; }
+:root { --table-sticky-offset: 0px; }
 
 .topbar {
   position: sticky;
@@ -227,7 +227,7 @@ footer { color: var(--muted); text-align:center; padding: 20px 0 10px; font-size
   .reports-toolbar { grid-template-columns: 1fr; }
   .container { padding: 12px; }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
-  :root { --table-sticky-offset: 98px; }
+  :root { --table-sticky-offset: 0px; }
 
   .topbar .container {
     flex-direction: column;
