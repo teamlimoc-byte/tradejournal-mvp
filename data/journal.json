@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-03-09T20:20:49.049Z",
+  "generatedAt": "2026-03-10T00:23:46.345Z",
   "entries": [
     {
       "date": "2026-03-05",
@@ -216,7 +216,7 @@
     },
     {
       "date": "2026-03-09",
-      "summary": "Imported 17 MNQ trades from Performance_6 CSV. Win rate 70.59% (12W/5L), net PnL -24.0, PF 0.91. Early scalps strong, later drawdown from larger losers (-64.5, -63.0, -62.0) erased edge. Focus: cap downside and stop after momentum fade."
+      "summary": "Mood: Emotionally tested; focus on discipline reset over outcome.\nRecovery Metrics: Sleep N/A | Readiness N/A\nSetup Context: Session stats — Trades 18 | Wins 12 | Losses 5 | BE 1 | Win rate 66.67% | Net -24.0 | PF 0.91.\nExecution: Best trade 49.0, worst trade -64.5. Prioritize A+ confirmation entries only.\nPsychology: Pattern risk: protect against FOMO entries and red-to-green panic exits.\nRule Adherence: Mixed; execution quality dropped after momentum shifts.\nWhat I Did Good: Kept data logged and reviewed process objectively.\nWhat To Improve: Avoid early entries before full confirmation; do not flatten just because trade turns green.\nLesson Learned: High win rate means little if losers are oversized or exits are fear-based.\nNext Trade Rule: No trigger, no trade. Hold for planned target structure (250-tick framework) unless invalidated.\nSession summary: Auto EOD journal generated at 1 PM PT and saved to MVP."
     },
     {
       "date": "2026-03-08",

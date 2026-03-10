@@ -16,7 +16,7 @@ const MOCK_DATA = {
 
 const state = {
   data: null,
-  filters: { symbol: '', side: 'All', setup: 'All', dateFrom: '', dateTo: '', sort: 'date-desc' },
+  filters: { symbol: '', side: 'All', setup: 'All', accountCycle: 'All', dateFrom: '', dateTo: '', sort: 'date-desc' },
   reportFilters: { dateFrom: '', dateTo: '', assetType: 'all', sortBy: 'pnl' },
   selectedTrade: null,
   formMounted: false,
@@ -60,12 +60,24 @@ function normalizeTradeSchema(t) {
   if (allowed.has(rawStatus)) trade.status = rawStatus;
   else trade.status = trade.assetType === 'options' ? 'open' : 'closed';
 
+  trade.accountCycle = String(trade.accountCycle || '').trim();
+
   return trade;
 }
 
 function normalizeDataSchema(data) {
   const out = { ...(data || {}) };
-  out.trades = (out.trades || []).map(normalizeTradeSchema);
+  out.currentAccountCycle = String(out.currentAccountCycle || 'default').trim();
+  out.previousAccountCycle = String(out.previousAccountCycle || 'legacy').trim();
+  out.accountResetDate = String(out.accountResetDate || '').trim();
+  out.trades = (out.trades || []).map(t => {
+    const n = normalizeTradeSchema(t);
+    if (!n.accountCycle) {
+      if (out.accountResetDate && n.date && n.date < out.accountResetDate) n.accountCycle = out.previousAccountCycle;
+      else n.accountCycle = out.currentAccountCycle;
+    }
+    return n;
+  });
   out.journal = out.journal || [];
   return out;
 }
@@ -139,6 +151,7 @@ function getTrades() {
     if (state.filters.symbol && !String(t.symbol || '').toLowerCase().includes(state.filters.symbol.toLowerCase())) return false;
     if (state.filters.side !== 'All' && t.side !== state.filters.side) return false;
     if (state.filters.setup !== 'All' && t.setup !== state.filters.setup) return false;
+    if (state.filters.accountCycle !== 'All' && String(t.accountCycle || '') !== state.filters.accountCycle) return false;
     if (state.filters.dateFrom && t.date < state.filters.dateFrom) return false;
     if (state.filters.dateTo && t.date > state.filters.dateTo) return false;
     return true;
@@ -598,6 +611,8 @@ function renderStrategyAnalytics(trades) {
 function renderFilterControls() {
   const setupSet = new Set((state.data?.trades || []).map(t => t.setup).filter(Boolean));
   const setupOptions = ['All', ...Array.from(setupSet)].map(v => `<option ${state.filters.setup === v ? 'selected' : ''}>${v}</option>`).join('');
+  const cycleSet = new Set((state.data?.trades || []).map(t => String(t.accountCycle || '')).filter(Boolean));
+  const cycleOptions = ['All', ...Array.from(cycleSet)].map(v => `<option ${state.filters.accountCycle === v ? 'selected' : ''}>${v}</option>`).join('');
   const host = document.querySelector('#filters');
   if (!host) return;
 
@@ -605,6 +620,7 @@ function renderFilterControls() {
     <div class="field"><label>Symbol</label><input id="f-symbol" placeholder="MNQ" value="${state.filters.symbol}"/></div>
     <div class="field"><label>Side</label><select id="f-side"><option>All</option><option ${state.filters.side==='Long'?'selected':''}>Long</option><option ${state.filters.side==='Short'?'selected':''}>Short</option></select></div>
     <div class="field"><label>Setup</label><select id="f-setup">${setupOptions}</select></div>
+    <div class="field"><label>Account Cycle</label><select id="f-cycle">${cycleOptions}</select></div>
     <div class="field"><label>Date Range</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input id="f-from" type="date" value="${state.filters.dateFrom}"/><input id="f-to" type="date" value="${state.filters.dateTo}"/></div></div>
     <div class="field"><label>Sort</label><select id="f-sort">
       <option value="date-desc" ${state.filters.sort==='date-desc'?'selected':''}>Date (Newest)</option>
@@ -622,19 +638,20 @@ function renderFilterControls() {
   bind('#f-to', 'dateTo');
   document.querySelector('#f-side')?.addEventListener('change', e => { state.filters.side = e.target.value; rerender(); });
   document.querySelector('#f-setup')?.addEventListener('change', e => { state.filters.setup = e.target.value; rerender(); });
+  document.querySelector('#f-cycle')?.addEventListener('change', e => { state.filters.accountCycle = e.target.value; rerender(); });
   document.querySelector('#f-sort')?.addEventListener('change', e => { state.filters.sort = e.target.value; rerender(); });
 }
 
 function toCsv(rows) {
   if (!rows.length) return '';
-  const headers = ['id', 'date', 'entryTime', 'assetType', 'symbol', 'underlying', 'side', 'status', 'setup', 'strategy', 'qty', 'contracts', 'expiry', 'strike', 'optionType', 'entry', 'exit', 'pnl', 'commission', 'netPnl', 'r', 'tags', 'notes'];
+  const headers = ['id', 'date', 'entryTime', 'assetType', 'accountCycle', 'symbol', 'underlying', 'side', 'status', 'setup', 'strategy', 'qty', 'contracts', 'expiry', 'strike', 'optionType', 'entry', 'exit', 'pnl', 'commission', 'netPnl', 'r', 'tags', 'notes'];
   const esc = (v) => {
     const s = String(v ?? '');
     if (s.includes('"') || s.includes(',') || s.includes('\n')) return `"${s.replace(/"/g, '""')}"`;
     return s;
   };
   return [headers.join(','), ...rows.map(t => [
-    t.id, t.date, deriveEntryTime(t), t.assetType || '', t.symbol, t.underlying || '', t.side, t.status || '', t.setup, t.strategy || '', t.qty, t.contracts || '', t.expiry || '', t.strike || '', t.optionType || '', t.entry, t.exit, t.pnl, (t.commission || 0), netPnl(t), t.r, (t.tags || []).join('|'), t.notes || ''
+    t.id, t.date, deriveEntryTime(t), t.assetType || '', t.accountCycle || '', t.symbol, t.underlying || '', t.side, t.status || '', t.setup, t.strategy || '', t.qty, t.contracts || '', t.expiry || '', t.strike || '', t.optionType || '', t.entry, t.exit, t.pnl, (t.commission || 0), netPnl(t), t.r, (t.tags || []).join('|'), t.notes || ''
   ].map(esc).join(','))].join('\n');
 }
 
@@ -682,6 +699,7 @@ function parseCsv(text) {
     id: ['id', 'tradeid', 'ticketid', 'orderid'],
     date: ['date', 'tradedate', 'opendate', 'closedate', 'boughttime', 'soldtime', 'boughttimestamp', 'soldtimestamp'],
     assetType: ['assettype', 'instrumenttype', 'type'],
+    accountCycle: ['accountcycle', 'cycle', 'account'],
     symbol: ['symbol', 'ticker', 'instrument'],
     underlying: ['underlying', 'underlyingsymbol'],
     side: ['side', 'direction', 'position', 'action'],
@@ -763,6 +781,7 @@ function parseCsv(text) {
       date,
       symbol: (getField(parts, 'symbol') || '').toUpperCase(),
       assetType: (getField(parts, 'assetType') || '').toLowerCase(),
+      accountCycle: (getField(parts, 'accountCycle') || '').trim(),
       underlying: (getField(parts, 'underlying') || '').toUpperCase(),
       side,
       status: (getField(parts, 'status') || '').toLowerCase(),
@@ -868,6 +887,7 @@ function fillFormForEdit(trade) {
   form.querySelector('[name="date"]').value = trade.date || '';
   form.querySelector('[name="entryTime"]').value = deriveEntryTime(trade);
   form.querySelector('[name="assetType"]').value = trade.assetType || 'futures';
+  form.querySelector('[name="accountCycle"]').value = trade.accountCycle || state.data?.currentAccountCycle || 'default';
   form.querySelector('[name="symbol"]').value = trade.symbol || '';
   form.querySelector('[name="underlying"]').value = trade.underlying || '';
   form.querySelector('[name="side"]').value = trade.side || 'Long';
@@ -921,6 +941,7 @@ function renderTradeForm() {
     <div class="field"><label>Date</label><input name="date" type="date" required /></div>
     <div class="field"><label>Entry Time</label><input name="entryTime" type="time" /></div>
     <div class="field"><label>Asset Type</label><select name="assetType"><option value="futures">Futures</option><option value="options">Options</option><option value="stock">Stock</option></select></div>
+    <div class="field"><label>Account Cycle</label><input name="accountCycle" placeholder="LUCID-funded-v2" value="${state.data?.currentAccountCycle || 'default'}" /></div>
     <div class="field"><label>Symbol</label><input name="symbol" placeholder="MNQH6 or AAPL" required /></div>
     <div class="field"><label>Underlying</label><input name="underlying" placeholder="NQ / SPY / AAPL" /></div>
     <div class="field"><label>Side</label><select name="side"><option>Long</option><option>Short</option></select></div>
@@ -979,6 +1000,7 @@ function renderTradeForm() {
       checklistCriticalOk: ck.criticalOk,
       checklistSnapshot: { ...checklist },
       assetType: String(fd.get('assetType') || 'futures').toLowerCase(),
+      accountCycle: String(fd.get('accountCycle') || state.data?.currentAccountCycle || 'default').trim(),
       symbol: String(fd.get('symbol') || '').toUpperCase(),
       underlying: String(fd.get('underlying') || '').toUpperCase(),
       side,
@@ -1048,7 +1070,7 @@ function renderTradesTable(selector, trades, clickable = false) {
     <div class="table-wrap panel">
       <table>
         <thead>
-          <tr><th>Date</th><th>Time</th><th>ID</th><th>Type</th><th>Symbol</th><th>Side</th><th>Status</th><th>Setup</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Comm</th><th>Net P&L</th><th>R</th><th>Actions</th></tr>
+          <tr><th>Date</th><th>Time</th><th>ID</th><th>Type</th><th>Cycle</th><th>Symbol</th><th>Side</th><th>Status</th><th>Setup</th><th>Qty</th><th>Entry</th><th>Exit</th><th>Comm</th><th>Net P&L</th><th>R</th><th>Actions</th></tr>
         </thead>
         <tbody>
           ${trades.map(t => `
@@ -1057,6 +1079,7 @@ function renderTradesTable(selector, trades, clickable = false) {
               <td>${deriveEntryTime(t) || '—'}</td>
               <td>${t.id || ''}</td>
               <td>${t.assetType || ''}</td>
+              <td>${t.accountCycle || ''}</td>
               <td>${t.symbol || ''}</td>
               <td><span class="badge ${(t.side || '').toLowerCase()}">${t.side || ''}</span></td>
               <td><span class="badge status-${String(t.status || 'closed').toLowerCase()}">${String(t.status || 'closed').toUpperCase()}</span></td>
@@ -1563,6 +1586,7 @@ function rerender() {
   initThemeToggle();
   loadCommissionSetting();
   state.data = await loadData();
+  if (state?.data?.currentAccountCycle) state.filters.accountCycle = state.data.currentAccountCycle;
   rerender();
 })();
 
