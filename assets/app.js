@@ -608,6 +608,23 @@ function renderStrategyAnalytics(trades) {
   `;
 }
 
+function renderAccountCycleBar(selector = '#cycle-filter-bar') {
+  const host = document.querySelector(selector);
+  if (!host) return;
+  const cycleSet = new Set((state.data?.trades || []).map(t => String(t.accountCycle || '')).filter(Boolean));
+  const cycleOptions = ['All', ...Array.from(cycleSet)].map(v => `<option value="${v}" ${state.filters.accountCycle === v ? 'selected' : ''}>${v}</option>`).join('');
+  host.innerHTML = `
+    <div class="field" style="max-width:260px;">
+      <label>Account Cycle</label>
+      <select id="cycle-bar-select">${cycleOptions}</select>
+    </div>
+  `;
+  host.querySelector('#cycle-bar-select')?.addEventListener('change', (e) => {
+    state.filters.accountCycle = e.target.value;
+    rerender();
+  });
+}
+
 function renderFilterControls() {
   const setupSet = new Set((state.data?.trades || []).map(t => t.setup).filter(Boolean));
   const setupOptions = ['All', ...Array.from(setupSet)].map(v => `<option ${state.filters.setup === v ? 'selected' : ''}>${v}</option>`).join('');
@@ -1541,6 +1558,7 @@ function rerender() {
     });
   });
 
+  if (document.querySelector('#cycle-filter-bar')) renderAccountCycleBar('#cycle-filter-bar');
   if (document.querySelector('#filters')) renderFilterControls();
   if (document.querySelector('#data-ops')) renderDataOps();
   if (document.querySelector('#trade-form') && !state.formMounted) {
