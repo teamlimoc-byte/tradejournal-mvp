@@ -1604,7 +1604,12 @@ function rerender() {
   initThemeToggle();
   loadCommissionSetting();
   state.data = await loadData();
-  if (state?.data?.currentAccountCycle) state.filters.accountCycle = state.data.currentAccountCycle;
+  const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  if (page === 'dashboard-options.html' || page === 'index.html') {
+    state.filters.accountCycle = 'All';
+  } else if (state?.data?.currentAccountCycle) {
+    state.filters.accountCycle = state.data.currentAccountCycle;
+  }
   rerender();
 })();
 
