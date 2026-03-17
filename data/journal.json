@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-03-16T19:39:28.429Z",
+  "generatedAt": "2026-03-17T20:41:14.195Z",
   "entries": [
     {
       "date": "2026-02-18",
@@ -313,6 +313,22 @@
       "whatToImprove": "Trade less. Accept risk before entry. Use rules to prevent emotional spirals after losses.",
       "lessonLearned": "I need to follow rules to protect my mind. Protecting my mind protects my capital. If risk is accepted up front, I do not need to spiral when a trade fails.",
       "nextTradeRule": "Before entry: define risk, accept the loss mentally, and commit to following the rule set so I do not spiral if the market goes the wrong way."
+    },
+    {
+      "date": "2026-03-17",
+      "title": "Trading Journal — Tuesday, March 17, 2026",
+      "mood": "7/10",
+      "content": "Session summary: 3 MNQ trades logged. Gross PnL was -61.50 and net after $1/trade commissions was -64.50. The money result was red, but the bigger win was behavioral: I became more honest about what was actually driving bad trades and more willing to cut trades that were not proving themselves.",
+      "setupContext": "The day repeatedly highlighted the difference between reaction plays and true continuation setups. Several areas looked long-biased or structurally valid, but not every valid-looking bounce actually deserved trend expectations. Key context lessons were that 15-minute ORB high is context, not command, and that a valid pattern in a bad zone is still a bad trade.",
+      "execution": "Trade 1 lost -56.50 and showed that I entered before price fully proved it could hold the area. Trade 2 was only +1.50, but the more important win was stopping myself from immediately re-entering for emotional repair after seeing a possible bearish setup. Trade 3 lost -6.50, but I exited early when the long hovered, weakened, and failed to prove itself, which saved the full -1R. I also recognized that a reaction long from demand can be valid without becoming a true continuation trend.",
+      "psychology": "The biggest breakthrough today was identifying the real opponent more clearly: not the market itself, but the undisciplined behaviors wired into me. I caught the urge to trade for emotional repair, to take tiny profits just to feel safe, and to hope when trades were not working. I also reframed the fight correctly: I am a developing trader, and the undisciplined version of me is the part that needs to lose power.",
+      "ruleAdherence": "Better than the raw PnL suggests. I still entered one trade before price fully proved hold/acceptance, but I showed better restraint during deadzone conditions, avoided at least one emotional re-entry, and cut a weak trade before it became full damage. The session was more process-aware and less impulsive than many prior red days.",
+      "whatIDidGood": "Identified emotional-repair trading before clicking. Respected deadzone by passing on a bearish 1-2-3-4 that was in a bad zone. Cut weakness instead of hoping. Saved full -1R on the last trade by responding to breakdown instead of babysitting it. Pulled out clean lessons from live decision points instead of grading everything with hindsight.",
+      "whatToImprove": "Wait for price to prove it can hold the area before entry instead of entering just because it reaches the area. Stop treating 15-minute ORB high as permission by itself. Keep distinguishing reaction bounces from real continuation setups. Continue resisting the urge to suffocate small green trades purely for emotional comfort.",
+      "lessonLearned": "I do not need to be right immediately; I need to avoid paying full price when price is not confirming. A reaction long can be valid without becoming a trend long. If a trade is not working, get my hand off the hot stove instead of hoping it cools down.",
+      "nextTradeRule": "Do not enter when price merely reaches the area—enter only when price proves it can hold the area. If the trade is not working, exit and move on. ORB high is context, not command. A valid pattern inside a bad zone is still a bad trade.",
+      "ouraSleepScore": 70,
+      "ouraReadinessScore": 78
     }
   ]
 }
