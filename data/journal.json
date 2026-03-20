@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-03-19T20:12:17.830Z",
+  "generatedAt": "2026-03-20T20:10:06.205Z",
   "entries": [
     {
       "date": "2026-02-18",
@@ -345,6 +345,22 @@
       "nextTradeRule": "If a setup is valid, manage it based on whether the thesis is still valid — not whether PnL discomfort wants safety. After an exit, the next trade must stand on its own and not be emotionally sponsored by the previous trade. Fewer trades, higher quality, more authority given to truth trader.",
       "ouraSleepScore": 86,
       "ouraReadinessScore": 90
+    },
+    {
+      "date": "2026-03-20",
+      "title": "Trading Journal — Friday, March 20, 2026",
+      "mood": "6/10",
+      "content": "Session summary: 4 MNQ trades logged. Gross PnL was -54.50 and net after $1/trade commissions was -58.50. The day was small on size but meaningful psychologically: I saw how quickly a failed long idea and revenge emotion can still sneak in, but I also cut the emotional follow-up fast instead of letting it snowball.",
+      "setupContext": "The day was clearly downtrending, but I kept looking for long setups. That helped expose a directional comfort bias: investor brain prefers buying dips and hoping for recovery, while intraday trader brain needs to respect the actual tape. I also realized that on downtrend days I may keep seeing bounce setups because longs feel emotionally safer and more familiar.",
+      "execution": "Trade 1 was basically a misclick / noise trade. Trade 2 was the real losing trade: I thought price would hold and bounce on the white line, but it did not. Trade 3 was the revenge / emotional follow-up, and although I let that voice get me in, I recognized it quickly and got out right away. Trade 4 was only a tiny cleanup win. This was not a blowup day; it was one failed idea plus one emotional follow-up that got contained fast.",
+      "psychology": "Today highlighted two key inner conflicts. First, revenge self still appears after a failed trade and tries to win authority with urgency. Second, investor brain seems to prefer longs even when the day is clearly downtrending. I am seeing more clearly that I do not need to silence every voice — I need to know which voice gets authority. The real work is to keep investor brain and revenge voice from placing intraday trades.",
+      "ruleAdherence": "Mixed but improving. I still allowed a revenge trade to happen, and I still looked for longs in a downtrend day. But compared with older versions of me, I caught the emotional hijack much faster and limited the damage. The day shows progress in recognition, but recognition must continue turning into pre-trade prevention.",
+      "whatIDidGood": "Contained the emotional damage quickly. Did not let the revenge follow-up spiral into a larger red day. Recognized that the problem was not mysterious price action but sloppy execution plus emotional authority. Identified a likely long-side comfort bias coming from investor conditioning.",
+      "whatToImprove": "No more misclick-style noise trades. After a failed trade, pause before the next order and ask whether the next setup stands on its own or is emotionally sponsored. On trend days, stop hunting only the direction that feels more comfortable. Investor brain is not allowed to place intraday trades.",
+      "lessonLearned": "A failed trade does not owe me another trade. I cannot stop the revenge voice from appearing, but I can stop giving it orders to execute. My investor brain wants up; my intraday trader brain must trade what is, not what it prefers.",
+      "nextTradeRule": "If the day is clearly trending down, I do not get to keep searching only for longs because they feel safer. After a failed trade, the next trade must be independently valid. Investor brain and revenge voice do not get authority over intraday execution.",
+      "ouraSleepScore": 73,
+      "ouraReadinessScore": 72
     }
   ]
 }
