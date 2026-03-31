@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-03-31T03:08:00Z",
+  "generatedAt": "2026-03-31T11:21:46.613096",
   "entries": [
     {
       "date": "2026-02-18",
@@ -443,6 +443,23 @@
       "summary": "Mood: Emotionally pressured early, then noticeably steadier once the session stopped spiraling and a cleaner recovery sequence appeared.\nRecovery Metrics: Sleep N/A | Readiness N/A\nSetup Context: Only the CSV was provided, so chart structure is inferred from timing and trade flow. The day started with four straight losing longs, including a size-up loss, then shifted into a meaningful recovery burst with three green trades before ending with one more loser.\nExecution: Execution quality split into two phases. Phase one was poor: repeated long attempts failed quickly and trade count escalated while the read was not working. Phase two was much better: the 2-lot bounce winner and the two later winners showed that when timing improved, the session could recover materially. Still, the early damage and overall decision count kept the day red after commissions.\nPsychology: This reads like classic early-session forcing and refusal to fully stand down after the first few failed attempts. The strongest positive is that you did recover composure enough to catch real moves later. The biggest issue is that the session likely asked for a reset much earlier than you gave it.\nRule Adherence: Weak overall. The locked max-3-trades rule was broken heavily with 8 trades, and there was clear escalation through repeated attempts plus a 2-contract loss during the rough patch. Recovery execution was real, but process discipline was still below standard.\nWhat I Did Good: 1) Found real recovery trades after a bad start instead of total emotional collapse. 2) Captured two strong winners that proved you can still execute when aligned. 3) Pulled the session back from what could have been a much worse day.\nWhat To Improve: 1) Hard-stop the session much sooner after multiple failed reads. 2) Do not increase size in the middle of a losing sequence unless the setup quality is objectively higher and preplanned. 3) Respect the max-3-trades rule so the session cannot drift into constant re-engagement.\nLesson Learned: The day was not lost because there were no opportunities. It was lost because too much early damage had to be repaired. Recovery skill is useful, but it should not become a substitute for early-session discipline.\nNext Trade Rule: After 2 failed reads in the same early session environment, pause and reset before taking another trade. No size increase during a losing streak. Max 3 trades means max 3 trades.\nSession summary: Auto review created from Performance CSV and saved to MVP.",
       "ouraSleepScore": null,
       "ouraReadinessScore": null
+    },
+    {
+      "date": "2026-03-31",
+      "title": "Trading Journal \u2014 Tuesday, March 31, 2026",
+      "mood": "Finished green, but the emotional management issue is still active. More aware of the real loop now, which matters more than the PnL.",
+      "content": "Session summary: 13 MNQ trades logged. Gross PnL was +184.00 and net after $1/trade commissions was +171.00. The day finished green, but the most important lesson was psychological: fear still suffocated winners, and regret after early exits created re-entry pressure.",
+      "setupContext": "The market offered both messy and cleaner opportunities. Earlier trades were more prediction-based, using \u201cit should bounce here\u201d thinking. Later, the cleaner long came only after price reclaimed and held key structure. That contrast made the lesson obvious: proof-based entries are better than assumption-based entries.",
+      "execution": "Execution had two very different modes. The better trade came from waiting for reclaim and hold, then entering on proof and getting paid. The weaker trades came from prediction, early exit discomfort, and trying to re-enter to prove I could hold longer. I stopped trading for the day instead of reopening the emotional loop further, which was the right decision.",
+      "psychology": "Today I recognized two emotional enemies: fear of losing open profit and regret after exiting too early. Fear made me chicken out. Regret then created a second emotional voice: \u201cI need another chance to prove I can hold.\u201d That re-entry pressure had little to do with the chart and much more to do with making the emotional side feel better. Once I am trading to repair regret, I am no longer trading the chart.",
+      "ruleAdherence": "Mixed. Positive: I stopped for the day to protect mentality after getting back to even and understanding the lesson. Negative: I still let PnL and regret influence trade management too much. The stronger rule that emerged is that PnL cannot be the authority; structure must be.",
+      "whatIDidGood": "1) I identified the exact psychological loop instead of just calling it a bad day. 2) I saw the difference between prediction/hope and proof-based entry. 3) I stopped for the day rather than letting emotional re-entry attempts keep escalating.",
+      "whatToImprove": "1) Stop using \u201cshould\u201d language in live trading. 2) Stop re-entering just to prove I can hold. 3) Ignore the need to emotionally repair an early exit. 4) Manage from candle, structure, invalidation, and target \u2014 not from the PnL box.",
+      "lessonLearned": "Regret is not a setup. The market does not care what I think it should do. I need to trade what price proves, not what I imagine or what would make me feel better after an early exit.",
+      "nextTradeRule": "I do not re-enter just to prove I can hold. If I exit early from fear, I must wait for a brand new setup before entering again. I trade the chart, not my need to feel better. PnL is informational, not directional.",
+      "summary": "Green day, but the bigger win was identifying the fear -> regret -> re-entry loop. The correct path going forward is proof over prediction and structure over PnL emotion.",
+      "ouraSleepScore": "",
+      "ouraReadinessScore": ""
     }
   ]
 }
