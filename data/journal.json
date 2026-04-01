@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-03-31T11:21:46.613096",
+  "generatedAt": "2026-04-01T13:06:20.995091",
   "entries": [
     {
       "date": "2026-02-18",
@@ -458,6 +458,23 @@
       "lessonLearned": "Regret is not a setup. The market does not care what I think it should do. I need to trade what price proves, not what I imagine or what would make me feel better after an early exit.",
       "nextTradeRule": "I do not re-enter just to prove I can hold. If I exit early from fear, I must wait for a brand new setup before entering again. I trade the chart, not my need to feel better. PnL is informational, not directional.",
       "summary": "Green day, but the bigger win was identifying the fear -> regret -> re-entry loop. The correct path going forward is proof over prediction and structure over PnL emotion.",
+      "ouraSleepScore": "",
+      "ouraReadinessScore": ""
+    },
+    {
+      "date": "2026-04-01",
+      "title": "Trading Journal \u2014 Wednesday, April 1, 2026",
+      "mood": "Emotionally tested but more aware. Anger and revenge urge showed up, but I could name them without fully handing them control.",
+      "content": "Session summary: 19 MNQ trades logged. Gross PnL was -97.00 and net after $1/trade commissions was about -116.00. The biggest lesson was not the final number but the difference between prediction-based entries and proof-based entries, plus the emotional damage caused by getting stopped in valid-idea but weak-location trades.",
+      "setupContext": "The day repeatedly highlighted the difference between assuming a bounce and waiting for reclaim/hold proof. At times I was still trying to buy because I thought price should bounce. The stronger setup came only when price proved itself above reclaim structure. That contrast made it obvious that many weaker trades were still based on assumption, not actual confirmation.",
+      "execution": "Execution was mixed. Some early trades worked, but later trades showed the recurring issue of getting tagged on stops placed too close to micro noise or entering before the market fully proved the move. I also recognized that one long near resistance/weak structure was simply a bad entry. The stronger trade logic came later when waiting for a reclaim and hold above key structure instead of predicting the path.",
+      "psychology": "The emotional issue today had two layers. First, I felt the pain of being stopped out and watching price continue without me, which triggered anger and a revenge impulse. Second, I could feel how easy it would be to hand authority to that anger. The positive part is that I named the emotion and acknowledged it without letting it fully take over. I also saw clearly that the market does not care what I think should happen. \u201cShould\u201d thinking is a warning sign that I am arguing with reality instead of trading what price proves.",
+      "ruleAdherence": "Mixed to poor. Positive: I became much clearer in real time about the difference between proof-based entries and assumption-based entries, and I explicitly recognized anger without blindly obeying it. Negative: trade count was still too high, and I was still too willing to engage with prediction-based ideas instead of waiting for real confirmation.",
+      "whatIDidGood": "1) I identified that some entries were simply bad because they were longs into weakness or under resistance. 2) I saw that a pullback is not automatically a higher low and that proof matters. 3) I acknowledged intense anger and revenge pressure without instantly giving it authority.",
+      "whatToImprove": "1) Stop entering what I imagine price will do next. 2) Stop using \u201cit should bounce here\u201d logic. 3) Place stops based on real structure, not just the nearest micro wiggle. 4) Reduce trade count and force myself to wait for reclaim/hold proof.",
+      "lessonLearned": "The market has no \u201cshould.\u201d It will do what it will do, regardless of what I think or feel. Prediction-based entries create weak trades and emotional pain. Proof-based entries create cleaner trades. Emotion can be present without being obeyed.",
+      "nextTradeRule": "I do not buy because it might go. I buy when it proves it can go. I trade what price proves, not what I hope. If anger or revenge shows up after a stop-out, I acknowledge it, but I do not give it authority.",
+      "summary": "Red day, but it clarified the real distinction: prediction versus proof. The stronger future path is simple \u2014 fewer trades, more confirmation, structure-based stops, and no obedience to anger or \u201cshould\u201d thinking.",
       "ouraSleepScore": "",
       "ouraReadinessScore": ""
     }
