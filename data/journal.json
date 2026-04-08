@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-04-01T13:06:20.995091",
+  "generatedAt": "2026-04-07T21:12:30.207Z",
   "entries": [
     {
       "date": "2026-02-18",
@@ -477,6 +477,26 @@
       "summary": "Red day, but it clarified the real distinction: prediction versus proof. The stronger future path is simple \u2014 fewer trades, more confirmation, structure-based stops, and no obedience to anger or \u201cshould\u201d thinking.",
       "ouraSleepScore": "",
       "ouraReadinessScore": ""
+    },
+    {
+      "date": "2026-04-07",
+      "title": "Trading Journal \u2014 Tuesday, April 7, 2026",
+      "mood": "More clear-headed and self-aware. Emotional side wanted to pull the lever and feel right, but there was growing recognition that setup, not emotion, is what makes the account better.",
+      "content": "Manual note added directly after confirming the live repo path on this Mac. Canonical TradeJournal MVP repo path is /Users/ericlim/.openclaw/workspace/tradejournal-mvp and the canonical journal file is data/journal.json. No 2026-04-07 trades were present in data/trades.json at the time of entry, so this is a direct journal note rather than an auto-generated trade recap.",
+      "setupContext": "First long came after a strong move up into FVG but still inside uncertain territory and prior chop. Second long came after breakout, pullback, hold, and confirmation, which made it the model trade. Later attempts showed weak holds and tiny confirmation inside messy structure, which were not strong enough to justify re-entry.",
+      "execution": "Execution improved on the second trade because the plan was allowed to work until invalidation. Execution weakened later when small signs like a doji and minor 5-minute confirmation were almost treated as enough proof in a weak area. Best execution choice of the day may have been not re-entering immediately after the stop-outs.",
+      "psychology": "Major theme was seeing the difference between trader-self and emotional-self. Emotional self wanted validation, revenge, and relief. Trader self wanted edge, structure, and survival. Strong realization: FOMO only needs a plausible excuse, not a good setup. Several almost-reentry moments showed how easily weak price action can wear a technical costume and tempt a bad trade.",
+      "ruleAdherence": "Better than before. Stronger adherence on the winner and better restraint after the losses. Still room to improve on requiring stronger confirmation before entry and refusing weak re-entry temptation.",
+      "whatIDidGood": "1) Identified that the first long was understandable but still aggressive because it was mostly momentum shift without enough structure confirmation. 2) Took the second trade only after breakout, pullback, hold, and confirmation, which was much cleaner. 3) Stayed in the winning trade when it came back near breakeven and let invalidation, not emotion, control the decision. 4) After losing trades later, did not instantly re-enter to revenge trade. 5) Recognized in real time that FOMO and the need to feel right were trying to pull the slot-machine lever.",
+      "whatToImprove": "Stop treating momentum shift alone as enough. A doji or tiny 5-minute confirmation inside weak structure is not meaningful confirmation. After a stop-out, the next setup must be clearer than normal, not merely good enough. Avoid trying to re-enter the same idea just to prove the original thesis right.",
+      "lessonLearned": "Chasing P&L is death to the account. Wanting to feel right is not edge. Only clean setup improves the account. Momentum shift gets attention, but confirmation gets the money. Holding is not enough; it has to be a strong, trustworthy hold with real buyer control.",
+      "nextTradeRule": "I do not enter just because momentum shifts. I enter when momentum shift becomes confirmed structure. If I just got stopped, the next setup must be clearly better than normal or I pass. If the desire is emotional relief or to feel right, I am disqualified from entering.",
+      "summary": "Manual 2026-04-07 journal note added after confirming the canonical local TradeJournal MVP path and journal file.",
+      "ouraSleepScore": null,
+      "ouraReadinessScore": null,
+      "sessionSummary": "Took multiple intraday trades and the day reinforced a major shift: chasing P&L and trying to feel right are deadly to the account. The first long was based on momentum shift only and was less clean. The cleaner trade came later on breakout, pullback, hold, and confirmation, and the profit target hit because the plan was allowed to play out. Later losses highlighted how weak holds, tiny doji confirmation, and post-stop temptation can disguise FOMO as a setup.",
+      "whatWentWell": "1) Identified that the first long was understandable but still aggressive because it was mostly momentum shift without enough structure confirmation. 2) Took the second trade only after breakout, pullback, hold, and confirmation, which was much cleaner. 3) Stayed in the winning trade when it came back near breakeven and let invalidation, not emotion, control the decision. 4) After losing trades later, did not instantly re-enter to revenge trade. 5) Recognized in real time that FOMO and the need to feel right were trying to pull the slot-machine lever.",
+      "nextRule": "I do not enter just because momentum shifts. I enter when momentum shift becomes confirmed structure. If I just got stopped, the next setup must be clearly better than normal or I pass. If the desire is emotional relief or to feel right, I am disqualified from entering."
     }
   ]
 }
