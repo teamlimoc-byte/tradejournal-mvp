@@ -2,6 +2,10 @@ const DATA_CANDIDATES = [
   './data/trades.json'
 ];
 
+const JOURNAL_CANDIDATES = [
+  './data/journal.json'
+];
+
 const LOCAL_TRADES_KEY = 'trading-platform-mvp.localTrades.v1';
 const COMMISSION_RT_KEY = 'trading-platform-mvp.commissionRt.v1';
 const THEME_KEY = 'trading-platform-mvp.theme.v1';
@@ -123,6 +127,8 @@ function syncLocalTradesFromState() {
 }
 
 async function loadData() {
+  let loaded = null;
+
   for (const path of DATA_CANDIDATES) {
     try {
       const bust = `${path}${path.includes('?') ? '&' : '?'}t=${Date.now()}`;
@@ -139,11 +145,37 @@ async function loadData() {
           if (!id || !byId.has(id)) byId.set(id, t);
         }
         parsed.trades = Array.from(byId.values());
-        return normalizeDataSchema(parsed);
+        loaded = normalizeDataSchema(parsed);
+        break;
       }
     } catch (_) {}
   }
-  return normalizeDataSchema({ ...MOCK_DATA, trades: [...MOCK_DATA.trades, ...readLocalTrades()] });
+
+  if (!loaded) {
+    loaded = normalizeDataSchema({ ...MOCK_DATA, trades: [...MOCK_DATA.trades, ...readLocalTrades()] });
+  }
+
+  for (const path of JOURNAL_CANDIDATES) {
+    try {
+      const bust = `${path}${path.includes('?') ? '&' : '?'}t=${Date.now()}`;
+      const r = await fetch(bust, { cache: 'no-store' });
+      if (!r.ok) continue;
+      const parsed = await r.json();
+      const journalEntries = Array.isArray(parsed)
+        ? parsed
+        : Array.isArray(parsed?.entries)
+          ? parsed.entries
+          : Array.isArray(parsed?.journal)
+            ? parsed.journal
+            : [];
+      if (journalEntries.length) {
+        loaded.journal = journalEntries;
+        break;
+      }
+    } catch (_) {}
+  }
+
+  return normalizeDataSchema(loaded);
 }
 
 function getTrades() {
