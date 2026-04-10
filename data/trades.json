@@ -1,6 +1,6 @@
 {
   "source": "live-chat-manual-log",
-  "generatedAt": "2026-04-09T22:15:22.546736Z",
+  "generatedAt": "2026-04-10T20:04:49.093431Z",
   "trades": [
     {
       "id": "MAN-20260227-CC-01",
@@ -3418,6 +3418,54 @@
       "direction": "LONG",
       "buyFillId": "461767401256",
       "sellFillId": "461767401275",
+      "source": "telegram-csv-import"
+    },
+    {
+      "id": "461767401292-461767401320",
+      "date": "2026-04-10",
+      "symbol": "MNQM6",
+      "qty": 1,
+      "buyPrice": 25309.25,
+      "sellPrice": 25294.0,
+      "pnl": -30.5,
+      "boughtTimestamp": "2026-04-10T08:46:30",
+      "soldTimestamp": "2026-04-10T08:50:50",
+      "duration": "4min 19sec",
+      "direction": "LONG",
+      "buyFillId": "461767401292",
+      "sellFillId": "461767401320",
+      "source": "telegram-csv-import"
+    },
+    {
+      "id": "461767401329-461767401365",
+      "date": "2026-04-10",
+      "symbol": "MNQM6",
+      "qty": 1,
+      "buyPrice": 25263.5,
+      "sellPrice": 25249.5,
+      "pnl": -28.0,
+      "boughtTimestamp": "2026-04-10T09:53:21",
+      "soldTimestamp": "2026-04-10T10:01:55",
+      "duration": "8min 34sec",
+      "direction": "LONG",
+      "buyFillId": "461767401329",
+      "sellFillId": "461767401365",
+      "source": "telegram-csv-import"
+    },
+    {
+      "id": "461767401374-461767401422",
+      "date": "2026-04-10",
+      "symbol": "MNQM6",
+      "qty": 1,
+      "buyPrice": 25274.5,
+      "sellPrice": 25280.75,
+      "pnl": 12.5,
+      "boughtTimestamp": "2026-04-10T12:54:11",
+      "soldTimestamp": "2026-04-10T13:00:10",
+      "duration": "5min 59sec",
+      "direction": "LONG",
+      "buyFillId": "461767401374",
+      "sellFillId": "461767401422",
       "source": "telegram-csv-import"
     }
   ],
