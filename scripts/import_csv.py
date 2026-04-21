@@ -26,7 +26,7 @@ def load_db() -> dict:
 
 def save_db(db: dict) -> None:
     db['generatedAt'] = datetime.utcnow().isoformat() + 'Z'
-    JSON_PATH.write_text(json.dumps(db, indent=2) + '\n')
+    JSON_PATH.write_text(json.dumps(db, indent=2, ensure_ascii=False) + '\n')
 
 
 def parse_args() -> argparse.Namespace:
