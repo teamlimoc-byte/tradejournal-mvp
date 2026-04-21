@@ -6,6 +6,9 @@ const JOURNAL_CANDIDATES = [
   './data/journal.json'
 ];
 
+const CHART_CACHE_ROOT = './data/chart-cache';
+const journalChartCache = new Map();
+
 const LOCAL_TRADES_KEY = 'trading-platform-mvp.localTrades.v1';
 const COMMISSION_RT_KEY = 'trading-platform-mvp.commissionRt.v1';
 const THEME_KEY = 'trading-platform-mvp.theme.v1';
@@ -42,9 +45,15 @@ function inferAssetType(symbol = '') {
 
 function normalizeTradeSchema(t) {
   const trade = { ...(t || {}) };
+  const entry = Number(trade.entry ?? trade.buyPrice ?? 0);
+  const exit = Number(trade.exit ?? trade.sellPrice ?? 0);
   trade.assetType = String(trade.assetType || inferAssetType(trade.symbol));
   trade.underlying = String(trade.underlying || trade.symbol || '').toUpperCase();
   trade.strategy = String(trade.strategy || trade.setup || '');
+  trade.entry = Number.isFinite(entry) ? entry : 0;
+  trade.exit = Number.isFinite(exit) ? exit : 0;
+  trade.entryTimestamp = String(trade.entryTimestamp || trade.boughtTimestamp || trade.timestamp || trade.openedAt || '').trim();
+  trade.exitTimestamp = String(trade.exitTimestamp || trade.soldTimestamp || trade.closedAt || '').trim();
 
   // Options fields (backward-compatible defaults for non-options trades)
   if (trade.assetType === 'options') {
@@ -67,6 +76,29 @@ function normalizeTradeSchema(t) {
   trade.accountCycle = String(trade.accountCycle || '').trim();
 
   return trade;
+}
+
+function parseDateLike(value) {
+  if (!value) return null;
+  const raw = String(value).trim();
+  if (!raw) return null;
+
+  const isoish = raw.replace(' ', 'T');
+  let parsed = new Date(isoish);
+  if (!Number.isNaN(parsed.getTime())) return parsed;
+
+  parsed = new Date(raw);
+  if (!Number.isNaN(parsed.getTime())) return parsed;
+
+  const usMatch = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})(?:\s+(\d{1,2}:\d{2}(?::\d{2})?(?:\s?[AP]M)?))?$/i);
+  if (usMatch) {
+    const [, mm, dd, yy, timePart = '00:00:00'] = usMatch;
+    const year = yy.length === 2 ? `20${yy}` : yy;
+    parsed = new Date(`${year}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}T${timePart.replace(/\s+/g, '')}`);
+    if (!Number.isNaN(parsed.getTime())) return parsed;
+  }
+
+  return null;
 }
 
 function normalizeDataSchema(data) {
@@ -287,7 +319,7 @@ function parseTradeTimestamp(trade) {
   const fullCandidates = [trade?.entryTimestamp, trade?.boughtTimestamp, trade?.soldTimestamp, trade?.timestamp, trade?.openedAt];
   for (const c of fullCandidates) {
     if (!c) continue;
-    const d = new Date(c);
+    const d = parseDateLike(c);
     if (!Number.isNaN(d.getTime())) return d;
   }
 
@@ -306,15 +338,263 @@ function parseTradeTimestamp(trade) {
 
     // H:mm AM/PM (rare imports)
     if (/^\d{1,2}:\d{2}\s?(AM|PM)$/i.test(t) && date) {
-      const d = new Date(`${date} ${t}`);
+      const d = parseDateLike(`${date} ${t}`);
       if (!Number.isNaN(d.getTime())) return d;
     }
 
     // Last resort: direct parse
-    const direct = new Date(t);
+    const direct = parseDateLike(t);
     if (!Number.isNaN(direct.getTime())) return direct;
   }
   return null;
+}
+
+function getTradeEntryDate(trade) {
+  return parseDateLike(trade?.entryTimestamp || trade?.boughtTimestamp || trade?.timestamp || trade?.openedAt || '');
+}
+
+function getTradeExitDate(trade) {
+  return parseDateLike(trade?.exitTimestamp || trade?.soldTimestamp || trade?.closedAt || '');
+}
+
+function getTradeEntryPrice(trade) {
+  const n = Number(trade?.entry ?? trade?.buyPrice ?? 0);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function getTradeExitPrice(trade) {
+  const n = Number(trade?.exit ?? trade?.sellPrice ?? 0);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function sanitizePathToken(value = '') {
+  return String(value || '').replace(/[^A-Za-z0-9_-]+/g, '_');
+}
+
+function getChartSymbolForTrade(trade) {
+  const assetType = String(trade?.assetType || inferAssetType(trade?.symbol)).toLowerCase();
+  const underlying = String(trade?.underlying || '').trim().toUpperCase();
+  const rawSymbol = String(trade?.symbol || '').trim().toUpperCase();
+  const root = (underlying || rawSymbol.split(' ')[0] || rawSymbol).trim();
+
+  if (assetType === 'options' && underlying) return underlying;
+  if (/^MNQ/.test(root)) return 'MNQ=F';
+  if (/^NQ/.test(root)) return 'NQ=F';
+  if (/^MES/.test(root)) return 'MES=F';
+  if (/^ES/.test(root)) return 'ES=F';
+  if (/^M2K/.test(root)) return 'RTY=F';
+  if (/^RTY/.test(root)) return 'RTY=F';
+  if (/^MGC/.test(root)) return 'GC=F';
+  if (/^GC/.test(root)) return 'GC=F';
+  if (/^MCL/.test(root)) return 'CL=F';
+  if (/^CL/.test(root)) return 'CL=F';
+  return root;
+}
+
+function chartSnapshotPath(date, chartSymbol) {
+  return `${CHART_CACHE_ROOT}/${date}--${sanitizePathToken(chartSymbol)}.json`;
+}
+
+function getTradesForJournalDate(date) {
+  return (state.data?.trades || []).filter(t => t.date === date);
+}
+
+function groupTradesByChartSymbol(date) {
+  const groups = new Map();
+  for (const trade of getTradesForJournalDate(date)) {
+    const chartSymbol = getChartSymbolForTrade(trade);
+    if (!chartSymbol) continue;
+    if (!groups.has(chartSymbol)) groups.set(chartSymbol, []);
+    groups.get(chartSymbol).push(trade);
+  }
+  return Array.from(groups.entries()).map(([chartSymbol, trades]) => ({
+    chartSymbol,
+    trades: trades.slice().sort((a, b) => {
+      const at = getTradeEntryDate(a)?.getTime() || 0;
+      const bt = getTradeEntryDate(b)?.getTime() || 0;
+      return at - bt;
+    })
+  }));
+}
+
+async function loadChartSnapshot(date, chartSymbol) {
+  const key = `${date}::${chartSymbol}`;
+  if (journalChartCache.has(key)) return journalChartCache.get(key);
+  const promise = (async () => {
+    const path = chartSnapshotPath(date, chartSymbol);
+    const bust = `${path}?t=${Date.now()}`;
+    const resp = await fetch(bust, { cache: 'no-store' });
+    if (!resp.ok) throw new Error(`missing chart snapshot: ${path}`);
+    return resp.json();
+  })();
+  journalChartCache.set(key, promise);
+  try {
+    return await promise;
+  } catch (err) {
+    journalChartCache.delete(key);
+    throw err;
+  }
+}
+
+function getChartPalette() {
+  const dark = document.body.classList.contains('dark');
+  return dark ? {
+    bg: '#0f1a2e',
+    text: '#9db0ce',
+    grid: '#223657',
+    border: '#223657',
+    up: '#35d39a',
+    down: '#ff6b88',
+    wickUp: '#35d39a',
+    wickDown: '#ff6b88'
+  } : {
+    bg: '#ffffff',
+    text: '#6b7280',
+    grid: '#e5e7eb',
+    border: '#e5e7eb',
+    up: '#16a34a',
+    down: '#dc2626',
+    wickUp: '#16a34a',
+    wickDown: '#dc2626'
+  };
+}
+
+function nearestBarTime(targetSeconds, bars = []) {
+  if (!bars.length) return targetSeconds;
+  let best = bars[0].time;
+  let bestDiff = Math.abs(best - targetSeconds);
+  for (const bar of bars) {
+    const diff = Math.abs(bar.time - targetSeconds);
+    if (diff < bestDiff) {
+      best = bar.time;
+      bestDiff = diff;
+    }
+  }
+  return best;
+}
+
+function applySeriesMarkers(series, markers) {
+  if (!series || !markers?.length) return;
+  if (typeof series.setMarkers === 'function') {
+    series.setMarkers(markers);
+    return;
+  }
+  if (window.LightweightCharts?.createSeriesMarkers) {
+    window.LightweightCharts.createSeriesMarkers(series, markers);
+  }
+}
+
+function renderTradeLegend(trades = []) {
+  return trades.map((trade, idx) => {
+    const entryAt = getTradeEntryDate(trade);
+    const exitAt = getTradeExitDate(trade);
+    const entryTime = entryAt ? entryAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : deriveEntryTime(trade) || '—';
+    const exitTime = exitAt ? exitAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '—';
+    return `
+      <div class="journal-chart-legend-row">
+        <span class="badge">T${idx + 1}</span>
+        <span>${entryTime} → ${exitTime}</span>
+        <span>Entry ${fmtNum(getTradeEntryPrice(trade))}</span>
+        <span>Exit ${fmtNum(getTradeExitPrice(trade))}</span>
+        <span class="${netPnl(trade) >= 0 ? 'pos' : 'neg'}">${fmtMoney(netPnl(trade))}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+async function renderJournalChart(container) {
+  if (!container || container.dataset.rendered === '1') return;
+  container.dataset.rendered = '1';
+
+  if (!window.LightweightCharts?.createChart) {
+    container.innerHTML = '<div class="muted small">Chart library did not load.</div>';
+    return;
+  }
+
+  const date = container.dataset.date;
+  const chartSymbol = container.dataset.chartSymbol;
+  const trades = getTradesForJournalDate(date).filter(t => getChartSymbolForTrade(t) === chartSymbol);
+  if (!trades.length) {
+    container.innerHTML = '<div class="muted small">No trades found for this chart.</div>';
+    return;
+  }
+
+  try {
+    const snapshot = await loadChartSnapshot(date, chartSymbol);
+    const bars = Array.isArray(snapshot?.bars) ? snapshot.bars : [];
+    if (!bars.length) {
+      container.innerHTML = '<div class="muted small">No candles available for this session yet.</div>';
+      return;
+    }
+
+    container.innerHTML = '<div class="journal-chart-canvas"></div>';
+    const palette = getChartPalette();
+    const canvas = container.querySelector('.journal-chart-canvas');
+    const width = Math.max(280, container.clientWidth || 280);
+    const chart = window.LightweightCharts.createChart(canvas, {
+      width,
+      height: 280,
+      layout: { background: { color: palette.bg }, textColor: palette.text },
+      grid: { vertLines: { color: palette.grid }, horzLines: { color: palette.grid } },
+      rightPriceScale: { borderColor: palette.border },
+      timeScale: { borderColor: palette.border, timeVisible: true, secondsVisible: false },
+      crosshair: { mode: 0 }
+    });
+
+    const series = chart.addCandlestickSeries({
+      upColor: palette.up,
+      downColor: palette.down,
+      wickUpColor: palette.wickUp,
+      wickDownColor: palette.wickDown,
+      borderVisible: false
+    });
+    series.setData(bars);
+
+    const markers = [];
+    trades.forEach((trade, idx) => {
+      const entryAt = getTradeEntryDate(trade);
+      const exitAt = getTradeExitDate(trade);
+      if (entryAt) {
+        markers.push({
+          time: nearestBarTime(Math.floor(entryAt.getTime() / 1000), bars),
+          position: 'belowBar',
+          color: '#2563eb',
+          shape: 'arrowUp',
+          text: `B${idx + 1} ${fmtNum(getTradeEntryPrice(trade))}`
+        });
+      }
+      if (exitAt) {
+        markers.push({
+          time: nearestBarTime(Math.floor(exitAt.getTime() / 1000), bars),
+          position: 'aboveBar',
+          color: netPnl(trade) >= 0 ? '#16a34a' : '#dc2626',
+          shape: 'arrowDown',
+          text: `S${idx + 1} ${fmtNum(getTradeExitPrice(trade))}`
+        });
+      }
+    });
+    applySeriesMarkers(series, markers);
+    chart.timeScale().fitContent();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(entries => {
+        const rect = entries[0]?.contentRect;
+        if (!rect?.width) return;
+        chart.applyOptions({ width: Math.max(280, Math.floor(rect.width)) });
+        chart.timeScale().fitContent();
+      });
+      ro.observe(container);
+    }
+  } catch (err) {
+    console.error('journal chart render failed', date, chartSymbol, err);
+    container.innerHTML = '<div class="muted small">Chart snapshot missing. Run the chart snapshot generator for this date.</div>';
+  }
+}
+
+function hydrateJournalCharts(root = document) {
+  root.querySelectorAll?.('.journal-chart').forEach(el => {
+    renderJournalChart(el);
+  });
 }
 
 function weekdayFromDate(dateStr) {
@@ -1280,16 +1560,39 @@ function renderJournal(selector) {
 
   const entries = (state.data?.journal || []).slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   const journalHtml = entries.length
-    ? entries.map(j => `
+    ? entries.map(j => {
+      const chartGroups = groupTradesByChartSymbol(j.date || '');
+      const chartsHtml = chartGroups.length
+        ? `
+          <div class="journal-chart-grid">
+            ${chartGroups.map(group => `
+              <section class="journal-chart-card">
+                <div class="journal-chart-header">
+                  <div>
+                    <div><strong>${group.chartSymbol}</strong></div>
+                    <div class="muted small">${group.trades.length} trade${group.trades.length === 1 ? '' : 's'} plotted on local candle snapshot</div>
+                  </div>
+                </div>
+                <div class="journal-chart" data-date="${j.date || ''}" data-chart-symbol="${group.chartSymbol}"></div>
+                <div class="journal-chart-legend">${renderTradeLegend(group.trades)}</div>
+              </section>
+            `).join('')}
+          </div>
+        ` : '';
+
+      return `
       <article class="note-item">
         <h4>${j.date || '—'} — ${j.title || 'Journal Entry'}</h4>
         ${renderDetailedJournalEntry(j)}
+        ${chartsHtml}
       </article>
-    `).join('')
+    `;
+    }).join('')
     : '<div class="panel muted">No journal entries found in local JSON.</div>';
 
   const autoLessons = renderAutoTradeLessons(getTrades());
   host.innerHTML = journalHtml + (autoLessons ? `<div style="margin-top:10px;"><h3 style="margin:0 0 8px;">Recent Trade Lessons</h3>${autoLessons}</div>` : '');
+  hydrateJournalCharts(host);
 }
 
 function renderInlineJournalForDate(selector, scopeTrades = []) {
@@ -1492,6 +1795,7 @@ function initThemeToggle() {
     const next = document.body.classList.contains('dark') ? 'light' : 'dark';
     applyTheme(next);
     try { localStorage.setItem(THEME_KEY, next); } catch (_) {}
+    rerender();
   });
 }
 
@@ -1645,4 +1949,3 @@ function rerender() {
   }
   rerender();
 })();
-
