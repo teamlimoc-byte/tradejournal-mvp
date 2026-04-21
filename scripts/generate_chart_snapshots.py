@@ -12,10 +12,15 @@ ROOT = Path(__file__).resolve().parents[1]
 TRADES_PATH = ROOT / 'data' / 'trades.json'
 OUT_DIR = ROOT / 'data' / 'chart-cache'
 USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36'
+YAHOO_HOSTS = ['query1.finance.yahoo.com', 'query2.finance.yahoo.com']
 
 
 def sanitize_symbol(value: str) -> str:
     return ''.join(ch if ch.isalnum() or ch in {'-', '_'} else '_' for ch in (value or ''))
+
+
+def snapshot_path(trade_date: str, chart_symbol: str) -> Path:
+    return OUT_DIR / f"{trade_date}--{sanitize_symbol(chart_symbol)}.json"
 
 
 def chart_symbol_for_trade(trade: dict) -> str:
@@ -53,10 +58,11 @@ def fetch_range_snapshot(chart_symbol: str, start_date: str, end_date: str, inte
         'includePrePost': 'true',
         'events': 'div,splits,capitalGains'
     })
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{chart_symbol}?{params}"
     payload = None
     for attempt in range(4):
         try:
+            host = YAHOO_HOSTS[attempt % len(YAHOO_HOSTS)]
+            url = f"https://{host}/v8/finance/chart/{chart_symbol}?{params}"
             result = subprocess.run(
                 ['curl', '-L', '-A', USER_AGENT, '--max-time', '30', '--silent', '--show-error', url],
                 text=True,
@@ -153,7 +159,47 @@ def main() -> int:
 
     for chart_symbol, by_date in sorted(grouped_by_symbol.items()):
         dates = sorted(by_date)
-        snapshot = fetch_range_snapshot(chart_symbol, dates[0], dates[-1])
+        existing = {}
+        all_cached = True
+        for trade_date in dates:
+            out_path = snapshot_path(trade_date, chart_symbol)
+            if out_path.exists():
+                try:
+                    existing[trade_date] = json.loads(out_path.read_text())
+                except Exception:
+                    all_cached = False
+                    break
+            else:
+                all_cached = False
+                break
+
+        if all_cached:
+            for trade_date in dates:
+                day_trades = by_date[trade_date]
+                cached = existing[trade_date]
+                day_snapshot = {
+                    'date': trade_date,
+                    'chartSymbol': chart_symbol,
+                    'interval': cached.get('interval', '5m'),
+                    'source': cached.get('source', 'yahoo-chart-api'),
+                    'generatedAt': datetime.now(timezone.utc).isoformat(),
+                    'meta': cached.get('meta') or {},
+                    'bars': cached.get('bars') or [],
+                    'tradeCount': len(day_trades),
+                    'tradeIds': [t.get('id') for t in day_trades if t.get('id')],
+                    'symbols': sorted({str(t.get('symbol') or '').upper() for t in day_trades if t.get('symbol')}),
+                }
+                out_path = snapshot_path(trade_date, chart_symbol)
+                out_path.write_text(json.dumps(day_snapshot, indent=2) + '\n')
+                print(f'Refreshed {out_path.relative_to(ROOT)} ({len(day_snapshot["bars"])} bars cached)')
+            continue
+
+        try:
+            snapshot = fetch_range_snapshot(chart_symbol, dates[0], dates[-1])
+        except Exception as exc:
+            print(f'warning: failed to fetch chart data for {chart_symbol} ({dates[0]}..{dates[-1]}): {exc}', file=sys.stderr)
+            continue
+
         bars = snapshot['bars']
         bars_by_date = defaultdict(list)
         for bar in bars:
@@ -174,7 +220,7 @@ def main() -> int:
                 'tradeIds': [t.get('id') for t in day_trades if t.get('id')],
                 'symbols': sorted({str(t.get('symbol') or '').upper() for t in day_trades if t.get('symbol')}),
             }
-            out_path = OUT_DIR / f"{trade_date}--{sanitize_symbol(chart_symbol)}.json"
+            out_path = snapshot_path(trade_date, chart_symbol)
             out_path.write_text(json.dumps(day_snapshot, indent=2) + '\n')
             print(f'Wrote {out_path.relative_to(ROOT)} ({len(day_snapshot["bars"])} bars)')
         time.sleep(1)
