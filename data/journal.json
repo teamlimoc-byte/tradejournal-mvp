@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-05-01T04:02:58.381Z",
+  "generatedAt": "2026-05-01T19:17:47.814Z",
   "entries": [
     {
       "date": "2026-02-18",
@@ -694,6 +694,20 @@
       "lessonLearned": "My edge today was not prediction — it was waiting for confirmation after the flush. The buyer response mattered more than the dump itself. When I keep the trade plan simple and structured, I trade better. Removing TP adds emotion and weakens the process. Right now, consistency matters more than squeezing extra distance out of a winner.",
       "nextTradeRule": "If the plan is 1R/2R, leave it alone and let it work. Doji is the alert, confirmation is the entry. No mid-trade TP changes unless that rule exists before the trade is entered.",
       "content": "Mood: Calm, patient, and more in sync with the market. Felt good waiting for setups instead of forcing entries.\nRecovery Metrics: Better patience today. Emotional control was solid. No revenge trading after the one red trade.\nSetup Context: Started with short scalps, then found better reversal setups after flushes. Best signals came from 10m doji candles and 5m hammer/doji candles showing buyers stepping in.\nExecution: 9 trades, +$275.50 gross, +$266.50 net after modeled commissions, 8 winners and 1 loser. Best trade was +$100. The main mistake was taking TP off mid-trade to see if it could run further, then changing my mind and closing it anyway.\nPsychology: I stayed more patient and waited for confirmation. I read the reversal context well after the market showed its hand. I still felt the urge to optimize mid-trade, which is something I need to cut out.\nRule Adherence: Did well waiting for setups, using confirmation candles, and recognizing buyer response after flushes. Broke discipline by removing TP mid-trade and traded more than my ideal daily cap.\nWhat I Did Good: Waited for the setup. Read reversal patterns well. Used 10m and 5m confirmation effectively. Captured clean 2R trades and stayed in control.\nWhat To Improve: Stick to 1R/2R without changing the plan mid-trade. Reduce trade count. Keep treating doji/hammer candles as alerts, then wait for confirmation before entry.\nLesson Learned: My edge today was waiting for confirmation after the flush, not predicting. When I keep the trade plan simple, I trade better. Removing TP adds emotion and weakens the process.\nNext Trade Rule: If the plan is 1R/2R, leave it alone and let it work. Doji is the alert, confirmation is the entry. No mid-trade TP changes unless planned before entry.\nSession Summary: Strong green day with better patience and solid pattern recognition. Best trades came from spotting flushes, then waiting for buyers to confirm reversal. The next level is same patience, fewer trades, and stricter 2R discipline."
+    },
+    {
+      "date": "2026-05-01",
+      "title": "Trading Journal — Friday, May 1, 2026",
+      "mood": "Finished green, but more importantly caught the real execution leaks in real time. Protected mental capital and shut it down intentionally before the weekend.",
+      "content": "Session summary: 8 trades logged. Gross PnL 115.00, commissions 8.00, net PnL 107.00. Win/Loss/BE = 5/3/0 (Winrate 62.5%). Best trade: CSV-20260501-461767407669 (MNQM6) 61.50. Worst trade: CSV-20260501-461767407466 (MNQM6) -51.00.",
+      "setupContext": "Mixed intraday tape with a broader downtrend context later in the session. Some valid scalp opportunities existed, but lower-timeframe candles inside chop repeatedly tested discipline and made it easy to confuse alert candles with actual reversal confirmation.",
+      "execution": "Early management leak showed up as a fear-based short exit after a hammer/doji in a prior chop zone. A later countertrend long was cleaner because the 10m 8EMA target was defined before entry as a scalp against the broader downtrend. The weakest trade of the day came from re-entering too quickly after a loss on a doji-and-hope thesis without proof of momentum shift.",
+      "psychology": "Biggest win was honesty. I identified the difference between structure-based exits and discomfort exits, and I recognized when a trade idea was being fueled by hope rather than confirmation. Stopping for the day was the right call to protect both the account and Monday’s mental state.",
+      "ruleAdherence": "Mixed but improving. I stayed self-aware enough to catch fear exits and revenge-adjacent behavior in real time, but I still violated process by taking a reversal idea without confirmation shortly after a loss. I finished strong by respecting a predefined scalp target and shutting down intentionally.",
+      "whatIDidGood": "Called out the real reasons behind entries and exits instead of rationalizing them. Respected a preplanned 10m 8EMA scalp target on the final trade. Protected the weekly momentum by ending the session once mental quality started to matter more than squeezing extra P&L.",
+      "whatToImprove": "Do not let one candle override structure. Do not re-enter within minutes of a loss on the same idea unless momentum shift is clearly proven. Keep higher-timeframe location in control so 1m fear does not make the decision for me.",
+      "lessonLearned": "A doji is an alert, not a trigger. Discomfort is not an exit signal. When I feel urgency after a loss, the proof requirement must go up, not down.",
+      "nextTradeRule": "Doji + hope = no trade. After any stop-out on the same idea, wait at least 3 minutes and require clear momentum-shift confirmation before re-entry."
     }
   ]
 }
