@@ -1,6 +1,6 @@
 {
   "source": "canonical",
-  "generatedAt": "2026-05-01T19:17:47.814Z",
+  "generatedAt": "2026-05-04T21:01:15.839Z",
   "entries": [
     {
       "date": "2026-02-18",
@@ -708,6 +708,20 @@
       "whatToImprove": "Do not let one candle override structure. Do not re-enter within minutes of a loss on the same idea unless momentum shift is clearly proven. Keep higher-timeframe location in control so 1m fear does not make the decision for me.",
       "lessonLearned": "A doji is an alert, not a trigger. Discomfort is not an exit signal. When I feel urgency after a loss, the proof requirement must go up, not down.",
       "nextTradeRule": "Doji + hope = no trade. After any stop-out on the same idea, wait at least 3 minutes and require clear momentum-shift confirmation before re-entry."
+    },
+    {
+      "date": "2026-05-04",
+      "title": "Trading Journal — Monday, May 4, 2026",
+      "mood": "Emotional day because I was close to passing the eval and felt the pressure build after a strong start. The frustration wasn’t from being lost — it came from seeing multiple trades go about 1R and then reverse before I could protect them. That sequence pushed me over the edge and changed the quality of my decision-making.",
+      "content": "Session summary: 27 trades logged. Gross PnL 77.50, commissions 27.00, net PnL 50.50. Win/Loss/BE = 12/15/0 (Winrate 44.4%). Best trade: CSV-20260504-461767407719 (MNQM6) 100.00, tied with CSV-20260504-461767408034 (MNQM6) 100.00. Worst trade: -50.50, repeated three times.",
+      "setupContext": "The session started with real opportunity and a clean read. The first trade worked immediately and the first three trades put me in a good position. After that, the market kept offering moves that would reach about 1R and then reverse sharply, which made trade management feel reactive instead of planned. The issue was less about lacking setups and more about handling extension entries and known reaction levels without a predefined 1R decision.",
+      "execution": "Execution split into two different days. Early on I traded well enough to get traction and had +125.00 after the first three trades. Then the day turned into churn: repeated entries, several full-stop losses, and too many attempts to win back the eval through activity. The biggest execution leak was not having a preplanned 1R management rule once the early rhythm changed. Without that, trades that briefly worked started feeding frustration instead of confidence.",
+      "psychology": "The emotional break came after multiple trades went roughly 1R and snapped back before I could move stop to breakeven. That created a feeling of almost having it, over and over, and that feeling pushed me into pressing. Once I was trading the eval and the frustration instead of the setup, the market stopped being the main problem. Today was a discipline failure under emotional pressure, not proof that I can’t trade.",
+      "ruleAdherence": "Poor overall. I respected the market well enough to build an early cushion, but I violated the locked process badly afterward. Twenty-seven trades is far beyond the preferred cap, and the day became reactive after the third trade. I did not maintain a process-first posture once the repeated 1R reversals started to sting.",
+      "whatIDidGood": "Started the session with real edge and proved I can read and capture a clean move. Stayed observant enough after the fact to identify the exact trigger that pushed me off-center. Caught the real lesson: the combination of trade count, emotional pressure, and undefined 1R management was what turned a close eval day into a churn day.",
+      "whatToImprove": "Define the 1R management decision before entry, especially on later-session or extended setups. Treat three trades as an automatic checkpoint instead of a suggestion. Stop trying to pass the eval through volume once emotional friction appears. When trades start hitting near 1R and reversing, respond with a rule-based pause rather than another entry.",
+      "lessonLearned": "Being close to the eval can be just as dangerous as being down because the pressure makes every reversal feel personal. When repeated almost-wins start stacking, the solution is not more clicking — it is a forced reset and a predefined management rule.",
+      "nextTradeRule": "After 3 trades or after 2 trades that reach about 1R and then reverse, stop live trading for 15 minutes. The next trade is allowed only if it is A+ and the 1R management decision is defined before entry."
     }
   ]
 }
